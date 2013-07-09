@@ -2,135 +2,95 @@
 
 include_once('defines.php');
 include_once(ROOT . 'libs/security.php');
-include_once(ROOT . 'libs/sessionTransaction.php');
+include_once(ROOT . 'libs/language.php');
 
+include_once(Language::getLanguageFile());
+
+// TODO : À retirer lors de la publication d'une version B2C.
 if (!Security::isAuthenticated()) {
-    $page = 'login';
-
+	$page = 'logIn';
 } else {
-    $page = empty($_GET['page']) ? 'index' : $_GET['page'];
+	$page = isSet($_GET['page']) ? $_GET['page'] : 'index';
 
-    switch ($page) {
-        // Page d'accueil
-        case 'login' :
-        case 'index' :
-            if (Security::isInRoleName(ROLE_ADMINISTRATOR)) {
-                $page = 'manager';
-                break;
-            }
-
-        // Pages transactionnelles
-        case 'products' :
-        case 'categories' :
-        case 'destinations' :
-        case 'shippingInfos' :
-            $transaction = new SessionTransaction();
-
-            // Redirige l'utilisateur vers une page selon
-            // le statut de la transaction courrante.
-            switch ($transaction->getStatus()) {
-                case TRANSACTION_IS_READY:
-                    $page = 'destinations';
-                    break;
-                case TRANSACTION_DESTINATION_IS_SELECTED:
-                    $page = 'receiverInfos';
-                    break;
-                case TRANSACTION_SHIPPING_INFOS_ARE_SETTED:
-                    $page = 'shippingInfos';
-                    break;
-                case TRANSACTION_IS_OPEN:
-                    $page = 'categories';
-                    break;
-                case TRANSACTION_CATEGORY_IS_SELECTED:
-                    $page = 'products';
-                    break;
-            }
-            break;
-
-        // Pages administratives
-        case 'export' :
-        case 'manager' :
-        case 'storeInfos' :
-            if (!Security::isInRoleName(ROLE_ADMINISTRATOR)) {
-                $page = 'error';
-            }
-            break;
-    }
+	switch ($page) {
+		case 'home':
+		case 'index':
+		case 'logIn':
+			$page = 'logIn';
+			break;
+	}
 }
 
 $file = ROOT . 'pages/' . $page . '.php';
 
 // Avant d'inclure la page, on doit vérifier quelle existe.
 if (!file_exists($file)) {
-    $file = ROOT . 'pages/' . 'error' . '.php';
+	$file = ROOT . 'pages/' . 'error' . '.php';
 }
 
+// Sélection de la langue
 include_once($file);
 
 // On doit vérifier que la page est correctement construite.
-if (!isset($title) || !isset($head) || !isset($content)) {
-    include_once(ROOT . 'pages/' . 'error' . '.php');
+if (!isSet($title) || !isSet($head) || !isSet($content)) {
+	include_once(ROOT . 'pages/' . 'error' . '.php');
 }
 ?>
 
 <html>
 <head>
-    <title>Parts Order Web - <?php echo $title; ?></title>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 
-    <link type="text/css" rel="stylesheet" href="css/default.css"/>
+	<title>Web Boutique - <?php echo $title; ?></title>
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script type="text/javascript" src="js/noty/jquery.noty.js"></script>
-    <script type="text/javascript" src="js/noty/layouts/topRight.js"></script>
-    <script type="text/javascript" src="js/noty/themes/default.js"></script>
+	<link type="text/css" rel="stylesheet" href="css/default.css" />
+	<link type="text/css" rel="stylesheet" href="css/master.css" />
 
-    <!-- Début de l'en-tête dynamique. -->
-    <?php echo $head; ?>
-    <!-- Fin de l'en-tête dynamique. -->
+	<!-- JQuery -->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+	<!-- Jquery UI -->
+	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+	<link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+
+	<!-- Jquery Validate plugin -->
+	<?php $lang = Language::getCurrent(); ?>
+	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.js"></script>
+	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/localization/messages_<?php echo $lang; ?>.js "></script>
+
+	<!-- Noty -->
+	    <script type="text/javascript" src="js/noty/jquery.noty.js"></script>
+	    <script type="text/javascript" src="js/noty/themes/default.js"></script>
+	    <script type="text/javascript" src="js/noty/layouts/topRight.js"></script>
+
+	<?php echo $head; ?>
 
 </head>
 <body>
 <div id="wrapper">
+	<div id="header-band">
+		<div id="header-wrapper">
+			<img id="logo-dutailier" src="img/dutailier.png">
+			<ul id="menu">
+				<?php if (Language::getCurrent() == 'en') { ?>
+					<li><a id="btnFrench">Français</a></li>
+				<?php } else { ?>
+					<li><a id="btnEnglish">English</a></li>
+				<?php } ?>
+			</ul>
+		</div>
+	</div>
+	<div id="content">
+		<?php echo $content; ?>
+	</div>
+	<div id="footer-band">
+		<div id="footer-wrapper">
+			<span id="copyright">Dutailier 2013 &copy;</span>
+		</div>
+	</div>
 
-    <!-- Début de l'en-tête de la page. -->
-    <div id="header-band">
-        <div id="header-wrapper">
-            <img id="logo-dutailier" src="img/dutailier.png">
-            <ul id="menu">
-
-                <?php if (Security::isAuthenticated()) { ?>
-                    <?php if (Security::isInRoleName(ROLE_STORE)) { ?>
-                        <li><a id="btnProducts">Products</a></li>
-                        <li><a id="btnOrders">Orders</a></li>
-                    <?php } ?>
-
-                    <?php if (Security::isInRoleName(ROLE_ADMINISTRATOR)) { ?>
-                        <li><a id="btnManager">Manager</a></li>
-                    <?php } ?>
-
-                    <li><a id="btnLogout">Logout</a></li>
-                <?php } ?>
-            </ul>
-            <img id="logo-babiesRus" src="img/babiesrus.png">
-        </div>
-    </div>
-    <!-- Fin de l'en-tête de la page. -->
-
-    <!-- Début du contenu dynamique. -->
-    <div id="content">
-        <?php echo $content; ?>
-    </div>
-    <!-- Fin du contenu dynamique. -->
-
-    <!-- Début du pied de page. -->
-    <div id="footer-band">
-        <div id="footer-wrapper">
-            <span id="copyright">Dutailier 2013 &copy;</span>
-        </div>
-    </div>
-
-    <script src="js/menu.js"></script>
-    <!-- Fin du pied de page. -->
+	<script src="js/url.js"></script>
+	<script src="js/menu.js"></script>
 </div>
 </body>
 </html>

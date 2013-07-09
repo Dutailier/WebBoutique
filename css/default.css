@@ -1,0 +1,30 @@
+﻿input,
+textarea,
+select {
+	padding : 6px;
+}
+
+label.error {
+	color : red;
+}
+
+input.error,
+select.error,
+textarea.error {
+	border : 2px solid red;
+}
+
+a.button,
+input[type=button],
+input[type=submit] {
+	font-size : 1.1em;
+	cursor    : pointer;
+}
+
+.hidden {
+	display : none;
+}
+
+span.highlight {
+	background-color : yellow;
+}

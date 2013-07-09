@@ -1,8 +1,6 @@
 DirectoryIndex index.php
 RewriteEngine on
 
-RewriteCond %{REQUEST_URI} !^(.*)export.php(.*)$
-
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 

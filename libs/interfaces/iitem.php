@@ -8,16 +8,20 @@ include_once(ROOT . 'libs/interfaces/icomparable.php');
  */
 interface IItem extends IComparable
 {
-    /**
-     * Retourne la quantité.
-     * @return mixed
-     */
-    public function getQuantity();
+	/**
+	 * Retourne la quantité.
+	 *
+	 * @return mixed
+	 */
+	public function getQuantity();
 
-    /**
-     * Définit la quantité.
-     * @param $quantity
-     * @return mixed
-     */
-    public function setQuantity($quantity);
+
+	/**
+	 * Définit la quantité.
+	 *
+	 * @param $quantity
+	 *
+	 * @return mixed
+	 */
+	public function setQuantity($quantity);
 }

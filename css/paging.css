@@ -1,0 +1,17 @@
+ul.paging {
+	list-style-type : none;
+	height          : 40px;
+	text-align      : center;
+}
+
+ul.paging > li {
+	display     : inline-block;
+	margin      : 5px 10px;
+	line-height : 30px;
+	cursor      : pointer;
+	font-size   : 1.5em;
+}
+
+ul.paging > li.selected {
+	text-decoration : underline;
+}

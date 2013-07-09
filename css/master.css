@@ -1,0 +1,96 @@
+html {
+	margin  : 0;
+	padding : 0;
+	height  : 100%;
+}
+
+body {
+	margin      : 0;
+	padding     : 0;
+	height      : 100%;
+	font-family : "Arial", sans-serif;
+}
+
+#wrapper {
+	position   : relative;
+	min-width  : 960px;
+	min-height : 100%;
+	overflow   : auto;
+}
+
+#header-band,
+#footer-band {
+	background-color : #484848;
+}
+
+#content {
+	width          : 960px;
+	margin         : 0px auto;
+	padding-bottom : 110px;
+	overflow       : hidden; /* Clearfix */
+}
+
+#header-band {
+	top : 0;
+}
+
+#footer-band {
+	position : absolute;
+	width    : 100%;
+	bottom   : 0;
+}
+
+#header-wrapper,
+#footer-wrapper {
+	margin   : 0px auto;
+	height   : 100px;
+	width    : 960px;
+	overflow : hidden; /* Clearfix */
+}
+
+/* En-tête */
+#logo-dutailier {
+	width  : 324px;
+	height : 86px;
+	margin : 7px 0px;
+}
+
+#menu {
+	overflow : hidden;
+	padding  : 0px;
+	margin   : 5px;
+	float    : right;
+}
+
+#menu > li {
+	display     : inline-block;
+	margin      : 12px 0px 12px 19px;
+	border-left : 1px solid #FFFFFF;
+}
+
+#menu > li:first-child {
+	border : none;
+}
+
+#menu > li > a {
+	display         : block;
+	line-height     : 10px;
+	list-style      : none;
+	font-size       : 1.2em;
+	color           : #FFFFFF;
+	padding         : 8px 0px 8px 20px;
+	text-decoration : none;
+}
+
+#menu > li > a:hover {
+	cursor : pointer;
+	color  : #F0F0F0;
+}
+
+/* Pied de page */
+
+#copyright {
+	float   : right;
+	padding : 5px;
+	color   : white;
+}

@@ -9,43 +9,47 @@ include_once(ROOT . 'libs/entities/role.php');
  */
 class Roles
 {
-    /**
-     * Retourne les rôles détenues par un utilisateur.
-     * @param $id
-     * @return array
-     */
-    public static function FilterByUserId($id)
-    {
-        $query = 'EXEC [getRolesByUserId]';
-        $query .= '@userId = "' . intval($id) . '"';
+	/**
+	 * Retourne les rôles détenues par un utilisateur.
+	 *
+	 * @param $id
+	 *
+	 * @return array
+	 */
+	public static function FilterByUserId($id)
+	{
+		$query = 'EXEC [getRolesByUserId]';
+		$query .= '@userId = "' . intval($id) . '"';
 
-        $rows = Database::Execute($query);
+		$rows = Database::Execute($query);
 
-        $roles = array();
-        foreach ($rows as $row) {
+		$roles = array();
+		foreach ($rows as $row) {
 
-            $role = new Role(
-                $row['name']
-            );
-            $role->setId($row['id']);
+			$role = new Role(
+				$row['name']
+			);
+			$role->setId($row['id']);
 
-            $roles[] = $role;
-        }
-        return $roles;
-    }
+			$roles[] = $role;
+		}
+
+		return $roles;
+	}
 
 
-    /**
-     * Ajoute un utilisteur à un rôle.
-     * @param User $user
-     * @param $name
-     */
-    public static function addUserToRoleName(User $user, $name)
-    {
-        $query = 'EXEC [addUserIdToRoleName]';
-        $query .= '@userId = "' . $user->getId() . '", ';
-        $query .= '@roleName = "' . strtolower($name) . '"';
+	/**
+	 * Ajoute un utilisteur à un rôle.
+	 *
+	 * @param User $user
+	 * @param      $name
+	 */
+	public static function addUserToRoleName(User $user, $name)
+	{
+		$query = 'EXEC [addUserIdToRoleName]';
+		$query .= '@userId = "' . $user->getId() . '", ';
+		$query .= '@roleName = "' . strtolower($name) . '"';
 
-        Database::Execute($query);
-    }
+		Database::Execute($query);
+	}
 }
