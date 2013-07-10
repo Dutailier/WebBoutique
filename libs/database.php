@@ -20,16 +20,8 @@ class Database
 
 		$result = odbc_exec($conn, $query);
 
-		// Définit le délai d'attente pour cette requête à 60 secondes
-		// plutôt que 30 secondes (par défaut).
-		odbc_setoption($result, 2, 0, 60);
-
-		if (empty($result)) {
-			// TODO : Retirer en mode publication.
-			// Affiche la requête érronée.
-			echo $query;
-
-			throw new Exception('The execution of the query failed.');
+		if (odbc_error($result)) {
+			throw new Exception(ERROR_DB_EXECUTION_FAILED);
 		}
 
 		// On doit obligatoirement insérer ligne par ligne dans un tableau
@@ -45,6 +37,8 @@ class Database
 			}
 			$rows[] = $row;
 		}
+
+		odbc_close($result);
 
 		return $rows;
 	}
@@ -64,8 +58,8 @@ class Database
 			DB_PASSWORD
 		);
 
-		if (empty($conn)) {
-			throw new Exception('The connection to the database failed.');
+		if (odbc_error($conn)) {
+			throw new Exception(ERROR_DB_CONNECTION_FAILED);
 		}
 
 		return $conn;

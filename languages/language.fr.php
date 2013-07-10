@@ -16,3 +16,5 @@ define('ERROR_404', '404 - La page n\'a pas pu être trouvée.');
 // Erreurs
 define('ERROR_CREDENTIELS_REQUIRED', 'Les informations de connexion sont nécessaire.');
 define('ERROR_CREDENTIELS_INCORRECT', 'Le nom d\'utilisateur ou le mot de passe est incorrect.');
+define('ERROR_DB_CONNECTION_FAILED', 'La connexion à la base de données à échouée.');
+define('ERROR_DB_EXECUTION_FAILED', 'L\'exécution de la requête à échouée.');

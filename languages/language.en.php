@@ -16,3 +16,5 @@ define('ERROR_404', '404 - Page not found.');
 // Erreurs
 define('ERROR_CREDENTIELS_REQUIRED', 'Username and password are required.');
 define('ERROR_CREDENTIELS_INCORRECT', 'Username or password incorrect.');
+define('ERROR_DB_CONNECTION_FAILED', 'The database connection failed.');
+define('ERROR_DB_EXECUTION_FAILED', 'The execution of the query failed.');

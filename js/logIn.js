@@ -1,39 +1,68 @@
-$(document).ready(function () {
+(function ($) {
+	$(document).ready(function () {
 
-	$('#frmLogIn').validate({
+		$('#frmLogIn').validate({
 
-		rules: {
-			username: { required: true },
-			password: { required: true }
-		},
+			rules: {
+				username: { required: true },
+				password: { required: true }
+			},
 
-		submitHandler: function () {
+			submitHandler: function () {
 
-			var credentials = {
-				"username": $('#username').val(),
-				"password": $('#password').val()
-			};
+				var $username = $('#username');
+				var $password = $('#password');
+				var $btnLogIn = $('#btnLogIn');
 
-			$.post('ajax/tryLogIn.php', credentials)
-				.done(function (data) {
+				// Désactive temporairement les champs et le bouton.
+				$username.attr('disabled', true);
+				$password.attr('disabled', true);
+				$btnLogIn.attr('disabled', true);
 
-					if (data.hasOwnProperty('success') &&
-						data['success'] &&
-						data.hasOwnProperty('valid') &&
-						data['valid']) {
+				var credentials = {
+					'username': $username.val(),
+					'password': $password.val()
+				};
 
-						window.location = 'index.php';
+				$.post('ajax/tryLogIn.php', credentials)
+					.done(function (data) {
 
-					} else if (data.hasOwnProperty('message')) {
-						noty({layout: 'topRight', type: 'error', text: data['message']});
+						if (data.hasOwnProperty('success') && data['success'] &&
+							data.hasOwnProperty('valid') && data['valid']) {
 
-					} else {
-						noty({layout: 'topRight', type: 'error', text: 'The result of the server is unreadable.'});
-					}
-				})
-				.fail(function () {
-					noty({layout: 'topRight', type: 'error', text: 'Communication with the server failed.'});
-				})
-		}
+							// En redirigeant l'utiisateur vers "index.php",
+							// il sera automatique pris en charge.
+							window.location = 'index.php';
+
+						} else if (data.hasOwnProperty('message')) {
+							noty({
+								layout: 'topRight',
+								type  : 'error',
+								text  : data['message']
+							});
+
+						} else {
+							noty({
+								layout: 'topRight',
+								type  : 'error',
+								text  : errors['SERVER_UNREADABLE']
+							});
+						}
+					})
+					.fail(function () {
+						noty({
+							layout: 'topRight',
+							type  : 'error',
+							text  : errors['SERVER_FAILED']
+						});
+					})
+					.always(function () {
+						// Active les champs et les boutons.
+						$username.removeAttr('disabled');
+						$password.removeAttr('disabled');
+						$btnLogIn.removeAttr('disabled');
+					})
+			}
+		});
 	});
-});
+})(jQuery);

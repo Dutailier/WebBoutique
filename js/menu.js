@@ -1,9 +1,11 @@
-$(function () {
-    $('#btnFrench').click(function () {
-        $.URL.setParam('lang', 'fr');
-    });
+(function ($) {
+	$(document).ready(function () {
+		$('#btnFrench').click(function () {
+			$.URL.setParam('lang', 'fr');
+		});
 
-    $('#btnEnglish').click(function () {
-        $.URL.setParam('lang', 'en');
-    });
-});
+		$('#btnEnglish').click(function () {
+			$.URL.setParam('lang', 'en');
+		});
+	});
+})(jQuery);

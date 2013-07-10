@@ -1,14 +1,15 @@
 <?php
 
-include_once('defines.php');
+include_once('config.php');
 include_once(ROOT . 'libs/security.php');
 include_once(ROOT . 'libs/language.php');
 
 include_once(Language::getLanguageFile());
 
-// TODO : À retirer lors de la publication d'une version B2C.
+// TODO : Le test d'authentification devra être retiré lors de la publication d'une version B2C.
 if (!Security::isAuthenticated()) {
 	$page = 'logIn';
+
 } else {
 	$page = isSet($_GET['page']) ? $_GET['page'] : 'index';
 
@@ -22,16 +23,12 @@ if (!Security::isAuthenticated()) {
 }
 
 $file = ROOT . 'pages/' . $page . '.php';
-
-// Avant d'inclure la page, on doit vérifier quelle existe.
 if (!file_exists($file)) {
 	$file = ROOT . 'pages/' . 'error' . '.php';
 }
 
-// Sélection de la langue
 include_once($file);
 
-// On doit vérifier que la page est correctement construite.
 if (!isSet($title) || !isSet($head) || !isSet($content)) {
 	include_once(ROOT . 'pages/' . 'error' . '.php');
 }
@@ -39,9 +36,12 @@ if (!isSet($title) || !isSet($head) || !isSet($content)) {
 
 <html>
 <head>
-	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-
 	<title>Web Boutique - <?php echo $title; ?></title>
+
+	<!-- Sélection de la langue -->
+	<?php $language = Language::getCurrent(); ?>
+	<!-- Accepte les caractères accentués. -->
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 
 	<link type="text/css" rel="stylesheet" href="css/default.css" />
 	<link type="text/css" rel="stylesheet" href="css/master.css" />
@@ -54,14 +54,13 @@ if (!isSet($title) || !isSet($head) || !isSet($content)) {
 	<link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 
 	<!-- Jquery Validate plugin -->
-	<?php $lang = Language::getCurrent(); ?>
 	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.js"></script>
-	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/localization/messages_<?php echo $lang; ?>.js "></script>
+	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/localization/messages_<?php echo $language; ?>.js" charset="utf8"></script>
 
 	<!-- Noty -->
-	    <script type="text/javascript" src="js/noty/jquery.noty.js"></script>
-	    <script type="text/javascript" src="js/noty/themes/default.js"></script>
-	    <script type="text/javascript" src="js/noty/layouts/topRight.js"></script>
+	<script type="text/javascript" src="js/noty/jquery.noty.js"></script>
+	<script type="text/javascript" src="js/noty/themes/default.js"></script>
+	<script type="text/javascript" src="js/noty/layouts/topRight.js"></script>
 
 	<?php echo $head; ?>
 
@@ -72,10 +71,14 @@ if (!isSet($title) || !isSet($head) || !isSet($content)) {
 		<div id="header-wrapper">
 			<img id="logo-dutailier" src="img/dutailier.png">
 			<ul id="menu">
-				<?php if (Language::getCurrent() == 'en') { ?>
+				<?php if ($language == 'en') { ?>
 					<li><a id="btnFrench">Français</a></li>
-				<?php } else { ?>
+				<?php } else if ($language == 'fr') { ?>
 					<li><a id="btnEnglish">English</a></li>
+				<?php } ?>
+
+				<?php if (Security::isAuthenticated()) { ?>
+					<li><a id="btnLogOut">Log Out</a></li>
 				<?php } ?>
 			</ul>
 		</div>
@@ -89,8 +92,10 @@ if (!isSet($title) || !isSet($head) || !isSet($content)) {
 		</div>
 	</div>
 
-	<script src="js/url.js"></script>
+	<!-- Scripts internes. -->
+	<script src="js/languages/language.<?php echo $language; ?>.js" charset="utf8"></script>
+
+	<script src="js/global/url.js"></script>
 	<script src="js/menu.js"></script>
-</div>
 </body>
 </html>

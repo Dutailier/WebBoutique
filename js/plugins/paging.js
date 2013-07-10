@@ -1,11 +1,13 @@
 (function ($) {
 	/**
 	 * Crée une pagination.
-	 * @param $container        Élément contenant les éléments à paginer.
-	 * @param $elements         Éléments à paginer.
+	 *
 	 * @param numElementsByPage Nombre d'éléments à afficher par page.
 	 */
-	function paginate($container, $elements, numElementsByPage) {
+	$.fn.paginate = function (numElementsByPage) {
+
+		var $elements = $(this);
+		var $container = $elements.closest('ul.paging');
 
 		// Si nécessaire, retire une précédente pagination.
 		$container.find('ul.paging').remove();
@@ -41,7 +43,7 @@
 			// Retire la sélection courante.
 			$links.removeClass('selected');
 
-			// Sélection la page cliquée.
+			// Sélectionne la page cliquée.
 			$(this).addClass('selected');
 
 			var currentPage = parseInt($(this).text()) - 1;

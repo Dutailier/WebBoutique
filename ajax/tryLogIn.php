@@ -1,6 +1,6 @@
 <?php
 
-include_once('../defines.php');
+include_once('../config.php');
 include_once(ROOT . 'libs/security.php');
 include_once(ROOT . 'libs/language.php');
 
