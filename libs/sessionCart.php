@@ -81,7 +81,7 @@ final class SessionCart implements ICart
 		$index = $this->getIndexOfItem($item);
 
 		if ($index == -1) {
-			throw new Exception('The item isn\'t inside the cart.');
+			throw new Exception(ERROR_ITEM_DOESNT_EXIST);
 		}
 
 		$item     = $this->items[$index];
@@ -131,7 +131,7 @@ final class SessionCart implements ICart
 	public function setQuantity(IItem $item, $quantity)
 	{
 		if (($quantity = (int)$quantity) < 1) {
-			throw new Exception('A positive quantity is required.');
+			throw new Exception(ERROR_POSITIVE_QUANTITY_REQUIRED);
 		}
 
 		$index = $this->getIndexOfItem($item);

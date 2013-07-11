@@ -16,7 +16,11 @@ define('LOGIN_LBL_PASSWORD', 'Mot de passe');
 define('ERROR_TITLE', 'Erreur');
 define('ERROR_404', '404 - La page demandée n\'a pas pu être trouvée.');
 
-// Erreurs d'authentification
+// Erreurs du panier d'achats
+define('ERROR_ITEM_DOESNT_EXIST', 'L\'item n\'est pas contenu dans le panier d\'achats.');
+define('ERROR_POSITIVE_QUANTITY_REQUIRED', 'Une quantité positive est requise.');
+
+// Erreurs de sécurité
 define('ERROR_ALREADY_LOGIN', 'Vous êtes déjà connecté.');
 define('ERROR_CREDENTIELS_REQUIRED', 'Le nom d\'utilisateur et le mot de passe sont obligatoire.');
 define('ERROR_CREDENTIELS_INCORRECT', 'Le nom d\'utilisateur ou le mot de passe est incorrect.');
