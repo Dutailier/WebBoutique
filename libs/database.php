@@ -20,7 +20,7 @@ class Database
 
 		$result = odbc_exec($conn, $query);
 
-		if (odbc_error($result)) {
+		if (empty($result)) {
 			throw new Exception(ERROR_DB_EXECUTION_FAILED);
 		}
 
@@ -37,8 +37,6 @@ class Database
 			}
 			$rows[] = $row;
 		}
-
-		odbc_close($result);
 
 		return $rows;
 	}
@@ -58,7 +56,7 @@ class Database
 			DB_PASSWORD
 		);
 
-		if (odbc_error($conn)) {
+		if (empty($conn)) {
 			throw new Exception(ERROR_DB_CONNECTION_FAILED);
 		}
 

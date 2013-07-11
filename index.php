@@ -78,7 +78,7 @@ if (!isSet($title) || !isSet($head) || !isSet($content)) {
 				<?php } ?>
 
 				<?php if (Security::isAuthenticated()) { ?>
-					<li><a id="btnLogOut">Log Out</a></li>
+					<li><a id="btnLogOut"><?php echo MENU_LBL_LOGOUT; ?></a></li>
 				<?php } ?>
 			</ul>
 		</div>

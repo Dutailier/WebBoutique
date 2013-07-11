@@ -30,7 +30,7 @@ class Users
 		$rows = Database::Execute($query);
 
 		if (empty($rows)) {
-			throw new Exception('The user wasn\'t added.');
+			throw new Exception(ERROR_USER_WASNT_ADDED);
 		}
 
 		$user->setId($rows[0]['id']);
@@ -87,7 +87,7 @@ class Users
 		$rows = Database::Execute($query);
 
 		if (empty($rows)) {
-			throw new Exception('No user found.');
+			throw new Exception(ERROR_USER_DOESNT_EXIST);
 		}
 
 		$user = new User(

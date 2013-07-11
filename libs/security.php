@@ -24,7 +24,7 @@ class Security
 	public static function TryLogin($username, $password)
 	{
 		if (self::isAuthenticated()) {
-			throw new Exception('You\'re already login.');
+			throw new Exception(ERROR_ALREADY_LOGIN);
 		}
 
 		// Le chiffrement du mot de passe est composé de la
@@ -50,7 +50,7 @@ class Security
 	public static function addUserToRoleName(User $user, $name)
 	{
 		if (!$user->isAttached()) {
-			throw new Exception('The user must be attached to a database.');
+			throw new Exception(ERROR_USER_DOESNT_EXIST);
 		}
 
 		Roles::addUserToRoleName($user, $name);
@@ -68,7 +68,7 @@ class Security
 	public static function isInRoleName($name)
 	{
 		if (!self::isAuthenticated()) {
-			throw new Exception('You must be authenticated.');
+			throw new Exception(ERROR_AUTHENTIFICATION_REQUIRED);
 		}
 
 		$user = self::getUserConnected();
@@ -121,7 +121,7 @@ class Security
 	public static function getUserConnected()
 	{
 		if (!self::isAuthenticated()) {
-			throw new Exception('You must be authenticated.');
+			throw new Exception(ERROR_AUTHENTIFICATION_REQUIRED);
 		}
 
 		return $_SESSION[self::USER_IDENTIFIER];
@@ -134,7 +134,7 @@ class Security
 	public static function Logout()
 	{
 		if (!self::isAuthenticated()) {
-			throw new Exception('You must be connected.');
+			throw new Exception(ERROR_AUTHENTIFICATION_REQUIRED);
 		}
 
 		session_destroy();
