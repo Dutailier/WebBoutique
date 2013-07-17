@@ -1,11 +1,16 @@
 <?php
 
+include_once(ROOT . 'libs/security.php');
+
 /**
  * Class Language
  * Gère les méthodes manipulant les langues.
  */
 class Language
 {
+	const LANGUAGE_IDENTITIFER = '_LANGUAGE_';
+
+
 	/**
 	 * Retourne la langue présentement sélectionnée.
 	 * @return mixed
@@ -22,8 +27,8 @@ class Language
 			session_start();
 		}
 
-		if (isSet($_SESSION['lang'])) {
-			return $_SESSION['lang'];
+		if (isSet($_SESSION[self::LANGUAGE_IDENTITIFER])) {
+			return $_SESSION[self::LANGUAGE_IDENTITIFER];
 		}
 
 		if (isSet($_COOKIE['lang'])) {
@@ -45,7 +50,7 @@ class Language
 			session_start();
 		}
 
-		$_SESSION['lang'] = $lang;
+		$_SESSION[self::LANGUAGE_IDENTITIFER] = $lang;
 		setcookie('lang', $lang, time() + (3600 * 24 * 30));
 	}
 

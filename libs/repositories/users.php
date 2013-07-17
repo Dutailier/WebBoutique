@@ -25,7 +25,7 @@ class Users
 		$query = 'EXEC [addUser]';
 		$query .= '@username = "' . $user->getUsername() . '", ';
 		$query .= '@password = "' . $user->getPassword() . '", ';
-		$query .= '@languageId = "' . $user->getLanguageId() . '"';
+		$query .= '@languageCode = "' . $user->getLanguageCode() . '"';
 
 		$rows = Database::Execute($query);
 
@@ -61,9 +61,9 @@ class Users
 		}
 
 		$user = new User(
+			$rows[0]['languageCode'],
 			$rows[0]['username'],
-			$rows[0]['password'],
-			$rows[0]['languageId']
+			$rows[0]['password']
 		);
 		$user->setId($rows[0]['id']);
 
@@ -91,9 +91,9 @@ class Users
 		}
 
 		$user = new User(
+			$rows[0]['languageCode'],
 			$rows[0]['username'],
-			$rows[0]['password'],
-			$rows[0]['languageId']
+			$rows[0]['password']
 		);
 		$user->setId($rows[0]['id']);
 

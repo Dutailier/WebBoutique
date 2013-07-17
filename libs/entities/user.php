@@ -11,20 +11,21 @@ class User extends Entity
 {
 	private $username;
 	private $password;
-	private $languageId;
+	private $languageCode;
 
 
 	/**
 	 * Initialise l'utilisateur.
 	 *
+	 * @param $languageCode
 	 * @param $username
-	 * @param $languageId
+	 * @param $password
 	 */
-	function __construct($username, $password, $languageId)
+	function __construct($languageCode, $username, $password)
 	{
+		$this->setLanguageCode($languageCode);
 		$this->setUsername($username);
 		$this->setPassword($password);
-		$this->setLanguageId($languageId);
 	}
 
 
@@ -36,8 +37,9 @@ class User extends Entity
 	public function getArray()
 	{
 		return array(
-			'id'       => $this->getId(),
-			'username' => $this->getUsername()
+			'id'           => $this->getId(),
+			'languageCode' => $this->getLanguageCode(),
+			'username'     => $this->getUsername()
 		);
 	}
 
@@ -62,8 +64,8 @@ class User extends Entity
 	 */
 	private function setUsername($username)
 	{
-		if (strlen($username) > 20) {
-			throw new Exception('The length of the username is too long.');
+		if (strlen($username) > 50) {
+			throw new Exception(ERROR_USERNAME_INVALID);
 		}
 
 		$this->username = strtolower($username);
@@ -95,11 +97,11 @@ class User extends Entity
 	/**
 	 * Définit la langue de l'utilisateur.
 	 *
-	 * @param mixed $id
+	 * @param mixed $code
 	 */
-	public function setLanguageId($id)
+	public function setLanguageCode($code)
 	{
-		$this->languageId = intval($id);
+		$this->languageCode = strtolower($code);
 	}
 
 
@@ -108,9 +110,9 @@ class User extends Entity
 	 *
 	 * @return mixed
 	 */
-	public function getLanguageId()
+	public function getLanguageCode()
 	{
-		return $this->languageId;
+		return $this->languageCode;
 	}
 
 

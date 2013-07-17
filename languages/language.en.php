@@ -16,6 +16,9 @@ define('LOGIN_LBL_PASSWORD', 'Password');
 define('ERROR_TITLE', 'Error');
 define('ERROR_404', '404 - Page not found.');
 
+// Types
+define('TYPES_TITLE', 'Types');
+
 // Erreurs du panier d'achats
 define('ERROR_ITEM_DOESNT_EXIST', 'The item isn\'t inside the cart.');
 define('ERROR_POSITIVE_QUANTITY_REQUIRED', 'A positive quantity is required.');
@@ -29,6 +32,8 @@ define('ERROR_AUTHENTIFICATION_REQUIRED', 'Your authentification is required.');
 // Erreurs d'entités
 define('ERROR_USER_DOESNT_EXIST', 'The user doesn\'t exist.');
 define('ERROR_USER_WASNT_ADDED', 'The user wasn\'t added.');
+define('ERROR_TYPE_DOESNT_EXIST', 'The type doesn\'t exist.');
+define('ERROR_USERNAME_INVALID', 'The username isn\'t valid.');
 
 // Erreurs de base de donnéées
 define('ERROR_DB_EXECUTION_FAILED', 'The execution of the query failed.');

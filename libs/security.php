@@ -1,5 +1,6 @@
 <?php
 
+include_once(ROOT . 'libs/language.php');
 include_once(ROOT . 'libs/repositories/users.php');
 include_once(ROOT . 'libs/repositories/roles.php');
 
@@ -27,13 +28,8 @@ class Security
 			throw new Exception(ERROR_ALREADY_LOGIN);
 		}
 
-		// Le chiffrement du mot de passe est composé de la
-		// concaténation du mot de passe inscrit par l'utilisateur
-		// et du nom d'utilisateur (grain de sel).
-		$username = strtolower($username);
-		$password = sha1($password . $username);
-
 		$_SESSION[self::USER_IDENTIFIER] = Users::FindByUsernameAndPassword($username, $password);
+		$_SESSION[Language::LANGUAGE_IDENTITIFER] = self::getUserConnected()->getLanguageCode();
 
 		return !empty($_SESSION[self::USER_IDENTIFIER]);
 	}
