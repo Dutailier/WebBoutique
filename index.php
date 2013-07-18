@@ -40,6 +40,7 @@ if (!isSet($title) || !isSet($head) || !isSet($content)) {
 
 	<!-- Sélection de la langue -->
 	<?php $language = Language::getCurrent(); ?>
+
 	<!-- Accepte les caractères accentués. -->
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 

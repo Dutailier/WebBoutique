@@ -28,8 +28,11 @@ class Security
 			throw new Exception(ERROR_ALREADY_LOGIN);
 		}
 
-		$_SESSION[self::USER_IDENTIFIER] = Users::FindByUsernameAndPassword($username, $password);
-		$_SESSION[Language::LANGUAGE_IDENTITIFER] = self::getUserConnected()->getLanguageCode();
+		$_SESSION[self::USER_IDENTIFIER] = Users::FindByUsernameAndPassword(
+			$username,
+			$password);
+
+		Language::setCurrent(self::getUserConnected()->getLanguageCode());
 
 		return !empty($_SESSION[self::USER_IDENTIFIER]);
 	}
