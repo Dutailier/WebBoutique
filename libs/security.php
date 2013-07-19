@@ -1,6 +1,5 @@
 <?php
 
-include_once(ROOT . 'libs/language.php');
 include_once(ROOT . 'libs/repositories/users.php');
 include_once(ROOT . 'libs/repositories/roles.php');
 
@@ -48,10 +47,6 @@ class Security
 	 */
 	public static function addUserToRoleName(User $user, $name)
 	{
-		if (!$user->isAttached()) {
-			throw new Exception(ERROR_USER_DOESNT_EXIST);
-		}
-
 		Roles::addUserToRoleName($user, $name);
 	}
 

@@ -1,14 +1,15 @@
 <?php
 
-include_once(ROOT . 'libs/entity.php');
 include_once(ROOT . 'libs/repositories/roles.php');
 
 /**
  * Class User
  * Représente un utilisateur.
  */
-class User extends Entity
+class User
 {
+	private $id;
+
 	private $username;
 	private $password;
 	private $languageCode;
@@ -34,13 +35,35 @@ class User extends Entity
 	 *
 	 * @return array|mixed
 	 */
-	public function getArray()
+	public function getInfoArray()
 	{
 		return array(
 			'id'           => $this->getId(),
 			'languageCode' => $this->getLanguageCode(),
 			'username'     => $this->getUsername()
 		);
+	}
+
+
+	/**
+	 * Définit l'identifiant de l'utilisateur.
+	 *
+	 * @param mixed $id
+	 */
+	public function setId($id)
+	{
+		$this->id = $id;
+	}
+
+
+	/**
+	 * Retourne l'identifiant de l'utlisateur.
+	 *
+	 * @return mixed
+	 */
+	public function getId()
+	{
+		return $this->id;
 	}
 
 

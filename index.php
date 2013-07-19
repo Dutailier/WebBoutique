@@ -22,16 +22,18 @@ if (!Security::isAuthenticated()) {
 	}
 }
 
-$file = ROOT . 'pages/' . $page . '.php';
-if (!file_exists($file)) {
-	$file = ROOT . 'pages/' . 'error' . '.php';
+// Inclue la page demandée seulement s'elle existe et est correctement construite.
+if (file_exists($file = ROOT . 'pages/' . $page . '.php')) {
+	include_once($file);
+
+	if (!isSet($title) || !isSet($head) || !isSet($content)) {
+		include_once(ERROR_PAGE);
+	}
+} else {
+	include_once(ERROR_PAGE);
 }
 
-include_once($file);
 
-if (!isSet($title) || !isSet($head) || !isSet($content)) {
-	include_once(ROOT . 'pages/' . 'error' . '.php');
-}
 ?>
 
 <html>

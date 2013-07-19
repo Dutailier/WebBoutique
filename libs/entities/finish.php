@@ -1,32 +1,32 @@
 <?php
 
 /**
- * Class Type
- * Représente un type de produit.
+ * Class Finish
+ * Représente un fini.
  */
-class Type
+class Finish
 {
 	private $code;
 	private $name;
 
 
 	/**
-	 * Initialise le type.
+	 * Initialise le fini.
 	 *
 	 * @param $name
 	 */
 	function __construct($name)
 	{
-		$this->setName($name);
+		$this->setName = trim($name);
 	}
 
 
 	/**
-	 * Retounre un tableau contenant les propriétés du type.
+	 * Retourne un tableau contenant les propriétés du fini.
 	 *
-	 * @return array|mixed
+	 * @return mixed|void
 	 */
-	function getInfoArray()
+	public function getInfoArray()
 	{
 		return array(
 			'code' => $this->getCode(),
@@ -36,7 +36,7 @@ class Type
 
 
 	/**
-	 * Définit le code du type de produit.
+	 * Définit le code du fini.
 	 *
 	 * @param mixed $code
 	 */
@@ -47,7 +47,7 @@ class Type
 
 
 	/**
-	 * Retourne le code du type de produit.
+	 * Retourne le code du fini.
 	 *
 	 * @return mixed
 	 */
@@ -58,18 +58,18 @@ class Type
 
 
 	/**
-	 * Définit le nom du type.
+	 * Définit le nom du fini.
 	 *
 	 * @param mixed $name
 	 */
 	public function setName($name)
 	{
-		$this->name = trim($name);
+		$this->name = $name;
 	}
 
 
 	/**
-	 * Retourne le nom du type.
+	 * Retourne le nom du fini.
 	 *
 	 * @return mixed
 	 */
@@ -77,4 +77,6 @@ class Type
 	{
 		return $this->name;
 	}
+
+
 }

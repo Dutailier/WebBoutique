@@ -1,13 +1,12 @@
 <?php
 
-include_once(ROOT . 'libs/entity.php');
-
 /**
  * Class Role
  * Représente un rôle.
  */
-class Role extends Entity
+class Role
 {
+	private $id;
 	private $name;
 
 
@@ -27,12 +26,34 @@ class Role extends Entity
 	 *
 	 * @return array
 	 */
-	public function getArray()
+	public function getInfoArray()
 	{
 		return array(
 			'id'   => $this->getId(),
 			'name' => $this->getName()
 		);
+	}
+
+
+	/**
+	 * Définit l'identifiant du rôle.
+	 *
+	 * @param mixed $id
+	 */
+	public function setId($id)
+	{
+		$this->id = $id;
+	}
+
+
+	/**
+	 * Retourne l'identifiant du rôle.
+	 *
+	 * @return mixed
+	 */
+	public function getId()
+	{
+		return $this->id;
 	}
 
 

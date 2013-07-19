@@ -1,32 +1,32 @@
 <?php
 
 /**
- * Class Type
- * Représente un type de produit.
+ * Class Model
+ * Représente un modèle de produit.
  */
-class Type
+class Model
 {
 	private $code;
 	private $name;
 
 
 	/**
-	 * Initialise le type.
+	 * Initialise le modèle.
 	 *
 	 * @param $name
 	 */
 	function __construct($name)
 	{
-		$this->setName($name);
+		$this->setName = trim($name);
 	}
 
 
 	/**
-	 * Retounre un tableau contenant les propriétés du type.
+	 * Retourne un tableau contenant les propriétés du modèle.
 	 *
-	 * @return array|mixed
+	 * @return mixed|void
 	 */
-	function getInfoArray()
+	public function getInfoArray()
 	{
 		return array(
 			'code' => $this->getCode(),
@@ -36,7 +36,7 @@ class Type
 
 
 	/**
-	 * Définit le code du type de produit.
+	 * Définit le code du modèle.
 	 *
 	 * @param mixed $code
 	 */
@@ -47,7 +47,7 @@ class Type
 
 
 	/**
-	 * Retourne le code du type de produit.
+	 * Retourne le code du modèle.
 	 *
 	 * @return mixed
 	 */
@@ -58,18 +58,18 @@ class Type
 
 
 	/**
-	 * Définit le nom du type.
+	 * Définit le nom du modèle.
 	 *
 	 * @param mixed $name
 	 */
 	public function setName($name)
 	{
-		$this->name = trim($name);
+		$this->name = $name;
 	}
 
 
 	/**
-	 * Retourne le nom du type.
+	 * Retourne le nom du modèle.
 	 *
 	 * @return mixed
 	 */

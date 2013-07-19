@@ -39,13 +39,19 @@ class Roles
 
 
 	/**
-	 * Ajoute un utilisteur à un rôle.
+	 * Attribue le rôle à l'utilisateur.
 	 *
 	 * @param User $user
 	 * @param      $name
+	 *
+	 * @throws Exception
 	 */
 	public static function addUserToRoleName(User $user, $name)
 	{
+		if (!isSet($user->getId())) {
+			throw new Exception(ERROR_USER_DOESNT_EXIST);
+		}
+
 		$query = 'EXEC [addUserIdToRoleName]';
 		$query .= '@userId = "' . $user->getId() . '", ';
 		$query .= '@roleName = "' . strtolower($name) . '"';

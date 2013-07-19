@@ -1,17 +1,17 @@
 <?php
 
 /**
- * Class Type
- * Représente un type de produit.
+ * Class Country
+ * Représente un pays.
  */
-class Type
+class Country
 {
 	private $code;
 	private $name;
 
 
 	/**
-	 * Initialise le type.
+	 * Initialise le pays.
 	 *
 	 * @param $name
 	 */
@@ -22,11 +22,11 @@ class Type
 
 
 	/**
-	 * Retounre un tableau contenant les propriétés du type.
+	 * Retourne un tableau contenant les propriétés du pays.
 	 *
-	 * @return array|mixed
+	 * @return array
 	 */
-	function getInfoArray()
+	public function getInfoArray()
 	{
 		return array(
 			'code' => $this->getCode(),
@@ -36,7 +36,7 @@ class Type
 
 
 	/**
-	 * Définit le code du type de produit.
+	 * Définit le code du pays.
 	 *
 	 * @param mixed $code
 	 */
@@ -47,7 +47,7 @@ class Type
 
 
 	/**
-	 * Retourne le code du type de produit.
+	 * Retourne le code du pays.
 	 *
 	 * @return mixed
 	 */
@@ -58,18 +58,18 @@ class Type
 
 
 	/**
-	 * Définit le nom du type.
+	 * Définit le nom du pays.
 	 *
 	 * @param mixed $name
 	 */
 	public function setName($name)
 	{
-		$this->name = trim($name);
+		$this->name = $name;
 	}
 
 
 	/**
-	 * Retourne le nom du type.
+	 * Retourne le nom du pays.
 	 *
 	 * @return mixed
 	 */
