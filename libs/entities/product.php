@@ -1,6 +1,11 @@
 <?php
 
-class Product
+include_once(ROOT . 'libs/repositories/types.php');
+
+/**
+ * Représente un produit.
+ */
+abstract class Product
 {
 	private $sku;
 	private $typeCode;
@@ -70,5 +75,16 @@ class Product
 	public function getTypeCode()
 	{
 		return $this->typeCode;
+	}
+
+
+	/**
+	 * Retourne le type de ce produit.
+	 *
+	 * @return Type
+	 */
+	public function getType()
+	{
+		return Types::Find($this->getTypeCode());
 	}
 }

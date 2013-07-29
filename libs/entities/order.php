@@ -1,5 +1,8 @@
 <?php
 
+include_once(ROOT . 'libs/repositories/users.php');
+include_once(ROOT . 'libs/repositories/comments.php');
+
 define('ORDER_STATUS_CANCELED', -1);
 define('ORDER_STATUS_NOT_SEND', 0);
 define('ORDER_STATUS_PENDING', 1);
@@ -29,6 +32,9 @@ class Order
 	function __construct($userId)
 	{
 		$this->setUserId($userId);
+
+		// Initialise le statut à : "Non envoyée", car pour l'instant,
+		// la commande n'est sauvegardée qu'en session.
 		$this->setStatus(ORDER_STATUS_NOT_SEND);
 	}
 
@@ -182,5 +188,27 @@ class Order
 	public function getDatetime()
 	{
 		return $this->datetime;
+	}
+
+
+	/**
+	 * Retourne les commentaires de cette commande.
+	 *
+	 * @return array
+	 */
+	public function getComments()
+	{
+		return Comments::FilterByOrderId($this->getId());
+	}
+
+
+	/**
+	 * Retourne l'auteur de la commande.
+	 *
+	 * @return User
+	 */
+	public function getUser()
+	{
+		return Users::Find($this->getUserId());
 	}
 }

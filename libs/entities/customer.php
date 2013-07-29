@@ -5,9 +5,8 @@
  * Représente un consommateur.
  * (Cet object sera utiliser lors d'une publication d'une version B2C.)
  */
-class Customer
+class Customer extends User
 {
-	private $userId;
 	private $greeting;
 	private $firstname;
 	private $lastname;
@@ -18,16 +17,22 @@ class Customer
 	/**
 	 * Initialise le consommateur.
 	 *
-	 * @param $userId
+	 * @param $languageCode
+	 * @param $username
+	 * @param $password
 	 * @param $greeting
 	 * @param $firstname
 	 * @param $lastname
 	 * @param $phone
 	 * @param $email
 	 */
-	function __construct($userId, $greeting, $firstname, $lastname, $phone, $email)
+	function __construct(
+		$languageCode, $username, $password,
+		$greeting, $firstname, $lastname, $phone, $email)
 	{
-		$this->setUserId($userId);
+		parent::__construct($languageCode, $username, $password);
+		parent::setRole(ROLE_CUSTOMER);
+
 		$this->setGreeting($greeting);
 		$this->setFirstname($firstname);
 		$this->setLastname($lastname);
@@ -44,35 +49,15 @@ class Customer
 	public function getInfoArray()
 	{
 		return array(
-			'userId'    => $this->getUserId(),
-			'greeting'  => $this->getGreeting(),
-			'firstname' => $this->getFirstname(),
-			'lastname'  => $this->getLastname(),
-			'phone'     => $this->getPhone(),
-			'email'     => $this->getEmail()
+			'userId'       => parent::getId(),
+			'languageCode' => parent::getLanguageCode(),
+			'username'     => parent::getUsername(),
+			'greeting'     => $this->getGreeting(),
+			'firstname'    => $this->getFirstname(),
+			'lastname'     => $this->getLastname(),
+			'phone'        => $this->getPhone(),
+			'email'        => $this->getEmail()
 		);
-	}
-
-
-	/**
-	 * Définit l'identifiant de l'utilisateur lié au consommateur.
-	 *
-	 * @param mixed $userId
-	 */
-	public function setUserId($userId)
-	{
-		$this->userId = $userId;
-	}
-
-
-	/**
-	 * Retourne l'identifiant de l'utilisteur lié au consommateur.
-	 *
-	 * @return mixed
-	 */
-	public function getUserId()
-	{
-		return $this->userId;
 	}
 
 

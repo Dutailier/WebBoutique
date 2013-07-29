@@ -12,9 +12,12 @@ class PriceList
 
 	/**
 	 * Initialise la liste de prix.
+	 *
+	 * @param $code
 	 */
-	function __construct()
+	function __construct($code)
 	{
+		$this->setCode($code);
 	}
 
 

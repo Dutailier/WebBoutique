@@ -13,11 +13,13 @@ class Finish
 	/**
 	 * Initialise le fini.
 	 *
+	 * @param $code
 	 * @param $name
 	 */
-	function __construct($name)
+	function __construct($code, $name)
 	{
-		$this->setName = trim($name);
+		$this->setCode($code);
+		$this->setName($name);
 	}
 
 

@@ -7,8 +7,8 @@ include_once(ROOT . 'libs/entities/type.php');
 include_once(Language::getLanguageFile());
 
 /**
- * Class Users
- * Gère les différentes méthodes manipulant l'entité type.
+ * Class Types
+ * Gère les différentes méthodes manipulant l'entité Type.
  */
 class Types
 {
@@ -22,6 +22,7 @@ class Types
 	 */
 	public static function Find($id)
 	{
+		// TODO : Implémenter la procédure stockée.
 		$query = 'EXEC [getTypeByIdAndLanguageCode]';
 		$query .= '@id = "' . intval($id) . '", ';
 		$query .= '@languageCode = "' . Language::getCurrent() . '"';
@@ -32,17 +33,15 @@ class Types
 			throw new Exception(ERROR_TYPE_DOESNT_EXIST);
 		}
 
-		$type = new Type(
+		return new Type(
+			$rows[0]['code'],
 			$rows[0]['name']
 		);
-		$type->setId($rows[0]['id']);
-
-		return $type;
 	}
 
 
 	/**
-	 * Retourne tous les types disponibles pour un utilisateur.
+	 * Retourne les types de produits disponibles pour l'utilisateur.
 	 *
 	 * @param $userId
 	 *
@@ -50,6 +49,7 @@ class Types
 	 */
 	public static function All($userId)
 	{
+		// TODO : Implémenter la procédure stockée.
 		$query = 'EXEC [getTypesByUserIdAndLanguageCode]';
 		$query .= '@userId = "' . intval($userId) . '", ';
 		$query .= '@languageCode = "' . Language::getCurrent() . '"';
@@ -58,13 +58,10 @@ class Types
 
 		$types = array();
 		foreach ($rows as $row) {
-
-			$type = new Type(
+			$types[] = new Type(
+				$row['code'],
 				$row['name']
 			);
-			$type->setId($row['id']);
-
-			$types[] = $type;
 		}
 
 		return $types;

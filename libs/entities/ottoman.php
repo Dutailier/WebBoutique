@@ -15,15 +15,14 @@ class Ottoman extends Product
 	/**
 	 * Initiliase le tabouret oscillant.
 	 *
-	 * @param $typeCode
 	 * @param $modelCode
 	 * @param $finishCode
 	 * @param $fabricCode
 	 * @param $pipingCode
 	 */
-	function __construct($typeCode, $modelCode, $finishCode = null, $fabricCode, $pipingCode = null)
+	function __construct($modelCode, $finishCode = null, $fabricCode, $pipingCode = null)
 	{
-		parent::__construct($typeCode);
+		parent::__construct(TYPE_OTTOMAN);
 
 		$this->setModelCode($modelCode);
 		$this->setFinishCode($finishCode);

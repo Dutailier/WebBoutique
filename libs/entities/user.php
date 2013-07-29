@@ -1,6 +1,8 @@
 <?php
 
-include_once(ROOT . 'libs/repositories/roles.php');
+define('ROLE_ADMINISTRATOR', 0);
+define('ROLE_CUSTOMER', 1);
+define('ROLE_STORE', 2);
 
 /**
  * Class User
@@ -9,10 +11,10 @@ include_once(ROOT . 'libs/repositories/roles.php');
 class User
 {
 	private $id;
-
+	private $role;
+	private $languageCode;
 	private $username;
 	private $password;
-	private $languageCode;
 
 
 	/**
@@ -64,6 +66,28 @@ class User
 	public function getId()
 	{
 		return $this->id;
+	}
+
+
+	/**
+	 * Définit le rôle de l'utilisateur.
+	 *
+	 * @param mixed $role
+	 */
+	public function setRole($role)
+	{
+		$this->role = $role;
+	}
+
+
+	/**
+	 * Retourne le rôle de l'utilsateur.
+	 *
+	 * @return mixed
+	 */
+	public function getRole()
+	{
+		return $this->role;
 	}
 
 
@@ -136,16 +160,5 @@ class User
 	public function getLanguageCode()
 	{
 		return $this->languageCode;
-	}
-
-
-	/**
-	 * Retourne les rôles de l'utilisateur.
-	 *
-	 * @return array
-	 */
-	public function getRoles()
-	{
-		return Roles::FilterByUserId($this->getId());
 	}
 }

@@ -38,60 +38,6 @@ class Security
 
 
 	/**
-	 * Ajoute un utilisateur à un rôle.
-	 *
-	 * @param User $user
-	 * @param      $name
-	 *
-	 * @throws Exception
-	 */
-	public static function addUserToRoleName(User $user, $name)
-	{
-		Roles::addUserToRoleName($user, $name);
-	}
-
-
-	/**
-	 * Retourne vrai si l'utilisateur détient se rôle.
-	 *
-	 * @param $name
-	 *
-	 * @return bool
-	 * @throws Exception
-	 */
-	public static function isInRoleName($name)
-	{
-		if (!self::isAuthenticated()) {
-			throw new Exception(ERROR_AUTHENTIFICATION_REQUIRED);
-		}
-
-		$user = self::getUserConnected();
-
-		return self::UserIsInRoleName($user, $name);
-	}
-
-
-	/**
-	 * Retourne vrai si l'utilisateur détient le rôle.
-	 *
-	 * @param User $user
-	 * @param      $name
-	 *
-	 * @return bool
-	 */
-	public static function UserIsInRoleName(User $user, $name)
-	{
-		foreach ($user->getRoles() as $role) {
-			if (strtolower($role->getName()) == strtolower($name)) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-
-	/**
 	 * Retourne vrai si l'utilisateur s'est authentifié.
 	 *
 	 * @return bool

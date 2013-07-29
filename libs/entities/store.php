@@ -4,10 +4,9 @@
  * Class Store
  * Représente un commerçant.
  */
-class Store
+class Store extends User
 {
 	private $ref;
-	private $userId;
 	private $name;
 	private $phone;
 	private $email;
@@ -18,16 +17,24 @@ class Store
 	/**
 	 * Initialise un commerçant.
 	 *
-	 * @param $userId
+	 * @param $languageCode
+	 * @param $username
+	 * @param $password
+	 * @param $ref
 	 * @param $name
 	 * @param $phone
 	 * @param $email
 	 * @param $emailRep
 	 * @param $emailAgent
 	 */
-	function __construct($userId, $name, $phone, $email, $emailRep, $emailAgent)
+	function __construct(
+		$languageCode, $username, $password,
+		$ref, $name, $phone, $email, $emailRep, $emailAgent)
 	{
-		$this->setUserId($userId);
+		parent::__construct($languageCode, $username, $password);
+		parent::setRole(ROLE_STORE);
+
+		$this->setRef($ref);
 		$this->setName($name);
 		$this->setPhone($phone);
 		$this->setEmail($email);
@@ -44,13 +51,16 @@ class Store
 	public function getInfoArray()
 	{
 		return array(
-			'ref'        => $this->getRef(),
-			'userId'     => $this->getUserId(),
-			'name'       => $this->getName(),
-			'phone'      => $this->getPhone(),
-			'email'      => $this->getEmail(),
-			'emailRep'   => $this->getEmailRep(),
-			'emailAgent' => $this->getEmailAgent()
+			'userId'       => parent::getId(),
+			'languageCode' => parent::getLanguageCode(),
+			'username'     => parent::getUsername(),
+			'password'     => parent::getPassword(),
+			'ref'          => $this->getRef(),
+			'name'         => $this->getName(),
+			'phone'        => $this->getPhone(),
+			'email'        => $this->getEmail(),
+			'emailRep'     => $this->getEmailRep(),
+			'emailAgent'   => $this->getEmailAgent()
 		);
 	}
 
@@ -74,28 +84,6 @@ class Store
 	public function getRef()
 	{
 		return $this->ref;
-	}
-
-
-	/**
-	 * Définit l'identifiant de l'utilisateur lié au commerçant.
-	 *
-	 * @param mixed $userId
-	 */
-	public function setUserId($userId)
-	{
-		$this->userId = $userId;
-	}
-
-
-	/**
-	 * Retourne l'identifiant de l'utilisateur lié au commerçant.
-	 *
-	 * @return mixed
-	 */
-	public function getUserId()
-	{
-		return $this->userId;
 	}
 
 

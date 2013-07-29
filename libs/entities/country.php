@@ -1,5 +1,7 @@
 <?php
 
+include_once(ROOT . 'libs/repositories/states.php');
+
 /**
  * Class Country
  * Représente un pays.
@@ -13,10 +15,12 @@ class Country
 	/**
 	 * Initialise le pays.
 	 *
+	 * @param $code
 	 * @param $name
 	 */
-	function __construct($name)
+	function __construct($code, $name)
 	{
+		$this->setCode($code);
 		$this->setName($name);
 	}
 
@@ -76,5 +80,16 @@ class Country
 	public function getName()
 	{
 		return $this->name;
+	}
+
+
+	/**
+	 * Retourne les états ou provinces de ce pays.
+	 *
+	 * @return array|State
+	 */
+	public function getStates()
+	{
+		return States::filterByCountryCode($this->getCode());
 	}
 }

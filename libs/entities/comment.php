@@ -1,5 +1,7 @@
 <?php
 
+include_once(ROOT . 'libs/repositories/comments.php');
+
 /**
  * Class Comment
  * Représente un commentaire.
@@ -11,22 +13,23 @@ class Comment
 	private $orderId;
 	private $datetime;
 	private $text;
+	private $commentId;
 
 
 	/**
-	 * Initialise le commentaire.
+	 * Initialise le commantaire.
 	 *
-	 * @param $userId
-	 * @param $orderId
-	 * @param $datetime
-	 * @param $text
+	 * @param      $userId
+	 * @param      $orderId
+	 * @param      $text
+	 * @param null $commentId
 	 */
-	function __construct($userId, $orderId, $datetime, $text)
+	function __construct($userId, $orderId, $text, $commentId = null)
 	{
 		$this->setUserId($userId);
 		$this->setOrderId($orderId);
-		$this->setDatetime($datetime);
 		$this->setText($text);
+		$this->setCommentId($commentId);
 	}
 
 
@@ -157,4 +160,46 @@ class Comment
 	}
 
 
+	/**
+	 * Définit l'identifiant du commentaire auquel ce commentaire répond.
+	 *
+	 * @param mixed $commentId
+	 */
+	public function setCommentId($commentId)
+	{
+		$this->commentId = $commentId;
+	}
+
+
+	/**
+	 * Retourne l'identifiant du commentaire auquel ce commentaire répond.
+	 *
+	 * @return mixed
+	 */
+	public function getCommentId()
+	{
+		return $this->commentId;
+	}
+
+
+	/**
+	 * Retourne le commentaire auquel ce commentaire répond.
+	 *
+	 * @return State
+	 */
+	public function getQuestion()
+	{
+		return States::find($this->getCommentId());
+	}
+
+
+	/**
+	 * Retourne les commentaires répondant à ce commentaire.
+	 *
+	 * @return array
+	 */
+	public function getAnswers()
+	{
+		return Comments::FilterByCommentId($this->getId());
+	}
 }

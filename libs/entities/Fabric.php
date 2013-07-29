@@ -1,17 +1,18 @@
 <?php
 
 /**
- * Class Piping
- * Représente un passepoil.
+ * Class Fabric
+ * Représente un tissu.
  */
-class Piping
+class Fabric
 {
 	private $code;
 	private $name;
+	private $grade;
 
 
 	/**
-	 * Initialise le passepoil.
+	 * Initialise le tissu.
 	 *
 	 * @param $code
 	 * @param $name
@@ -24,21 +25,22 @@ class Piping
 
 
 	/**
-	 * Retourne un tableau contenant les propriétés du passepoil.
+	 * Retourne un tableau contenant les propriétés du tissu.
 	 *
 	 * @return mixed|void
 	 */
 	public function getInfoArray()
 	{
 		return array(
-			'code' => $this->getCode(),
-			'name' => $this->getName()
+			'code'  => $this->getCode(),
+			'name'  => $this->getName(),
+			'grade' => $this->getGrade()
 		);
 	}
 
 
 	/**
-	 * Définit le code du passepoil.
+	 * Définit le code du tissu.
 	 *
 	 * @param mixed $code
 	 */
@@ -49,7 +51,7 @@ class Piping
 
 
 	/**
-	 * Retourne le code du passepoil.
+	 * Retourne le code du tissu.
 	 *
 	 * @return mixed
 	 */
@@ -60,7 +62,7 @@ class Piping
 
 
 	/**
-	 * Définit le nom du passepoil.
+	 * Définit le nom du tissu.
 	 *
 	 * @param mixed $name
 	 */
@@ -71,7 +73,7 @@ class Piping
 
 
 	/**
-	 * Retourne le nom du passepoil.
+	 * Retourne le nom du tissu.
 	 *
 	 * @return mixed
 	 */
@@ -81,4 +83,24 @@ class Piping
 	}
 
 
+	/**
+	 * Définit le grade du tissu.
+	 *
+	 * @param mixed $grade
+	 */
+	public function setGrade($grade)
+	{
+		$this->grade = $grade;
+	}
+
+
+	/**
+	 * Retourne le grade du tissu.
+	 *
+	 * @return mixed
+	 */
+	public function getGrade()
+	{
+		return $this->grade;
+	}
 }

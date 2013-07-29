@@ -1,5 +1,9 @@
 <?php
 
+define('TYPE_OTTOMAN', 5306);
+define('TYPE_GLIDER', 5305);
+define('TYPE_PILOW', 5804);
+
 /**
  * Class Type
  * Représente un type de produit.
@@ -13,10 +17,12 @@ class Type
 	/**
 	 * Initialise le type.
 	 *
+	 * @param $code
 	 * @param $name
 	 */
-	function __construct($name)
+	function __construct($code, $name)
 	{
+		$this->setCode($code);
 		$this->setName($name);
 	}
 

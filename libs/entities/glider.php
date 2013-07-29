@@ -18,15 +18,14 @@ class Glider extends Product
 	/**
 	 * Initiliase la chaise oscillante.
 	 *
-	 * @param $typeCode
 	 * @param $modelCode
 	 * @param $finishCode
 	 * @param $fabricCode
 	 * @param $pipingCode
 	 */
-	function __construct($typeCode, $modelCode, $finishCode = null, $fabricCode, $pipingCode = null)
+	function __construct($modelCode, $finishCode, $fabricCode, $pipingCode = null)
 	{
-		parent::__construct($typeCode);
+		parent::__construct(TYPE_GLIDER);
 
 		$this->setModelCode($modelCode);
 		$this->setFinishCode($finishCode);
