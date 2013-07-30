@@ -31,8 +31,7 @@ class Store extends User
 		$languageCode, $username, $password,
 		$ref, $name, $phone, $email, $emailRep, $emailAgent)
 	{
-		parent::__construct($languageCode, $username, $password);
-		parent::setRole(ROLE_STORE);
+		parent::__construct($languageCode, ROLE_STORE, $username, $password);
 
 		$this->setRef($ref);
 		$this->setName($name);
@@ -54,7 +53,6 @@ class Store extends User
 			'userId'       => parent::getId(),
 			'languageCode' => parent::getLanguageCode(),
 			'username'     => parent::getUsername(),
-			'password'     => parent::getPassword(),
 			'ref'          => $this->getRef(),
 			'name'         => $this->getName(),
 			'phone'        => $this->getPhone(),
@@ -70,7 +68,7 @@ class Store extends User
 	 *
 	 * @param mixed $ref
 	 */
-	public function setRef($ref)
+	private function setRef($ref)
 	{
 		$this->ref = $ref;
 	}
@@ -92,7 +90,7 @@ class Store extends User
 	 *
 	 * @param mixed $name
 	 */
-	public function setName($name)
+	private function setName($name)
 	{
 		$this->name = $name;
 	}
@@ -114,7 +112,7 @@ class Store extends User
 	 *
 	 * @param mixed $phone
 	 */
-	public function setPhone($phone)
+	private function setPhone($phone)
 	{
 		$this->phone = $phone;
 	}
@@ -136,7 +134,7 @@ class Store extends User
 	 *
 	 * @param mixed $email
 	 */
-	public function setEmail($email)
+	private function setEmail($email)
 	{
 		$this->email = $email;
 	}
@@ -158,7 +156,7 @@ class Store extends User
 	 *
 	 * @param mixed $emailRep
 	 */
-	public function setEmailRep($emailRep)
+	private function setEmailRep($emailRep)
 	{
 		$this->emailRep = $emailRep;
 	}
@@ -180,7 +178,7 @@ class Store extends User
 	 *
 	 * @param mixed $emailAgent
 	 */
-	public function setEmailAgent($emailAgent)
+	private function setEmailAgent($emailAgent)
 	{
 		$this->emailAgent = $emailAgent;
 	}

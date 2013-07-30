@@ -15,12 +15,14 @@ class Fabric
 	 * Initialise le tissu.
 	 *
 	 * @param $code
+	 * @param $grade
 	 * @param $name
 	 */
-	function __construct($code, $name)
+	function __construct($code, $name, $grade)
 	{
 		$this->setCode($code);
 		$this->setName($name);
+		$this->setGrade($grade);
 	}
 
 
@@ -44,7 +46,7 @@ class Fabric
 	 *
 	 * @param mixed $code
 	 */
-	public function setCode($code)
+	private function setCode($code)
 	{
 		$this->code = $code;
 	}
@@ -66,7 +68,7 @@ class Fabric
 	 *
 	 * @param mixed $name
 	 */
-	public function setName($name)
+	private function setName($name)
 	{
 		$this->name = $name;
 	}
@@ -88,7 +90,7 @@ class Fabric
 	 *
 	 * @param mixed $grade
 	 */
-	public function setGrade($grade)
+	private function setGrade($grade)
 	{
 		$this->grade = $grade;
 	}

@@ -46,7 +46,7 @@ class Users
 	 *
 	 * @param $id
 	 *
-	 * @return User
+	 * @return Customer|Store|User
 	 * @throws Exception
 	 */
 	public static function Find($id)
@@ -60,6 +60,7 @@ class Users
 			throw new Exception(ERROR_USER_DOESNT_EXIST);
 		}
 
+		$user = null;
 		switch ($rows[0]['role']) {
 			case ROLE_ADMINISTRATOR:
 				$user = new User (
@@ -95,6 +96,10 @@ class Users
 					$rows[0]['emailAgent']
 				);
 				break;
+
+			default:
+				// TODO : Implémenter l'erreur.
+				throw new Exception(ERROR_ROLE_INVALID);
 		}
 
 		$user->setId($rows[0]['id']);
@@ -109,7 +114,7 @@ class Users
 	 * @param $username
 	 * @param $password
 	 *
-	 * @return User
+	 * @return Customer|Store|User
 	 * @throws Exception
 	 */
 	public static function FindByUsernameAndPassword($username, $password)
@@ -124,6 +129,7 @@ class Users
 			throw new Exception(ERROR_CREDENTIELS_INCORRECT);
 		}
 
+		$user = null;
 		switch ($rows[0]['role']) {
 			case ROLE_ADMINISTRATOR:
 				$user = new User (
@@ -159,6 +165,10 @@ class Users
 					$rows[0]['emailAgent']
 				);
 				break;
+
+			default:
+				// TODO : Implémenter l'erreur.
+				throw new Exception(ERROR_ROLE_INVALID);
 		}
 
 		$user->setId($rows[0]['id']);

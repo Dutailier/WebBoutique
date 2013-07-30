@@ -24,9 +24,10 @@ class User
 	 * @param $username
 	 * @param $password
 	 */
-	function __construct($languageCode, $username, $password)
+	function __construct($languageCode, $role, $username, $password)
 	{
 		$this->setLanguageCode($languageCode);
+		$this->setRole($role);
 		$this->setUsername($username);
 		$this->setPassword($password);
 	}
@@ -41,6 +42,7 @@ class User
 	{
 		return array(
 			'id'           => $this->getId(),
+			'role'         => $this->getRole(),
 			'languageCode' => $this->getLanguageCode(),
 			'username'     => $this->getUsername()
 		);
@@ -74,7 +76,7 @@ class User
 	 *
 	 * @param mixed $role
 	 */
-	public function setRole($role)
+	private function setRole($role)
 	{
 		$this->role = $role;
 	}
@@ -92,6 +94,19 @@ class User
 
 
 	/**
+	 * Définit le nom d'utilisteur.
+	 *
+	 * @param $username
+	 *
+	 * @throws Exception
+	 */
+	private function setUsername($username)
+	{
+		$this->username = strtolower($username);
+	}
+
+
+	/**
 	 * Retourne le nom d'utilisateur.
 	 *
 	 * @return mixed
@@ -103,28 +118,11 @@ class User
 
 
 	/**
-	 * Définit le nom d'utilisteur.
-	 *
-	 * @param $username
-	 *
-	 * @throws Exception
-	 */
-	private function setUsername($username)
-	{
-		if (strlen($username) > 50) {
-			throw new Exception(ERROR_USERNAME_INVALID);
-		}
-
-		$this->username = strtolower($username);
-	}
-
-
-	/**
 	 * Définit le password d'un utilisateur.
 	 *
 	 * @param mixed $password
 	 */
-	public function setPassword($password)
+	private function setPassword($password)
 	{
 		$this->password = $password;
 	}
@@ -135,7 +133,7 @@ class User
 	 *
 	 * @return mixed
 	 */
-	public function getPassword()
+	private function getPassword()
 	{
 		return $this->password;
 	}
@@ -146,7 +144,7 @@ class User
 	 *
 	 * @param mixed $code
 	 */
-	public function setLanguageCode($code)
+	private function setLanguageCode($code)
 	{
 		$this->languageCode = strtolower($code);
 	}

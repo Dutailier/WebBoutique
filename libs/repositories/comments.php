@@ -77,6 +77,10 @@ class Comments
 
 	/**
 	 * Retourne les commentaires d'une commande.
+	 *
+	 * @param $orderId
+	 *
+	 * @return array
 	 */
 	public static function FilterByOrderId($orderId)
 	{

@@ -30,8 +30,7 @@ class Customer extends User
 		$languageCode, $username, $password,
 		$greeting, $firstname, $lastname, $phone, $email)
 	{
-		parent::__construct($languageCode, $username, $password);
-		parent::setRole(ROLE_CUSTOMER);
+		parent::__construct($languageCode, ROLE_CUSTOMER, $username, $password);
 
 		$this->setGreeting($greeting);
 		$this->setFirstname($firstname);
@@ -66,7 +65,7 @@ class Customer extends User
 	 *
 	 * @param mixed $greeting
 	 */
-	public function setGreeting($greeting)
+	private function setGreeting($greeting)
 	{
 		$this->greeting = $greeting;
 	}
@@ -88,7 +87,7 @@ class Customer extends User
 	 *
 	 * @param mixed $firstname
 	 */
-	public function setFirstname($firstname)
+	private function setFirstname($firstname)
 	{
 		$this->firstname = $firstname;
 	}
@@ -110,7 +109,7 @@ class Customer extends User
 	 *
 	 * @param mixed $lastname
 	 */
-	public function setLastname($lastname)
+	private function setLastname($lastname)
 	{
 		$this->lastname = $lastname;
 	}
@@ -132,7 +131,7 @@ class Customer extends User
 	 *
 	 * @param mixed $phone
 	 */
-	public function setPhone($phone)
+	private function setPhone($phone)
 	{
 		$this->phone = $phone;
 	}
@@ -154,7 +153,7 @@ class Customer extends User
 	 *
 	 * @param mixed $email
 	 */
-	public function setEmail($email)
+	private function setEmail($email)
 	{
 		$this->email = $email;
 	}

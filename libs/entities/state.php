@@ -33,7 +33,7 @@ class State
 	 *
 	 * @param mixed $code
 	 */
-	public function setCode($code)
+	private function setCode($code)
 	{
 		$this->code = $code;
 	}
@@ -55,7 +55,7 @@ class State
 	 *
 	 * @param mixed $countryCode
 	 */
-	public function setCountryCode($countryCode)
+	private function setCountryCode($countryCode)
 	{
 		$this->countryCode = $countryCode;
 	}
@@ -77,7 +77,7 @@ class State
 	 *
 	 * @param mixed $name
 	 */
-	public function setName($name)
+	private function setName($name)
 	{
 		$this->name = $name;
 	}

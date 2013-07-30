@@ -1,7 +1,10 @@
 <?php
 
 include_once(ROOT . 'libs/entities/product.php');
-
+include_once(ROOT . 'libs/repositories/models.php');
+include_once(ROOT . 'libs/repositories/finish.php');
+include_once(ROOT . 'libs/repositories/fabrics.php');
+include_once(ROOT . 'libs/repositories/pipings.php');
 
 /**
  * Class Glider
@@ -55,7 +58,7 @@ class Glider extends Product
 	 *
 	 * @param mixed $modelCode
 	 */
-	public function setModelCode($modelCode)
+	private function setModelCode($modelCode)
 	{
 		$this->modelCode = $modelCode;
 	}
@@ -77,7 +80,7 @@ class Glider extends Product
 	 *
 	 * @param mixed $finishCode
 	 */
-	public function setFinishCode($finishCode)
+	private function setFinishCode($finishCode)
 	{
 		$this->finishCode = $finishCode;
 	}
@@ -99,7 +102,7 @@ class Glider extends Product
 	 *
 	 * @param mixed $fabricCode
 	 */
-	public function setFabricCode($fabricCode)
+	private function setFabricCode($fabricCode)
 	{
 		$this->fabricCode = $fabricCode;
 	}
@@ -121,19 +124,63 @@ class Glider extends Product
 	 *
 	 * @param mixed $pipingCode
 	 */
-	public function setPipingCode($pipingCode)
+	private function setPipingCode($pipingCode)
 	{
 		$this->pipingCode = $pipingCode;
 	}
 
 
 	/**
-	 * Retourne le code du passpoil de la chaise osciallante.
+	 * Retourne le code du passpoil de la chaise oscillante.
 	 *
 	 * @return mixed
 	 */
 	public function getPipingCode()
 	{
 		return $this->pipingCode;
+	}
+
+
+	/**
+	 * Retourne le modèle de la chaise oscillante.
+	 *
+	 * @return Model
+	 */
+	public function getModel()
+	{
+		return Models::Find($this->getModelCode());
+	}
+
+
+	/**
+	 * Retourne le fini de la chaise oscillante.
+	 *
+	 * @return Finish
+	 */
+	public function getFinish()
+	{
+		return Finishs::Find($this->getFinishCode());
+	}
+
+
+	/**
+	 * Retourne le tissu de la chaise oscillante.
+	 *
+	 * @return Fabric
+	 */
+	public function getFabric()
+	{
+		return Fabrics::Find($this->getFabricCode());
+	}
+
+
+	/**
+	 * Retourne le passepoil de la chaise oscillante.
+	 *
+	 * @return Piping
+	 */
+	public function getPiping()
+	{
+		return Pipings::Find($this->getPipingCode());
 	}
 }

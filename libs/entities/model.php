@@ -42,7 +42,7 @@ class Model
 	 *
 	 * @param mixed $code
 	 */
-	public function setCode($code)
+	private function setCode($code)
 	{
 		$this->code = $code;
 	}
@@ -64,7 +64,7 @@ class Model
 	 *
 	 * @param mixed $name
 	 */
-	public function setName($name)
+	private function setName($name)
 	{
 		$this->name = $name;
 	}

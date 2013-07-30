@@ -1,5 +1,6 @@
 <?php
 
+include_once(ROOT . 'libs/repositories/logs.php');
 include_once(ROOT . 'libs/repositories/users.php');
 include_once(ROOT . 'libs/repositories/comments.php');
 
@@ -199,6 +200,17 @@ class Order
 	public function getComments()
 	{
 		return Comments::FilterByOrderId($this->getId());
+	}
+
+
+	/**
+	 * Retourne les entrées du journal d'évènements de cette commande.
+	 *
+	 * @return array
+	 */
+	public function getLogs()
+	{
+		return Logs::FilterByOrderId($this->getId());
 	}
 
 

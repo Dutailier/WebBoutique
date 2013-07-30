@@ -61,7 +61,7 @@ abstract class Product
 	 *
 	 * @param mixed $typeCode
 	 */
-	public function setTypeCode($typeCode)
+	private function setTypeCode($typeCode)
 	{
 		$this->typeCode = $typeCode;
 	}

@@ -1,5 +1,8 @@
 <?php
 
+include_once(ROOT . 'libs/entities/product.php');
+include_once(ROOT . 'libs/repositories/models.php');
+include_once(ROOT . 'libs/repositories/fabrics.php');
 
 /**
  * Class Pilow
@@ -7,18 +10,21 @@
  */
 class Pilow extends Product
 {
+	private $modelCode;
 	private $fabricCode;
 
 
 	/**
 	 * Initialise le coussin lombaire.
 	 *
+	 * @param $modelCode
 	 * @param $fabricCode
 	 */
-	function __construct($fabricCode)
+	function __construct($modelCode, $fabricCode)
 	{
 		parent::__construct(TYPE_PILOW);
 
+		$this->setModelCode($modelCode);
 		$this->setFabricCode($fabricCode);
 	}
 
@@ -33,8 +39,31 @@ class Pilow extends Product
 		return array(
 			'sku'        => parent::getSku(),
 			'typeCode'   => parent::getTypeCode(),
+			'modelCode'  => $this->getModelCode(),
 			'fabricCode' => $this->getFabricCode()
 		);
+	}
+
+
+	/**
+	 * Définit le code du modèle.
+	 *
+	 * @param mixed $modelCode
+	 */
+	private function setModelCode($modelCode)
+	{
+		$this->modelCode = $modelCode;
+	}
+
+
+	/**
+	 * Retourne le code du modèle.
+	 *
+	 * @return mixed
+	 */
+	public function getModelCode()
+	{
+		return $this->modelCode;
 	}
 
 
@@ -43,7 +72,7 @@ class Pilow extends Product
 	 *
 	 * @param mixed $fabricCode
 	 */
-	public function setFabricCode($fabricCode)
+	private function setFabricCode($fabricCode)
 	{
 		$this->fabricCode = $fabricCode;
 	}
@@ -60,4 +89,24 @@ class Pilow extends Product
 	}
 
 
+	/**
+	 * Retourne le modèle du coussin lombaire.
+	 *
+	 * @return Model
+	 */
+	public function getModel()
+	{
+		return Models::Find($this->getModelCode());
+	}
+
+
+	/**
+	 * Retourne le tissu du coussin lombaire.
+	 *
+	 * @return Fabric
+	 */
+	public function getFabric()
+	{
+		return Fabrics::Find($this->getFabricCode());
+	}
 }

@@ -6,7 +6,7 @@ include_once(ROOT . 'libs/language.php');
 
 include_once(Language::getLanguageFile());
 
-// TODO : Le test d'authentification devra être retiré lors de la publication d'une version B2C.
+// WARNING : Le test d'authentification devra être retiré lors de la publication d'une version B2C.
 if (!Security::isAuthenticated()) {
 	$page = 'logIn';
 

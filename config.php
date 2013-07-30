@@ -1,6 +1,6 @@
 <?php
 
-// TODO : Activer lors d'une publication.
+// WARNING : Activer lors d'une publication.
 //error_reporting(0);
 
 define('ROOT', realpath(dirname(__FILE__)) . '/');

@@ -1,5 +1,11 @@
 <?php
 
+include_once(ROOT . 'libs/entities/product.php');
+include_once(ROOT . 'libs/repositories/models.php');
+include_once(ROOT . 'libs/repositories/finish.php');
+include_once(ROOT . 'libs/repositories/fabrics.php');
+include_once(ROOT . 'libs/repositories/pipings.php');
+
 /**
  * Class Ottoman
  * Représente un tabouret oscillant.
@@ -52,7 +58,7 @@ class Ottoman extends Product
 	 *
 	 * @param mixed $modelCode
 	 */
-	public function setModelCode($modelCode)
+	private function setModelCode($modelCode)
 	{
 		$this->modelCode = $modelCode;
 	}
@@ -74,7 +80,7 @@ class Ottoman extends Product
 	 *
 	 * @param mixed $finishCode
 	 */
-	public function setFinishCode($finishCode)
+	private function setFinishCode($finishCode)
 	{
 		$this->finishCode = $finishCode;
 	}
@@ -96,7 +102,7 @@ class Ottoman extends Product
 	 *
 	 * @param mixed $fabricCode
 	 */
-	public function setFabricCode($fabricCode)
+	private function setFabricCode($fabricCode)
 	{
 		$this->fabricCode = $fabricCode;
 	}
@@ -118,7 +124,7 @@ class Ottoman extends Product
 	 *
 	 * @param mixed $pipingCode
 	 */
-	public function setPipingCode($pipingCode)
+	private function setPipingCode($pipingCode)
 	{
 		$this->pipingCode = $pipingCode;
 	}
@@ -132,5 +138,49 @@ class Ottoman extends Product
 	public function getPipingCode()
 	{
 		return $this->pipingCode;
+	}
+
+
+	/**
+	 * Retourne le modèle du tabouret oscillant.
+	 *
+	 * @return Model
+	 */
+	public function getModel()
+	{
+		return Models::Find($this->getModelCode());
+	}
+
+
+	/**
+	 * Retourne le fini du tabouret oscillant.
+	 *
+	 * @return Finish
+	 */
+	public function getFinish()
+	{
+		return Finishs::Find($this->getFinishCode());
+	}
+
+
+	/**
+	 * Retourne le tissu du tabouret oscillant.
+	 *
+	 * @return Fabric
+	 */
+	public function getFabric()
+	{
+		return Fabrics::Find($this->getFabricCode());
+	}
+
+
+	/**
+	 * Retourne le passepoil du tabouret oscillant.
+	 *
+	 * @return Piping
+	 */
+	public function getPiping()
+	{
+		return Pipings::Find($this->getPipingCode());
 	}
 }

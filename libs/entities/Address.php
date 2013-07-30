@@ -56,7 +56,7 @@ class Address
 	 *
 	 * @param mixed $id
 	 */
-	public function setUserId($id)
+	private function setUserId($id)
 	{
 		$this->userId = $id;
 	}

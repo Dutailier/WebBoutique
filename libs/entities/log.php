@@ -9,22 +9,26 @@ class Log
 	private $id;
 	private $orderId;
 	private $userId;
-	private $event;
+	private $eventId;
 	private $datetime;
 
 
 	/**
 	 * Initialise l'enregistrement du journal d'évènements.
 	 *
+	 * @param $id
 	 * @param $orderId
 	 * @param $userId
-	 * @param $event
+	 * @param $eventId
+	 * @param $datetime
 	 */
-	function __construct($orderId, $userId, $event)
+	function __construct($id, $orderId, $userId, $eventId, $datetime)
 	{
+		$this->setId($id);
 		$this->setOrderId($orderId);
 		$this->setUserId($userId);
-		$this->setEvent($event);
+		$this->setEventId($eventId);
+		$this->setDatetime($datetime);
 	}
 
 
@@ -40,7 +44,7 @@ class Log
 			'id'       => $this->getId(),
 			'orderId'  => $this->getOrderId(),
 			'userId'   => $this->getUserId(),
-			'event'    => $this->getEvent(),
+			'eventId'  => $this->getEventId(),
 			'datetime' => $this->getDatetime()
 		);
 	}
@@ -51,7 +55,7 @@ class Log
 	 *
 	 * @param mixed $id
 	 */
-	public function setId($id)
+	private function setId($id)
 	{
 		$this->id = $id;
 	}
@@ -73,7 +77,7 @@ class Log
 	 *
 	 * @param mixed $orderId
 	 */
-	public function setOrderId($orderId)
+	private function setOrderId($orderId)
 	{
 		$this->orderId = $orderId;
 	}
@@ -95,7 +99,7 @@ class Log
 	 *
 	 * @param mixed $userId
 	 */
-	public function setUserId($userId)
+	private function setUserId($userId)
 	{
 		$this->userId = $userId;
 	}
@@ -113,24 +117,24 @@ class Log
 
 
 	/**
-	 * Définit l'évènement de l'enregistrement du journal d'évènements.
+	 * Définit l'identifiant de l'évènement de l'enregistrement du journal d'évènements.
 	 *
 	 * @param mixed $event
 	 */
-	public function setEvent($event)
+	private function setEventId($event)
 	{
-		$this->event = $event;
+		$this->eventId = $event;
 	}
 
 
 	/**
-	 * Retourne l'évènement de l'enregistrement du journal d'évènements.
+	 * Retourne l'identifiant de l'évènement de l'enregistrement du journal d'évènements.
 	 *
 	 * @return mixed
 	 */
-	public function getEvent()
+	public function getEventId()
 	{
-		return $this->event;
+		return $this->eventId;
 	}
 
 
@@ -139,7 +143,7 @@ class Log
 	 *
 	 * @param mixed $datetime
 	 */
-	public function setDatetime($datetime)
+	private function setDatetime($datetime)
 	{
 		$this->datetime = $datetime;
 	}

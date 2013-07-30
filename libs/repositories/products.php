@@ -9,6 +9,14 @@ include_once(ROOT . 'libs/entities/product.php');
  */
 class Products
 {
+	/**
+	 * Retourne le produit.
+	 *
+	 * @param $sku
+	 *
+	 * @return Glider|Ottoman|Pilow
+	 * @throws Exception
+	 */
 	public static function Find($sku)
 	{
 		// TODO : Implémenter la procédure stockée.
@@ -22,6 +30,7 @@ class Products
 			throw new Exception(ERROR_PRODUCT_DOESNT_EXIST);
 		}
 
+		$product = null;
 		switch ($rows[0]['typeCode']) {
 			case TYPE_GLIDER:
 				$product = new Glider (
@@ -43,9 +52,14 @@ class Products
 
 			case TYPE_PILOW:
 				$product = new Pilow (
+					$rows[0]['modelCode'],
 					$rows[0]['fabricCode']
 				);
 				break;
+
+			default:
+				// TODO : Implémenter l'erreur.
+				throw new Exception(ERROR_TYPE_INVALID);
 		}
 
 		$product->setSku($sku);
