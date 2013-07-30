@@ -39,7 +39,7 @@ class PriceList
 	 *
 	 * @param mixed $code
 	 */
-	public function setCode($code)
+	private function setCode($code)
 	{
 		$this->code = $code;
 	}

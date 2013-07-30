@@ -22,7 +22,6 @@ class Models
 	 */
 	public static function Find($code)
 	{
-		// TODO : Implémenter à procédure stockée.
 		$query = 'EXEC [getModelByCode]';
 		$query .= '@code = "' . $code . '", ';
 		$query .= '@languageCode = "' . Language::getCurrent() . '"';
@@ -30,7 +29,6 @@ class Models
 		$rows = Database::Execute($query);
 
 		if (empty($rows)) {
-			// TODO : Implémenter l'erreur.
 			throw new Exception(ERROR_MODEL_DOESNT_EXIST);
 		}
 
@@ -42,14 +40,18 @@ class Models
 
 
 	/**
-	 * Retourne tous les modèles.
+	 * Retourne tous les modèles disponibles pour l'utilisateur et le type.
+	 *
+	 * @param $userId
+	 * @param $typeCode
 	 *
 	 * @return array
 	 */
-	public static function All()
+	public static function All($userId, $typeCode)
 	{
-		// TODO : Implémenter la procédure stockée.
 		$query = 'EXEC [getModels]';
+		$query .= '@userId = "' . intval($userId) . '", ';
+		$query .= '@typeCode = "' . $typeCode . '", ';
 		$query .= '@LanguageCode = "' . Language::getCurrent() . '"';
 
 		$rows = Database::Execute($query);

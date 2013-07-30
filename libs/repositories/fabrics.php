@@ -22,7 +22,6 @@ class Fabrics
 	 */
 	public static function Find($code)
 	{
-		// TODO : Implémenter à procédure stockée.
 		$query = 'EXEC [getFabricByCode]';
 		$query .= '@code = "' . $code . '", ';
 		$query .= '@languageCode = "' . Language::getCurrent() . '"';
@@ -30,7 +29,6 @@ class Fabrics
 		$rows = Database::Execute($query);
 
 		if (empty($rows)) {
-			// TODO : Implémenter l'erreur.
 			throw new Exception(ERROR_FABRIC_DOESNT_EXIST);
 		}
 
@@ -49,7 +47,6 @@ class Fabrics
 	 */
 	public static function All()
 	{
-		// TODO : Implémenter la procédure stockée.
 		$query = 'EXEC [getFabrics]';
 		$query .= '@LanguageCode = "' . Language::getCurrent() . '"';
 

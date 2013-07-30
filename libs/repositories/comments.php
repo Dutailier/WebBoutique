@@ -19,7 +19,6 @@ class Comments
 	 */
 	public static function Attach(Comment $comment)
 	{
-		// TODO : Implémenter la procédure stockée.
 		$query = 'EXEC [addComment]';
 		$query .= '@userId = "' . $comment->getUserId() . '", ';
 		$query .= '@orderId = "' . $comment->getOrderId() . '", ';
@@ -29,7 +28,6 @@ class Comments
 		$rows = Database::Execute($query);
 
 		if (Empty($rows)) {
-			// TODO : Implémenter l'erreur.
 			throw new Exception(ERROR_COMMENT_WASNT_ADDED);
 		}
 
@@ -50,14 +48,12 @@ class Comments
 	 */
 	public static function Find($id)
 	{
-		// TODO : Implémenter la procédure stockée.
 		$query = 'EXEC [getCommentById]';
 		$query .= '@id = "' . intval($id) . '"';
 
 		$rows = Database::Execute($query);
 
 		if (empty($rows)) {
-			// TODO : Implémenter l'erreur.
 			throw new Exception(ERROR_COMMENT_DOESNT_EXIST);
 		}
 
@@ -84,7 +80,6 @@ class Comments
 	 */
 	public static function FilterByOrderId($orderId)
 	{
-		// TODO : Implémenter la procédure stockée.
 		$query = 'EXEC [getCommentsByOrderId]';
 		$query .= '@orderId = "' . intval($orderId) . '"';
 
@@ -118,7 +113,6 @@ class Comments
 	 */
 	public static function FilterByCommentId($commentId)
 	{
-		// TODO : Implémenter la procédure stockée.
 		$query = 'EXEC [getCommentsByCommentId]';
 		$query .= '@orderId = "' . intval($commentId) . '"';
 

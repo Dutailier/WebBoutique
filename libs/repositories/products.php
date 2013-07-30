@@ -19,14 +19,12 @@ class Products
 	 */
 	public static function Find($sku)
 	{
-		// TODO : Implémenter la procédure stockée.
 		$query = 'EXEC [getProductBySku]';
 		$query .= '@sku = "' . trim($sku) . '"';
 
 		$rows = Database::Execute($query);
 
 		if (empty($rows)) {
-			// TODO : Implémenter l'erreur.
 			throw new Exception(ERROR_PRODUCT_DOESNT_EXIST);
 		}
 
@@ -58,7 +56,6 @@ class Products
 				break;
 
 			default:
-				// TODO : Implémenter l'erreur.
 				throw new Exception(ERROR_TYPE_INVALID);
 		}
 

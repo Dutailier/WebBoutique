@@ -22,7 +22,6 @@ class Pipings
 	 */
 	public static function Find($code)
 	{
-		// TODO : Implémenter à procédure stockée.
 		$query = 'EXEC [getPipingByCode]';
 		$query .= '@code = "' . $code . '", ';
 		$query .= '@languageCode = "' . Language::getCurrent() . '"';
@@ -30,7 +29,6 @@ class Pipings
 		$rows = Database::Execute($query);
 
 		if (empty($rows)) {
-			// TODO : Implémenter l'erreur.
 			throw new Exception(ERROR_PIPING_DOESNT_EXIST);
 		}
 
@@ -49,7 +47,6 @@ class Pipings
 	 */
 	public static function All()
 	{
-		// TODO : Implémenter la procédure stockée.
 		$query = 'EXEC [getPipings]';
 		$query .= '@LanguageCode = "' . Language::getCurrent() . '"';
 

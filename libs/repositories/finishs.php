@@ -22,7 +22,6 @@ class Finishs
 	 */
 	public static function Find($code)
 	{
-		// TODO : Implémenter à procédure stockée.
 		$query = 'EXEC [getFinishByCode]';
 		$query .= '@code = "' . $code . '", ';
 		$query .= '@languageCode = "' . Language::getCurrent() . '"';
@@ -30,7 +29,6 @@ class Finishs
 		$rows = Database::Execute($query);
 
 		if (empty($rows)) {
-			// TODO : Implémenter l'erreur.
 			throw new Exception(ERROR_FINISH_DOESNT_EXIST);
 		}
 
@@ -42,14 +40,18 @@ class Finishs
 
 
 	/**
-	 * Retourne tous les finis.
+	 * Retourne tous les finis disponibles pour l'utilisateur et le modèle.
+	 *
+	 * @param $userId
+	 * @param $modelCode
 	 *
 	 * @return array
 	 */
-	public static function All()
+	public static function All($userId, $modelCode)
 	{
-		// TODO : Implémenter la procédure stockée.
 		$query = 'EXEC [getFinishs]';
+		$query .= '@userId = "' . intval($userId) . '", ';
+		$query .= '@modelCode = "' . $modelCode . '", ';
 		$query .= '@LanguageCode = "' . Language::getCurrent() . '"';
 
 		$rows = Database::Execute($query);

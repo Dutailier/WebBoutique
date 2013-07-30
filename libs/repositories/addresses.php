@@ -19,7 +19,6 @@ class Addresses
 	 */
 	public static function Attach(Address $address)
 	{
-		// TODO : Implémenter la procédure stockée.
 		$query = 'EXEC [addAddress]';
 		$query .= '@userId = "' . $address->getUserId() . '", ';
 		$query .= '@street = "' . $address->getStreet() . '", ';
@@ -30,7 +29,6 @@ class Addresses
 		$rows = Database::Execute($query);
 
 		if (empty($rows)) {
-			// TODO : Implémenter l'erreur.
 			throw new Exception(ERROR_ADDRESS_WASNT_ADDED);
 		}
 
@@ -48,14 +46,12 @@ class Addresses
 	 */
 	public static function FindByUserId($userId)
 	{
-		// TODO : Implémenter la procédure stockée.
 		$query = 'EXEC [getAddressByUserId]';
 		$query .= '@userId = "' . intval($userId) . '"';
 
 		$rows = Database::Execute($query);
 
 		if (empty($rows)) {
-			// TODO : Implémenter l'erreur.
 			throw new Exception(ERROR_ADDRESS_DOESNT_EXIST);
 		}
 

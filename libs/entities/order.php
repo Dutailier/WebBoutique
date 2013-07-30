@@ -3,6 +3,8 @@
 include_once(ROOT . 'libs/repositories/logs.php');
 include_once(ROOT . 'libs/repositories/users.php');
 include_once(ROOT . 'libs/repositories/comments.php');
+include_once(ROOT . 'libs/repositories/recipients.php');
+include_once(ROOT . 'libs/repositories/shippingInfos.php');
 
 define('ORDER_STATUS_CANCELED', -1);
 define('ORDER_STATUS_NOT_SEND', 0);
@@ -222,5 +224,27 @@ class Order
 	public function getUser()
 	{
 		return Users::Find($this->getUserId());
+	}
+
+
+	/**
+	 * Retourne le destinateur de la commande.
+	 *
+	 * @return Recipient
+	 */
+	public function getRecipient()
+	{
+		return Recipients::Find($this->getUserId());
+	}
+
+
+	/**
+	 * Retourne l'informations d'expédition de la commande.
+	 *
+	 * @return ShippingInfo
+	 */
+	public function getShippingInfo()
+	{
+		return ShippingInfos::Find($this->getUserId());
 	}
 }

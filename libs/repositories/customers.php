@@ -22,7 +22,6 @@ class Customers
 	{
 		$user = Users::Attach($customer);
 
-		// TODO : Implémenter la procédure stockée.
 		$query = 'EXEC [addCustomer]';
 		$query .= '@userId = "' . $user->getId() . '", ';
 		$query .= '@greeting = "' . $customer->getGreeting() . '", ';
@@ -34,7 +33,6 @@ class Customers
 		$rows = Database::Execute($query);
 
 		if (empty($rows)) {
-			// TODO : Implémenter l'erreur.
 			throw new Exception(ERROR_CUSTOMER_WASNT_ADDED);
 		}
 

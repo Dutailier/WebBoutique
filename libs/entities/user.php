@@ -21,6 +21,7 @@ class User
 	 * Initialise l'utilisateur.
 	 *
 	 * @param $languageCode
+	 * @param $role
 	 * @param $username
 	 * @param $password
 	 */
@@ -133,7 +134,7 @@ class User
 	 *
 	 * @return mixed
 	 */
-	private function getPassword()
+	public function getPassword()
 	{
 		return $this->password;
 	}

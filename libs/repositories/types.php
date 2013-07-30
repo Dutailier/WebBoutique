@@ -15,16 +15,15 @@ class Types
 	/**
 	 * Retourne un type de produit.
 	 *
-	 * @param $id
+	 * @param $code
 	 *
 	 * @return Type
 	 * @throws Exception
 	 */
-	public static function Find($id)
+	public static function Find($code)
 	{
-		// TODO : Implémenter la procédure stockée.
-		$query = 'EXEC [getTypeByIdAndLanguageCode]';
-		$query .= '@id = "' . intval($id) . '", ';
+		$query = 'EXEC [getTypeByCode]';
+		$query .= '@code = "' . intval($code) . '", ';
 		$query .= '@languageCode = "' . Language::getCurrent() . '"';
 
 		$rows = Database::Execute($query);
@@ -41,7 +40,7 @@ class Types
 
 
 	/**
-	 * Retourne les types de produits disponibles pour l'utilisateur.
+	 * Retourne les types de produits disponibles pour cet utilisateur.
 	 *
 	 * @param $userId
 	 *
@@ -49,8 +48,7 @@ class Types
 	 */
 	public static function All($userId)
 	{
-		// TODO : Implémenter la procédure stockée.
-		$query = 'EXEC [getTypesByUserIdAndLanguageCode]';
+		$query = 'EXEC [getTypes]';
 		$query .= '@userId = "' . intval($userId) . '", ';
 		$query .= '@languageCode = "' . Language::getCurrent() . '"';
 

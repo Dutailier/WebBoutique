@@ -19,14 +19,12 @@ class Logs
 	 */
 	public static function Find($id)
 	{
-		// TODO : Implémenter la procédure stockée.
 		$query = 'EXEC [getLogById]';
 		$query .= '@id = "' . intval($id) . '"';
 
 		$rows = Database::Execute($query);
 
 		if (empty($rows)) {
-			// TODO : Implémenter l'erreur.
 			throw new Exception(ERROR_LOG_DOESNT_EXIST);
 		}
 
@@ -49,7 +47,6 @@ class Logs
 	 */
 	public static function FilterByOrderId($orderId)
 	{
-		// TODO : Implémenter la procédure stockée.
 		$query = 'EXEC [getLogsByOrderId]';
 		$query .= '@orderId = "' . intval($orderId) . '"';
 

@@ -22,7 +22,6 @@ class Users
 	 */
 	public static function Attach(User $user)
 	{
-		// TODO : Implémenter la procédure stockée.
 		$query = 'EXEC [addUser]';
 		$query .= '@languageCode = "' . $user->getLanguageCode() . '", ';
 		$query .= '@role = "' . $user->getRole() . '", ';
@@ -65,6 +64,7 @@ class Users
 			case ROLE_ADMINISTRATOR:
 				$user = new User (
 					$rows[0]['LanguageCode'],
+					$rows[0]['role'],
 					$rows[0]['username'],
 					$rows[0]['password']
 				);
@@ -98,7 +98,6 @@ class Users
 				break;
 
 			default:
-				// TODO : Implémenter l'erreur.
 				throw new Exception(ERROR_ROLE_INVALID);
 		}
 
@@ -134,6 +133,7 @@ class Users
 			case ROLE_ADMINISTRATOR:
 				$user = new User (
 					$rows[0]['LanguageCode'],
+					$rows[0]['role'],
 					$rows[0]['username'],
 					$rows[0]['password']
 				);
@@ -167,7 +167,6 @@ class Users
 				break;
 
 			default:
-				// TODO : Implémenter l'erreur.
 				throw new Exception(ERROR_ROLE_INVALID);
 		}
 

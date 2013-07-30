@@ -22,7 +22,6 @@ class States
 	 */
 	public static function find($code)
 	{
-		// TODO : Implémenter la procédure stockée.
 		$query = 'EXEC [getStateById]';
 		$query .= '@id = "' . intval($code) . '" ,';
 		$query .= '@languageCode = "' . Language::getCurrent() . '"';
@@ -30,7 +29,6 @@ class States
 		$rows = Database::Execute($query);
 
 		if (empty($rows)) {
-			// TODO : Implémenter l'erreur.
 			throw new Exception(ERROR_STATE_DOESNT_EXIST);
 		}
 
@@ -46,10 +44,11 @@ class States
 	 * Retourne les états ou provinces du pays.
 	 *
 	 * @param $countryCode
+	 *
+	 * @return array|State
 	 */
 	public static function filterByCountryCode($countryCode)
 	{
-		// TODO : Implémenter la procédure stockée.
 		$query = 'EXEC [getStatesByCountryId]';
 		$query .= '@countryId = "' . intval($countryCode) . '" , ';
 		$query .= '@languageCode = "' . Language::getCurrent() . '"';

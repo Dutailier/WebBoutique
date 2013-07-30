@@ -20,7 +20,6 @@ class Stores
 	 */
 	public static function Find($ref)
 	{
-		// TODO : Implémenter la procédure stockée.
 		$query = 'EXEC [getStoreByRef]';
 		$query .= '@ref = "' . intval($ref) . '"';
 

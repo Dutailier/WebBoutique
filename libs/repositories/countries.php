@@ -22,7 +22,6 @@ class Countries
 	 */
 	public static function Find($code)
 	{
-		// TODO : Implémenter la procédure stockée.
 		$query = 'EXEC [getCountryByCode]';
 		$query .= '@code = "' . intval($code) . '", ';
 		$query .= '@languageCode = "' . Language::getCurrent() . '"';
@@ -30,7 +29,6 @@ class Countries
 		$rows = Database::Execute($query);
 
 		if (empty($rows)) {
-			// TODO : Implémenter l'erreur.
 			throw new Exception(ERROR_COUNTRY_DOESNT_EXIST);
 		}
 
@@ -48,7 +46,6 @@ class Countries
 	 */
 	public static function All()
 	{
-		// TODO : Implémenter la procédure stockée.
 		$query = 'EXEC [getCountries]';
 		$query .= '@languageCode = "' . Language::getCurrent() . '"';
 
