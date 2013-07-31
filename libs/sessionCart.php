@@ -9,7 +9,7 @@ include_once(ROOT . 'libs/interfaces/iitem.php');
  */
 final class SessionCart implements ICart
 {
-	const ITEMS_IDENTIFIER = '_ITEMS_';
+	const CART_IDENTIFIER = '__CART__';
 
 	private $items;
 
@@ -23,11 +23,9 @@ final class SessionCart implements ICart
 			session_start();
 		}
 
-		if (!isset($_SESSION[self::ITEMS_IDENTIFIER])) {
-			$_SESSION[self::ITEMS_IDENTIFIER] = array();
+		if (isSet($_SESSION[self::CART_IDENTIFIER])) {
+			$this->Copy(unserialize($_SESSION[self::CART_IDENTIFIER]));
 		}
-
-		$this->items = & $_SESSION[self::ITEMS_IDENTIFIER];
 	}
 
 
@@ -41,6 +39,15 @@ final class SessionCart implements ICart
 	public function Copy(ICart $cart)
 	{
 		$this->items = $cart->getItems();
+	}
+
+
+	/**
+	 * Sauvegarde le panier d'achats.
+	 */
+	public function Save()
+	{
+		$_SESSION[self::CART_IDENTIFIER] = serialize($this);
 	}
 
 
@@ -145,12 +152,15 @@ final class SessionCart implements ICart
 			$item->setQuantity($quantity);
 		}
 
+		$this->Save();
+
 		return $item->getQuantity();
 	}
 
 
 	/**
 	 * Retourne vrai si le panier d'achats ne contient aucun item.
+	 *
 	 * @return bool
 	 */
 	public function isEmpty()
@@ -162,6 +172,7 @@ final class SessionCart implements ICart
 	/**
 	 * Retourne un tableau fixe de tous les items.
 	 * dans le panier d'achats.
+	 *
 	 * @return array
 	 */
 	public function getItems()
@@ -176,6 +187,7 @@ final class SessionCart implements ICart
 	public function Clear()
 	{
 		$this->items = array();
+		$this->Save();
 	}
 
 

@@ -17,6 +17,8 @@ define('TRANSACTION_STATUS_PAYMENT_IS_COMPLETE', 3); // La paiement est complét
  */
 class SessionTransaction
 {
+	const TRANSACTION_IDENTIFIER = '__TRANSACTION__';
+
 	private $status;
 	private $user;
 	private $cart;
@@ -31,8 +33,42 @@ class SessionTransaction
 	 */
 	public function __construct()
 	{
+		if (session_id() == '') {
+			session_start();
+		}
+
+		if (isSet($_SESSION[self::TRANSACTION_IDENTIFIER])) {
+			$this->Copy(unserialize($_SESSION[self::TRANSACTION_IDENTIFIER]));
+		}
+
 		$this->setStatus(TRANSACTION_STATUS_OPEN);
 		$this->setUser(Security::getUserConnected());
+	}
+
+
+	/**
+	 * Copie la transaction.
+	 *
+	 * @param SessionTransaction $transaction
+	 */
+	public function Copy(SessionTransaction $transaction)
+	{
+		$this->status        = $transaction->status;
+		$this->user          = $transaction->user;
+		$this->cart          = $transaction->cart;
+		$this->order         = $transaction->order;
+		$this->lines         = $transaction->lines;
+		$this->recipientInfo = $transaction->recipientInfo;
+		$this->shippingInfo  = $transaction->shippingInfo;
+	}
+
+
+	/**
+	 * Sauvegarde la transaction en session.
+	 */
+	public function Save()
+	{
+		$_SESSION[self::TRANSACTION_IDENTIFIER] = serialize($this);
 	}
 
 
@@ -42,6 +78,10 @@ class SessionTransaction
 	 */
 	public function Checkout()
 	{
+		if ($this->getStatus() >= TRANSACTION_STATUS_CHECKOUT) {
+			throw new Exception(ERROR_TRANSACTION_ALREADY_CHECKOUT);
+		}
+
 		foreach ($this->cart->getItems as $item) {
 			$this->lines[] = new Line(
 				$item->getProductSku(),
@@ -52,6 +92,7 @@ class SessionTransaction
 		}
 
 		$this->setStatus(TRANSACTION_STATUS_CHECKOUT);
+		$this->Save();
 	}
 
 
@@ -64,6 +105,10 @@ class SessionTransaction
 	 */
 	public function ReadyToPay()
 	{
+		if ($this->getStatus() >= TRANSACTION_STATUS_READY_TO_PAY) {
+			throw new Exception(ERROR_TRANSACTION_ALREADY_COMPLETE);
+		}
+
 		// Définit la commande
 		$this->setOrder($this->user->getId());
 
@@ -85,6 +130,7 @@ class SessionTransaction
 		}
 
 		$this->setStatus(TRANSACTION_STATUS_READY_TO_PAY);
+		$this->Save();
 	}
 
 
@@ -101,7 +147,10 @@ class SessionTransaction
 			$this->cart = new SessionCart();
 		}
 
-		return $this->cart->Add($item);
+		$quantity = $this->cart->Add($item);
+		$this->Save();
+
+		return $quantity;
 	}
 
 
@@ -114,8 +163,14 @@ class SessionTransaction
 	 */
 	public function RemoveItem(Item $item)
 	{
-		return isSet($this->cart) ?
-			$this->cart->Remove($item) : 0;
+		if (!isSet($this->cart)) {
+			return 0;
+		}
+
+		$quantity = $this->cart->Remove($item);
+		$this->Save();
+
+		return $quantity;
 	}
 
 
@@ -125,6 +180,7 @@ class SessionTransaction
 	public function ClearCart()
 	{
 		$this->cart->Clear();
+		$this->Save();
 	}
 
 
@@ -137,6 +193,7 @@ class SessionTransaction
 	private function setStatus($status)
 	{
 		$this->status = $status;
+		$this->Save();
 	}
 
 
@@ -160,6 +217,8 @@ class SessionTransaction
 	private function setUser($user)
 	{
 		$this->user = $user;
+
+		$this->Save();
 	}
 
 
@@ -184,6 +243,8 @@ class SessionTransaction
 		$this->order = new Order (
 			$userId
 		);
+
+		$this->Save();
 	}
 
 
@@ -220,6 +281,8 @@ class SessionTransaction
 			$phone,
 			$email
 		);
+
+		$this->Save();
 	}
 
 
@@ -250,6 +313,8 @@ class SessionTransaction
 			$zipCode,
 			$stateCode
 		);
+
+		$this->Save();
 	}
 
 
