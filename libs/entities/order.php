@@ -3,7 +3,7 @@
 include_once(ROOT . 'libs/repositories/logs.php');
 include_once(ROOT . 'libs/repositories/users.php');
 include_once(ROOT . 'libs/repositories/comments.php');
-include_once(ROOT . 'libs/repositories/recipients.php');
+include_once(ROOT . 'libs/repositories/recipientInfos.php');
 include_once(ROOT . 'libs/repositories/shippingInfos.php');
 
 define('ORDER_STATUS_CANCELED', -1);
@@ -230,11 +230,11 @@ class Order
 	/**
 	 * Retourne le destinateur de la commande.
 	 *
-	 * @return Recipient
+	 * @return RecipientInfo
 	 */
 	public function getRecipient()
 	{
-		return Recipients::Find($this->getUserId());
+		return RecipientInfos::Find($this->getUserId());
 	}
 
 

@@ -1,10 +1,10 @@
 <?php
 
 /**
- * Class Recipient
+ * Class RecipientInfo
  * Représente le destinateur d'une commande.
  */
-class Recipient
+class RecipientInfo
 {
 	private $orderId;
 	private $languageCode;
@@ -19,7 +19,6 @@ class Recipient
 	/**
 	 * Initialise le destinateur de la commande.
 	 *
-	 * @param $orderId
 	 * @param $languageCode
 	 * @param $greeting
 	 * @param $name
@@ -28,9 +27,8 @@ class Recipient
 	 * @param $phone
 	 * @param $email
 	 */
-	function __construct($orderId, $languageCode, $greeting, $name, $firstname, $lastname, $phone, $email)
+	function __construct($languageCode, $greeting, $name, $firstname, $lastname, $phone, $email)
 	{
-		$this->setOrderId($orderId);
 		$this->setLanguageCode($lastname);
 		$this->setGreeting($greeting);
 		$this->setName($name);

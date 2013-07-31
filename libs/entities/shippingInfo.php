@@ -16,15 +16,13 @@ class ShippingInfo
 	/**
 	 * Initialise les informations d'expédition.
 	 *
-	 * @param $orderId
 	 * @param $street
 	 * @param $city
 	 * @param $zipCode
 	 * @param $stateCode
 	 */
-	function __construct($orderId, $street, $city, $zipCode, $stateCode)
+	function __construct($street, $city, $zipCode, $stateCode)
 	{
-		$this->setOrderId($orderId);
 		$this->setStreet($street);
 		$this->setCity($city);
 		$this->setZipCode($zipCode);

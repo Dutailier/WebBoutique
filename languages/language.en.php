@@ -55,6 +55,8 @@ define('ERROR_SHIPPING_INFO_DOESNT_EXIST', 'The shipping infos doesn\'t exist.')
 define('ERROR_STATE_DOESNT_EXIST', 'The state doesn\'t exist.');
 define('ERROR_STORE_DOESNT_EXIST', 'The store doesn\'t exist.');
 define('ERROR_ROLE_INVALID', 'The role isn\'t valid.');
+define('ERROR_LINE_WASNT_ADDED', 'The line wasn\'t added.');
+define('ERROR_LINE_DOESNT_EXIST', 'The line doesn\'t exist.');
 
 // Erreurs de base de donnéées
 define('ERROR_DB_EXECUTION_FAILED', 'The execution of the query failed.');

@@ -1,23 +1,23 @@
 <?php
 
 include_once(ROOT . 'libs/database.php');
-include_once(ROOT . 'libs/entities/recipient.php');
+include_once(ROOT . 'libs/entities/recipientInfo.php');
 
 /**
- * Class Recipients
- * Gère les méthodes manipulant l'entité Recipient.
+ * Class RecipientInfos
+ * Gère les méthodes manipulant l'entité RecipientInfo.
  */
-class Recipients
+class RecipientInfos
 {
 	/**
 	 * Ajoute un destinateur à une commande.
 	 *
-	 * @param Recipient $recipient
+	 * @param RecipientInfo $recipient
 	 *
-	 * @return Recipient
+	 * @return RecipientInfo
 	 * @throws Exception
 	 */
-	public static function Attach(Recipient $recipient)
+	public static function Attach(RecipientInfo $recipient)
 	{
 		$query = 'EXEC [addRecipient]';
 		$query .= '@userId = "' . $recipient->getUserId() . '", ';
@@ -28,7 +28,7 @@ class Recipients
 			throw new Exception(ERROR_RECIPIENT_WASNT_ADDED);
 		}
 
-		return new Recipient(
+		return new RecipientInfo(
 			$rows[0]['orderId'],
 			$rows[0]['languageCode'],
 			$rows[0]['greeting'],
@@ -46,7 +46,7 @@ class Recipients
 	 *
 	 * @param $id
 	 *
-	 * @return Recipient
+	 * @return RecipientInfo
 	 * @throws Exception
 	 */
 	public static function Find($id)
@@ -60,7 +60,7 @@ class Recipients
 			throw new Exception(ERROR_RECIPIENT_DOESNT_EXIST);
 		}
 
-		return new Recipient(
+		return new RecipientInfo(
 			$rows[0]['orderId'],
 			$rows[0]['languageCode'],
 			$rows[0]['greeting'],

@@ -55,6 +55,8 @@ define('ERROR_SHIPPING_INFO_DOESNT_EXIST', 'Les informations d\'expéditions n\'
 define('ERROR_STATE_DOESNT_EXIST', 'L\'état ou la province n\'existe pas.');
 define('ERROR_STORE_DOESNT_EXIST', 'Le commerçant n\'existe pas.');
 define('ERROR_ROLE_INVALID', 'Le rôle n\'est pas valide.');
+define('ERROR_LINE_WASNT_ADDED', 'La ligne n\'a pas correctement été ajouté.');
+define('ERROR_LINE_DOESNT_EXIST', 'La ligne n\'existe pas.');
 
 // Erreurs de base de donnéées
 define('ERROR_DB_EXECUTION_FAILED', 'L\'exécution de la requête à échouée.');
