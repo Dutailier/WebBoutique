@@ -15,6 +15,7 @@ class Recipients
 	 * @param Recipient $recipient
 	 *
 	 * @return Recipient
+	 * @throws Exception
 	 */
 	public static function Attach(Recipient $recipient)
 	{
@@ -22,6 +23,10 @@ class Recipients
 		$query .= '@userId = "' . $recipient->getUserId() . '", ';
 
 		$rows = Database::Execute($query);
+
+		if (empty($rows)) {
+			throw new Exception(ERROR_RECIPIENT_WASNT_ADDED);
+		}
 
 		return new Recipient(
 			$rows[0]['orderId'],
@@ -42,6 +47,7 @@ class Recipients
 	 * @param $id
 	 *
 	 * @return Recipient
+	 * @throws Exception
 	 */
 	public static function Find($id)
 	{
@@ -50,6 +56,9 @@ class Recipients
 
 		$rows = Database::Execute($query);
 
+		if (empty($rows)) {
+			throw new Exception(ERROR_RECIPIENT_DOESNT_EXIST);
+		}
 
 		return new Recipient(
 			$rows[0]['orderId'],

@@ -39,22 +39,33 @@ class Pipings
 	}
 
 
-
 	/**
-	 * Retourne tous les passepoils.
+	 * Retourne les passepoils disponibles pour l'utilisateur selon
+	 * le type, le modèle, le fini et le tissu sélectionné.
 	 *
-	 * @return array
+	 * @param $typeCode
+	 * @param $modelCode
+	 * @param $finishCode
+	 * @param $fabricCode
+	 * @param $userId
+	 *
+	 * @return mixed
 	 */
-	public static function All()
+	public static function FilterByComponent($typeCode, $modelCode, $finishCode, $fabricCode, $userId)
 	{
 		$query = 'EXEC [getPipings]';
+		$query .= '@typeCode = "' . $typeCode . '", ';
+		$query .= '@modelCode = "' . $modelCode . '", ';
+		$query .= '@finishCode = "' . $finishCode . '", ';
+		$query .= '@fabricCode = "' . $fabricCode . '", ';
+		$query .= '@userId = "' . $userId . '", ';
 		$query .= '@LanguageCode = "' . Language::getCurrent() . '"';
 
 		$rows = Database::Execute($query);
 
-		$pipings = array();
+		$fabrics = array();
 		foreach ($rows as $row) {
-			$pipings[] = new Piping (
+			$fabrics[] = new Piping (
 				$row['code'],
 				$row['name']
 			);

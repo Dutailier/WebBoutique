@@ -41,13 +41,25 @@ class Fabrics
 
 
 	/**
-	 * Retourne tous les tissus.
+	 * Retourne les tissus disponibles pour l'utilisteur selon
+	 * le type, le modèle, le fini et le passepoil sélectionné.
+	 *
+	 * @param $typeCode
+	 * @param $modelCode
+	 * @param $finishCode
+	 * @param $pipingCode
+	 * @param $userId
 	 *
 	 * @return array
 	 */
-	public static function All()
+	public static function All($typeCode, $modelCode, $finishCode, $pipingCode, $userId)
 	{
 		$query = 'EXEC [getFabrics]';
+		$query .= '@typeCode = "' . $typeCode . '", ';
+		$query .= '@modelCode = "' . $modelCode . '", ';
+		$query .= '@finishCode = "' . $finishCode . '", ';
+		$query .= '@pipingCode = "' . $pipingCode . '", ';
+		$query .= '@userId = "' . $userId . '", ';
 		$query .= '@LanguageCode = "' . Language::getCurrent() . '"';
 
 		$rows = Database::Execute($query);

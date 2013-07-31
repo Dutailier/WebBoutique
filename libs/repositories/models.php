@@ -40,18 +40,19 @@ class Models
 
 
 	/**
-	 * Retourne tous les modèles disponibles pour l'utilisateur et le type.
+	 * Retourne tous les modèles disponible pour l'utilisateur selon
+	 * le type sélectionné.
 	 *
-	 * @param $userId
 	 * @param $typeCode
+	 * @param $userId
 	 *
 	 * @return array
 	 */
-	public static function All($userId, $typeCode)
+	public static function FilterByComponent($typeCode, $userId)
 	{
 		$query = 'EXEC [getModels]';
-		$query .= '@userId = "' . intval($userId) . '", ';
 		$query .= '@typeCode = "' . $typeCode . '", ';
+		$query .= '@userId = "' . intval($userId) . '", ';
 		$query .= '@LanguageCode = "' . Language::getCurrent() . '"';
 
 		$rows = Database::Execute($query);

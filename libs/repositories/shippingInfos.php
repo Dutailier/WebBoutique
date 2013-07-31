@@ -23,6 +23,10 @@ class ShippingInfos
 
 		$rows = Database::Execute($query);
 
+		if(empty($row)) {
+			throw new Exception(ERROR_SHIPPING_INFO_WASNT_ADDED);
+		}
+
 		return new ShippingInfo(
 			$rows[0]['orderId'],
 			$rows[0]['street'],
@@ -46,6 +50,10 @@ class ShippingInfos
 		$query .= '@id = "' . intval($id) . '"';
 
 		$rows = Database::Execute($query);
+
+		if(empty($row)) {
+			throw new Exception(ERROR_SHIPPING_INFO_DOESNT_EXIST);
+		}
 
 		return new ShippingInfo(
 			$rows[0]['orderId'],

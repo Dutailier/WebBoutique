@@ -40,18 +40,25 @@ class Finishs
 
 
 	/**
-	 * Retourne tous les finis disponibles pour l'utilisateur et le modèle.
+	 * Retourne les finis disponible pour l'utilisateur selon
+	 * le type, le modèle, le tissu et le passepoil sélectionné.
 	 *
-	 * @param $userId
+	 * @param $typeCode
 	 * @param $modelCode
+	 * @param $fabricCode
+	 * @param $pipingCode
+	 * @param $userId
 	 *
 	 * @return array
 	 */
-	public static function All($userId, $modelCode)
+	public static function All($typeCode, $modelCode, $fabricCode, $pipingCode, $userId)
 	{
 		$query = 'EXEC [getFinishs]';
-		$query .= '@userId = "' . intval($userId) . '", ';
+		$query .= '@typeCode = "' . $typeCode . '", ';
 		$query .= '@modelCode = "' . $modelCode . '", ';
+		$query .= '@fabricCode = "' . $fabricCode . '", ';
+		$query .= '@pipingCode = "' . $pipingCode . '", ';
+		$query .= '@userId = "' . $userId . '", ';
 		$query .= '@LanguageCode = "' . Language::getCurrent() . '"';
 
 		$rows = Database::Execute($query);

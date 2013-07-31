@@ -15,6 +15,7 @@ class Orders
 	 * @param Order $order
 	 *
 	 * @return Order
+	 * @throws Exception
 	 */
 	public static function Attach(Order $order)
 	{
@@ -22,6 +23,10 @@ class Orders
 		$query .= '@userId = "' . $order->getUserId() . '", ';
 
 		$rows = Database::Execute($query);
+
+		if (empty($row)) {
+			throw new Exception(ERROR_ORDER_WASNT_ADDED);
+		}
 
 		$order = new Order(
 			$rows[0]['userId']
@@ -43,6 +48,7 @@ class Orders
 	 * @param $id
 	 *
 	 * @return Order
+	 * @throws Exception
 	 */
 	public static function Find($id)
 	{
@@ -50,6 +56,10 @@ class Orders
 		$query .= '@id = "' . intval($id) . '"';
 
 		$rows = Database::Execute($query);
+
+		if (empty($rows)) {
+			throw new Exception(ERROR_ORDER_DOESNT_EXIST);
+		}
 
 		$order = new Order(
 			$rows[0]['userId']

@@ -46,7 +46,7 @@ class Types
 	 *
 	 * @return array
 	 */
-	public static function All($userId)
+	public static function FilterByComponent($userId)
 	{
 		$query = 'EXEC [getTypes]';
 		$query .= '@userId = "' . intval($userId) . '", ';
