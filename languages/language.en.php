@@ -29,6 +29,12 @@ define('ERROR_CREDENTIELS_REQUIRED', 'Username and password are required.');
 define('ERROR_CREDENTIELS_INCORRECT', 'Username or password incorrect.');
 define('ERROR_AUTHENTIFICATION_REQUIRED', 'Your authentification is required.');
 
+// Erreurs de transaction
+define('ERROR_TRANSACTION_ALREADY_CHECKOUT', 'You have already checkout.');
+define('ERROR_TRANSACTION_ALREADY_COMPLETE', 'You have already complete the recipient and shipping information.');
+define('ERROR_TRANSACTION_STATUS_INVALID', 'The status is invalid.');
+define('ERROR_TRANSACTION_ALREADY_OPEN', 'The transaction is already open.');
+
 // Erreurs d'entités
 define('ERROR_USER_DOESNT_EXIST', 'The user doesn\'t exist.');
 define('ERROR_USER_WASNT_ADDED', 'The user wasn\'t added.');

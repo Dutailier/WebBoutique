@@ -29,6 +29,12 @@ define('ERROR_CREDENTIELS_REQUIRED', 'Le nom d\'utilisateur et le mot de passe s
 define('ERROR_CREDENTIELS_INCORRECT', 'Le nom d\'utilisateur ou le mot de passe est incorrect.');
 define('ERROR_AUTHENTIFICATION_REQUIRED', 'Vous devez être authentifié.');
 
+// Erreurs de transaction
+define('ERROR_TRANSACTION_ALREADY_CHECKOUT', 'Vous avez déjà finalisé vos achats.');
+define('ERROR_TRANSACTION_ALREADY_COMPLETE', 'Les informations d\'expédition ont déjà été inscrites.');
+define('ERROR_TRANSACTION_STATUS_INVALID', 'Le statut n\'est pas valide.');
+define('ERROR_TRANSACTION_ALREADY_OPEN', 'La transaction a déjà débuté.');
+
 // Erreurs d'entités
 define('ERROR_USER_DOESNT_EXIST', 'L\'utilisteur n\'existe pas.');
 define('ERROR_USER_WASNT_ADDED', 'L\'utilisateur n\'a pas correctement été ajouté.');
