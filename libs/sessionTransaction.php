@@ -41,8 +41,8 @@ class SessionTransaction
 			$this->Copy(unserialize($_SESSION[self::TRANSACTION_IDENTIFIER]));
 		}
 
-		$this->setStatus(TRANSACTION_STATUS_OPEN);
 		$this->setUser(Security::getUserConnected());
+		$this->setStatus(TRANSACTION_STATUS_OPEN);
 	}
 
 
@@ -140,9 +140,14 @@ class SessionTransaction
 	 * @param Item $item
 	 *
 	 * @return mixed
+	 * @throws Exception
 	 */
 	public function AddItem(Item $item)
 	{
+		if ($this->getStatus() >= TRANSACTION_STATUS_CHECKOUT) {
+			throw new Exception(ERROR_TRANSACTION_ALREADY_CHECKOUT);
+		}
+
 		if (!isSet($this->cart)) {
 			$this->cart = new SessionCart();
 		}
@@ -160,9 +165,14 @@ class SessionTransaction
 	 * @param Item $item
 	 *
 	 * @return int
+	 * @throws Exception
 	 */
 	public function RemoveItem(Item $item)
 	{
+		if ($this->getStatus() >= TRANSACTION_STATUS_CHECKOUT) {
+			throw new Exception(ERROR_TRANSACTION_ALREADY_CHECKOUT);
+		}
+
 		if (!isSet($this->cart)) {
 			return 0;
 		}
@@ -176,9 +186,15 @@ class SessionTransaction
 
 	/**
 	 * Vide le panier d'achats.
+	 *
+	 * @throws Exception
 	 */
 	public function ClearCart()
 	{
+		if ($this->getStatus() >= TRANSACTION_STATUS_CHECKOUT) {
+			throw new Exception(ERROR_TRANSACTION_ALREADY_CHECKOUT);
+		}
+
 		$this->cart->Clear();
 		$this->Save();
 	}
@@ -188,10 +204,16 @@ class SessionTransaction
 	 * Définit le statut.
 	 * (Statuts définits ci-haut.)
 	 *
-	 * @param mixed $status
+	 * @param $status
+	 *
+	 * @throws Exception
 	 */
 	private function setStatus($status)
 	{
+		if ($this->getStatus() >= $status) {
+			throw new Exception(ERROR_TRANSACTION_STATUS_INVALID);
+		}
+
 		$this->status = $status;
 		$this->Save();
 	}
@@ -212,10 +234,16 @@ class SessionTransaction
 	/**
 	 * Définit l'utilisateur qui passe la commande.
 	 *
-	 * @param mixed $user
+	 * @param $user
+	 *
+	 * @throws Exception
 	 */
 	private function setUser($user)
 	{
+		if ($this->getStatus() >= TRANSACTION_STATUS_OPEN) {
+			throw new Exception(ERROR_TRANSACTION_ALREADY_OPEN);
+		}
+
 		$this->user = $user;
 
 		$this->Save();
@@ -237,9 +265,15 @@ class SessionTransaction
 	 * Définit la commande.
 	 *
 	 * @param $userId
+	 *
+	 * @throws Exception
 	 */
 	private function setOrder($userId)
 	{
+		if ($this->getStatus() >= TRANSACTION_STATUS_READY_TO_PAY) {
+			throw new Exception(ERROR_TRANSACTION_ALREADY_COMPLETE);
+		}
+
 		$this->order = new Order (
 			$userId
 		);
@@ -262,16 +296,22 @@ class SessionTransaction
 	/**
 	 * Définit les informations du destinateur.
 	 *
-	 * @param $languageCode
 	 * @param $greeting
+	 * @param $languageCode
 	 * @param $name
 	 * @param $firstname
 	 * @param $lastname
 	 * @param $phone
 	 * @param $email
+	 *
+	 * @throws Exception
 	 */
 	public function setRecipientInfo($greeting, $languageCode, $name, $firstname, $lastname, $phone, $email)
 	{
+		if ($this->getStatus() >= TRANSACTION_STATUS_READY_TO_PAY) {
+			throw new Exception(ERROR_TRANSACTION_ALREADY_COMPLETE);
+		}
+
 		$this->recipientInfo = new RecipientInfo(
 			$languageCode,
 			$greeting,
@@ -304,9 +344,15 @@ class SessionTransaction
 	 * @param $city
 	 * @param $zipCode
 	 * @param $stateCode
+	 *
+	 * @throws Exception
 	 */
 	public function setShippingInfo($street, $city, $zipCode, $stateCode)
 	{
+		if ($this->getStatus() >= TRANSACTION_STATUS_READY_TO_PAY) {
+			throw new Exception(ERROR_TRANSACTION_ALREADY_COMPLETE);
+		}
+
 		$this->shippingInfo = new ShippingInfo(
 			$street,
 			$city,

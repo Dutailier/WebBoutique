@@ -15,15 +15,20 @@ class ShippingInfos
 	 * @param ShippingInfo $shippingInfo
 	 *
 	 * @return ShippingInfo
+	 * @throws Exception
 	 */
 	public static function Attach(ShippingInfo $shippingInfo)
 	{
 		$query = 'EXEC [addShippingInfo]';
-		$query .= '@userId = "' . $shippingInfo->getUserId() . '", ';
+		$query .= '@orderId = "' . $shippingInfo->getOrderId() . '", ';
+		$query .= '@street = "' . $shippingInfo->getStreet() . '", ';
+		$query .= '@city = "' . $shippingInfo->getCity() . '", ';
+		$query .= '@zipCode = "' . $shippingInfo->getZipCode() . '", ';
+		$query .= '@stateCode = "' . $shippingInfo->getStateCode() . '"';
 
 		$rows = Database::Execute($query);
 
-		if(empty($row)) {
+		if (empty($row)) {
 			throw new Exception(ERROR_SHIPPING_INFO_WASNT_ADDED);
 		}
 
@@ -43,6 +48,7 @@ class ShippingInfos
 	 * @param $id
 	 *
 	 * @return ShippingInfo
+	 * @throws Exception
 	 */
 	public static function Find($id)
 	{
@@ -51,7 +57,7 @@ class ShippingInfos
 
 		$rows = Database::Execute($query);
 
-		if(empty($row)) {
+		if (empty($row)) {
 			throw new Exception(ERROR_SHIPPING_INFO_DOESNT_EXIST);
 		}
 

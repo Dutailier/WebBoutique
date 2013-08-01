@@ -20,7 +20,14 @@ class RecipientInfos
 	public static function Attach(RecipientInfo $recipient)
 	{
 		$query = 'EXEC [addRecipient]';
-		$query .= '@userId = "' . $recipient->getUserId() . '", ';
+		$query .= '@orderId = "' . $recipient->getOrderId() . '", ';
+		$query .= '@languageCode = "' . $recipient->getLanguageCode() . '", ';
+		$query .= '@greeting = "' . $recipient->getGreeting() . '", ';
+		$query .= '@name = "' . $recipient->getName() . '", ';
+		$query .= '@firstname = "' . $recipient->getFirstname() . '", ';
+		$query .= '@lastname = "' . $recipient->getLastname() . '", ';
+		$query .= '@phone = "' . $recipient->getPhone() . '", ';
+		$query .= '@email = "' . $recipient->getEmail() . '"';
 
 		$rows = Database::Execute($query);
 

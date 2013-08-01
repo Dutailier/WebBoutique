@@ -71,6 +71,6 @@ class Pipings
 			);
 		}
 
-		return $pipings;
+		return $fabrics;
 	}
 }
