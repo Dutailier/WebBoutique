@@ -50,7 +50,7 @@ class Models
 	 */
 	public static function FilterByComponent($typeCode, $userId)
 	{
-		$query = 'EXEC [getModels]';
+		$query = 'EXEC [getModelsByComponent]';
 		$query .= '@typeCode = "' . $typeCode . '", ';
 		$query .= '@userId = "' . intval($userId) . '", ';
 		$query .= '@LanguageCode = "' . Language::getCurrent() . '"';

@@ -19,7 +19,7 @@ class RecipientInfos
 	 */
 	public static function Attach(RecipientInfo $recipient)
 	{
-		$query = 'EXEC [addRecipient]';
+		$query = 'EXEC [addRecipientInfo]';
 		$query .= '@orderId = "' . $recipient->getOrderId() . '", ';
 		$query .= '@languageCode = "' . $recipient->getLanguageCode() . '", ';
 		$query .= '@greeting = "' . $recipient->getGreeting() . '", ';
@@ -58,7 +58,7 @@ class RecipientInfos
 	 */
 	public static function Find($id)
 	{
-		$query = 'EXEC [getRecipientById]';
+		$query = 'EXEC [getRecipientInfoById]';
 		$query .= '@id = "' . intval($id) . '"';
 
 		$rows = Database::Execute($query);

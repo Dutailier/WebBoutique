@@ -53,7 +53,7 @@ class Pipings
 	 */
 	public static function FilterByComponent($typeCode, $modelCode, $finishCode, $fabricCode, $userId)
 	{
-		$query = 'EXEC [getPipings]';
+		$query = 'EXEC [getPipingsByComponent]';
 		$query .= '@typeCode = "' . $typeCode . '", ';
 		$query .= '@modelCode = "' . $modelCode . '", ';
 		$query .= '@finishCode = "' . $finishCode . '", ';

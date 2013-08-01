@@ -52,9 +52,9 @@ class Fabrics
 	 *
 	 * @return array
 	 */
-	public static function All($typeCode, $modelCode, $finishCode, $pipingCode, $userId)
+	public static function FilterByComponent($typeCode, $modelCode, $finishCode, $pipingCode, $userId)
 	{
-		$query = 'EXEC [getFabrics]';
+		$query = 'EXEC [getFabricsByComponent]';
 		$query .= '@typeCode = "' . $typeCode . '", ';
 		$query .= '@modelCode = "' . $modelCode . '", ';
 		$query .= '@finishCode = "' . $finishCode . '", ';

@@ -22,7 +22,7 @@ class States
 	 */
 	public static function find($code)
 	{
-		$query = 'EXEC [getStateById]';
+		$query = 'EXEC [getStateByCode]';
 		$query .= '@id = "' . intval($code) . '" ,';
 		$query .= '@languageCode = "' . Language::getCurrent() . '"';
 
@@ -49,7 +49,7 @@ class States
 	 */
 	public static function filterByCountryCode($countryCode)
 	{
-		$query = 'EXEC [getStatesByCountryId]';
+		$query = 'EXEC [getStatesByCountryCode]';
 		$query .= '@countryId = "' . intval($countryCode) . '" , ';
 		$query .= '@languageCode = "' . Language::getCurrent() . '"';
 

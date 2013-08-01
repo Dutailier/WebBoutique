@@ -48,7 +48,7 @@ class Types
 	 */
 	public static function FilterByComponent($userId)
 	{
-		$query = 'EXEC [getTypes]';
+		$query = 'EXEC [getTypesByComponent]';
 		$query .= '@userId = "' . intval($userId) . '", ';
 		$query .= '@languageCode = "' . Language::getCurrent() . '"';
 
