@@ -29,7 +29,7 @@ class RecipientInfos
 		$query .= '@phone = "' . $recipient->getPhone() . '", ';
 		$query .= '@email = "' . $recipient->getEmail() . '"';
 
-		$rows = Database::Execute($query);
+		$rows = Database::ODBCExecute($query);
 
 		if (empty($rows)) {
 			throw new Exception(ERROR_RECIPIENT_WASNT_ADDED);
@@ -61,7 +61,7 @@ class RecipientInfos
 		$query = 'EXEC [getRecipientInfoById]';
 		$query .= '@id = "' . intval($id) . '"';
 
-		$rows = Database::Execute($query);
+		$rows = Database::ODBCExecute($query);
 
 		if (empty($rows)) {
 			throw new Exception(ERROR_RECIPIENT_DOESNT_EXIST);

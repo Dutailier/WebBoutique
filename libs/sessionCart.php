@@ -3,6 +3,8 @@
 include_once(ROOT . 'libs/interfaces/icart.php');
 include_once(ROOT . 'libs/interfaces/iitem.php');
 
+define('NOT_FOUND', -1);
+
 /**
  * Class Cart
  * Représente un panier d'achats contenu en session.
@@ -62,7 +64,7 @@ final class SessionCart implements ICart
 	{
 		$index = $this->getIndexOfItem($item);
 
-		if ($index == -1) {
+		if ($index == NOT_FOUND) {
 			$this->items[] = $item;
 
 		} else {
@@ -87,7 +89,7 @@ final class SessionCart implements ICart
 	{
 		$index = $this->getIndexOfItem($item);
 
-		if ($index == -1) {
+		if ($index == NOT_FOUND) {
 			throw new Exception(ERROR_ITEM_DOESNT_EXIST);
 		}
 
@@ -116,7 +118,7 @@ final class SessionCart implements ICart
 	{
 		$index = $this->getIndexOfItem($item);
 
-		if ($index == -1) {
+		if ($index == NOT_FOUND) {
 			return 0;
 
 		} else {
@@ -143,7 +145,7 @@ final class SessionCart implements ICart
 
 		$index = $this->getIndexOfItem($item);
 
-		if ($index == -1) {
+		if ($index == NOT_FOUND) {
 			$item->setQuantity($quantity);
 			$this->items[] = $item;
 
@@ -192,7 +194,7 @@ final class SessionCart implements ICart
 
 
 	/**
-	 * Retourne l'index de l'item trouvé sinon retourne -1.
+	 * Retourne l'index de l'item trouvé sinon retourne NOT_FOUND.
 	 *
 	 * @param IItem $item
 	 *
@@ -206,6 +208,6 @@ final class SessionCart implements ICart
 			}
 		}
 
-		return -1;
+		return NOT_FOUND;
 	}
 }

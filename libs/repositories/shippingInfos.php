@@ -26,7 +26,7 @@ class ShippingInfos
 		$query .= '@zipCode = "' . $shippingInfo->getZipCode() . '", ';
 		$query .= '@stateCode = "' . $shippingInfo->getStateCode() . '"';
 
-		$rows = Database::Execute($query);
+		$rows = Database::ODBCExecute($query);
 
 		if (empty($row)) {
 			throw new Exception(ERROR_SHIPPING_INFO_WASNT_ADDED);
@@ -55,7 +55,7 @@ class ShippingInfos
 		$query = 'EXEC [getShippingInfoById]';
 		$query .= '@id = "' . intval($id) . '"';
 
-		$rows = Database::Execute($query);
+		$rows = Database::ODBCExecute($query);
 
 		if (empty($row)) {
 			throw new Exception(ERROR_SHIPPING_INFO_DOESNT_EXIST);

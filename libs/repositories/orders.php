@@ -22,7 +22,7 @@ class Orders
 		$query = 'EXEC [addOrder]';
 		$query .= '@userId = "' . $order->getUserId() . '", ';
 
-		$rows = Database::Execute($query);
+		$rows = Database::ODBCExecute($query);
 
 		if (empty($row)) {
 			throw new Exception(ERROR_ORDER_WASNT_ADDED);
@@ -55,7 +55,7 @@ class Orders
 		$query = 'EXEC [getOrderById]';
 		$query .= '@id = "' . intval($id) . '"';
 
-		$rows = Database::Execute($query);
+		$rows = Database::ODBCExecute($query);
 
 		if (empty($rows)) {
 			throw new Exception(ERROR_ORDER_DOESNT_EXIST);

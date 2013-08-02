@@ -30,7 +30,7 @@ class Customers
 		$query .= '@phone = "' . $customer->getPhone() . '", ';
 		$query .= '@email = "' . $customer->getEmail() . '"';
 
-		$rows = Database::Execute($query);
+		$rows = Database::ODBCExecute($query);
 
 		if (empty($rows)) {
 			throw new Exception(ERROR_CUSTOMER_WASNT_ADDED);

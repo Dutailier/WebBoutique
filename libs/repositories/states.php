@@ -23,10 +23,10 @@ class States
 	public static function find($code)
 	{
 		$query = 'EXEC [getStateByCode]';
-		$query .= '@id = "' . intval($code) . '" ,';
+		$query .= '@id = "' . $code . '" ,';
 		$query .= '@languageCode = "' . Language::getCurrent() . '"';
 
-		$rows = Database::Execute($query);
+		$rows = Database::ODBCExecute($query);
 
 		if (empty($rows)) {
 			throw new Exception(ERROR_STATE_DOESNT_EXIST);
@@ -50,10 +50,10 @@ class States
 	public static function filterByCountryCode($countryCode)
 	{
 		$query = 'EXEC [getStatesByCountryCode]';
-		$query .= '@countryId = "' . intval($countryCode) . '" , ';
+		$query .= '@countryId = "' . $countryCode . '" , ';
 		$query .= '@languageCode = "' . Language::getCurrent() . '"';
 
-		$rows = Database::Execute($query);
+		$rows = Database::ODBCExecute($query);
 
 		$states = array();
 		foreach ($rows as $row) {

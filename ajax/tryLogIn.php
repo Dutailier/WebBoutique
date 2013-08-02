@@ -12,9 +12,9 @@ if (empty($_POST['username']) || empty($_POST['password'])) {
 
 } else {
 	try {
-		$data['valid'] = Security::TryLogin(
-			$_POST['username'],
-			$_POST['password']);
+		if ($data['valid'] = Security::TryLogin($_POST['username'], $_POST['password'])) {
+			Language::setCurrent(Security::getUserConnected()->getLanguageCode());
+		}
 
 		$data['success'] = true;
 

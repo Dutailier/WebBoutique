@@ -23,7 +23,7 @@ class Stores
 		$query = 'EXEC [getStoreByRef]';
 		$query .= '@ref = "' . intval($ref) . '"';
 
-		$rows = Database::Execute($query);
+		$rows = Database::ODBCExecute($query);
 
 		if (empty($rows)) {
 			throw new Exception(ERROR_STORE_DOESNT_EXIST);

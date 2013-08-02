@@ -23,10 +23,10 @@ class Pipings
 	public static function Find($code)
 	{
 		$query = 'EXEC [getPipingByCode]';
-		$query .= '@code = "' . $code . '", ';
+		$query .= '@code = "' . intval($code) . '", ';
 		$query .= '@languageCode = "' . Language::getCurrent() . '"';
 
-		$rows = Database::Execute($query);
+		$rows = Database::ODBCExecute($query);
 
 		if (empty($rows)) {
 			throw new Exception(ERROR_PIPING_DOESNT_EXIST);
@@ -54,14 +54,14 @@ class Pipings
 	public static function FilterByComponent($typeCode, $modelCode, $finishCode, $fabricCode, $userId)
 	{
 		$query = 'EXEC [getPipingsByComponent]';
-		$query .= '@typeCode = "' . $typeCode . '", ';
-		$query .= '@modelCode = "' . $modelCode . '", ';
-		$query .= '@finishCode = "' . $finishCode . '", ';
-		$query .= '@fabricCode = "' . $fabricCode . '", ';
-		$query .= '@userId = "' . $userId . '", ';
+		$query .= '@typeCode = "' . intval($typeCode) . '", ';
+		$query .= '@modelCode = "' . intval($modelCode) . '", ';
+		$query .= '@finishCode = "' . intval($finishCode) . '", ';
+		$query .= '@fabricCode = "' . intval($fabricCode) . '", ';
+		$query .= '@userId = "' . intval($userId) . '", ';
 		$query .= '@LanguageCode = "' . Language::getCurrent() . '"';
 
-		$rows = Database::Execute($query);
+		$rows = Database::ODBCExecute($query);
 
 		$fabrics = array();
 		foreach ($rows as $row) {

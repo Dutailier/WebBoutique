@@ -8,6 +8,9 @@ include_once(ROOT . 'libs/repositories/states.php');
  */
 class Address
 {
+	const REGEX_ZIP_CODE_CA = '/^[a-z][0-9][a-z](\s)?[0-9][a-z][0-9]$/i';
+	const REGEX_ZIP_CODE_US = '/^[0-9]{5}$/';
+
 	private $userId;
 	private $stateCode;
 	private $street;
@@ -42,7 +45,7 @@ class Address
 	function getInfoArray()
 	{
 		return array(
-			'userIdd'   => $this->getUserId(),
+			'userId'    => $this->getUserId(),
 			'stateCode' => $this->getStateCode(),
 			'street'    => $this->getStreet(),
 			'city'      => $this->getCity(),
@@ -58,7 +61,7 @@ class Address
 	 */
 	private function setUserId($id)
 	{
-		$this->userId = $id;
+		$this->userId = intval($id);
 	}
 
 
@@ -142,11 +145,29 @@ class Address
 	/**
 	 * Définit le code postal de l'adresse.
 	 *
-	 * @param mixed $zipCode
+	 * @param $zipCode
+	 *
+	 * @throws Exception
 	 */
 	public function setZipCode($zipCode)
 	{
-		$this->zipCode = $zipCode;
+		switch (States::find($this->getStateCode())->getCountryCode()) {
+			case CANADA_CODE :
+				if (!preg_match(self::REGEX_ZIP_CODE_CA, $zipCode)) {
+					throw new Exception(ERROR_ADDRESS_ZIP_CODE_CA_INVALID);
+				}
+
+				$this->zipCode = preg_replace(' ', '', $zipCode);
+				break;
+
+			case UNITED_STATES_CODE:
+				if (!preg_match(self::REGEX_ZIP_CODE_US, $zipCode)) {
+					throw new Exception(ERROR_ADDRESS_ZIP_CODE_US_INVALID);
+				}
+
+				$this->zipCode = intval($zipCode);
+				break;
+		}
 	}
 
 

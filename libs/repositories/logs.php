@@ -22,7 +22,7 @@ class Logs
 		$query = 'EXEC [getLogById]';
 		$query .= '@id = "' . intval($id) . '"';
 
-		$rows = Database::Execute($query);
+		$rows = Database::ODBCExecute($query);
 
 		if (empty($rows)) {
 			throw new Exception(ERROR_LOG_DOESNT_EXIST);
@@ -50,7 +50,7 @@ class Logs
 		$query = 'EXEC [getLogsByOrderId]';
 		$query .= '@orderId = "' . intval($orderId) . '"';
 
-		$rows = Database::Execute($query);
+		$rows = Database::ODBCExecute($query);
 
 		$logs = array();
 		foreach ($rows as $row) {

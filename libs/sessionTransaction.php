@@ -47,6 +47,29 @@ class SessionTransaction
 
 
 	/**
+	 * Retourne un tableau contenant les propriétés de la transaction.
+	 *
+	 * @return array
+	 */
+	public function getInfoArray()
+	{
+		$infos = array(
+			'status'        => $this->getStatus(),
+			'user'          => $this->getUser()->getInfoArray(),
+			'order'         => $this->getOrder()->getInfoArray(),
+			'recipientInfo' => $this->getRecipientInfo()->getInfoArray(),
+			'shippingInfo'  => $this->getShippingInfo()->getInfoArray()
+		);
+
+		foreach ($this->getLines() as $line) {
+			$info['lines'][] = $line->getInfoArray();
+		}
+
+		return $infos;
+	}
+
+
+	/**
 	 * Copie la transaction.
 	 *
 	 * @param SessionTransaction $transaction
@@ -123,7 +146,7 @@ class SessionTransaction
 		$this->shippingInfo->setOrderId($this->order->getId());
 		$this->shippingInfo = ShippingInfos::Attach($this->shippingInfo);
 
-		// Ajoute les lignes de commande.
+		// Ajoute les lignes de commande à la base de données.
 		foreach ($this->lines as &$line) {
 			$line->setOrderId($this->order->getId());
 			$line = Lines::Attach($line);
@@ -245,7 +268,6 @@ class SessionTransaction
 		}
 
 		$this->user = $user;
-
 		$this->Save();
 	}
 
@@ -294,11 +316,51 @@ class SessionTransaction
 
 
 	/**
-	 * Définit les informations du destinateur.
+	 * Retourne les lignes de commande de la transaction.
 	 *
-	 * @param $greeting
+	 * @return mixed
+	 */
+	public function getLines()
+	{
+		return $this->lines;
+	}
+
+
+	/**
+	 * Définit les informations du destinateur si c'est un commerçant.
+	 *
 	 * @param $languageCode
 	 * @param $name
+	 * @param $phone
+	 * @param $email
+	 *
+	 * @throws Exception
+	 */
+	public function setStoreInfo($languageCode, $name, $phone, $email)
+	{
+		if ($this->getStatus() >= TRANSACTION_STATUS_READY_TO_PAY) {
+			throw new Exception(ERROR_TRANSACTION_ALREADY_COMPLETE);
+		}
+
+		$this->recipientInfo = new RecipientInfo(
+			$languageCode,
+			null,
+			$name,
+			null,
+			null,
+			$phone,
+			$email
+		);
+
+		$this->Save();
+	}
+
+
+	/**
+	 * Définit les informations du destinateur si c'est un consommateur.
+	 *
+	 * @param $languageCode
+	 * @param $greeting
 	 * @param $firstname
 	 * @param $lastname
 	 * @param $phone
@@ -306,7 +368,7 @@ class SessionTransaction
 	 *
 	 * @throws Exception
 	 */
-	public function setRecipientInfo($greeting, $languageCode, $name, $firstname, $lastname, $phone, $email)
+	public function setCustomerInfo($languageCode, $greeting, $firstname, $lastname, $phone, $email)
 	{
 		if ($this->getStatus() >= TRANSACTION_STATUS_READY_TO_PAY) {
 			throw new Exception(ERROR_TRANSACTION_ALREADY_COMPLETE);
@@ -315,7 +377,7 @@ class SessionTransaction
 		$this->recipientInfo = new RecipientInfo(
 			$languageCode,
 			$greeting,
-			$name,
+			null,
 			$firstname,
 			$lastname,
 			$phone,

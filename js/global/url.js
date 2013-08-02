@@ -1,7 +1,7 @@
 (function ($) {
 	/**
 	 * location class
-	 * Gère différentes méthodes manipulant l'location.
+	 * Gère différentes méthodes manipulant la location.
 	 */
 	$.URL = new function () {
 
@@ -9,28 +9,33 @@
 		this.keyValues = this.location.search.substr(1).split('&');
 
 		/**
-		 * Retourne les paramètres location.
-		 * @returns {{}}	Paramètres URL
+		 * Retourne la valeur du paramètre.
+		 *
+		 * @param key           Clé.
+		 *
+		 * @returns {string}    Valeur.
 		 */
-		this.getParams = function () {
+		this.getParam = function (key) {
 
-			var params = {};
-			for (var i = 0; i < this.keyValues.length; i++) {
+			var i = 0;
+			while (i < this.keyValues.length) {
 				var keyValue = this.keyValues[i].split('=');
 
-				if (keyValue.length == 2) {
-					params[keyValue[0]] = decodeURIComponent(keyValue[1]);
+				if (keyValue.length == 2 && keyValue[0] == key) {
+					return decodeURIComponent(keyValue[1]);
 				}
+				i++;
 			}
 
-			return params;
+			return null;
 		};
 
 
 		/**
-		 * Définit un paramètre location. (Recharge de la page)
-		 * @param key		Clé.
-		 * @param value		Valeur.
+		 * Définit un paramètre. (Recharge de la page)
+		 *
+		 * @param key        Clé.
+		 * @param value      Valeur.
 		 */
 		this.setParam = function (key, value) {
 
@@ -38,12 +43,13 @@
 			while (i < this.keyValues.length) {
 				var keyValue = this.keyValues[i].split('=');
 
-				if (keyValue[0] == key) {
+				if (keyValue.length == 2 && keyValue[0] == key) {
 					break;
 				}
-
 				i++;
 			}
+
+			// Si le paramètre n'existe pas, il sera ajouté.
 			this.keyValues[i] = [key, encodeURIComponent(value)].join('=');
 
 			this.location.search = this.keyValues.join('&');

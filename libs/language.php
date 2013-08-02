@@ -2,25 +2,29 @@
 
 include_once(ROOT . 'libs/security.php');
 
+define('LANGUAGE_FRENCH', 'FR');
+define('LANGUAGE_ENGLISH', 'EN');
+
 /**
  * Class Language
  * Gère les méthodes manipulant les langues.
  */
 class Language
 {
-	const LANGUAGE_IDENTITIFER = '_LANGUAGE_';
+	const LANGUAGE_IDENTITIFER = '__LANGUAGE__';
 
 
 	/**
 	 * Retourne la langue présentement sélectionnée.
+	 *
 	 * @return mixed
 	 */
 	public static function getCurrent()
 	{
-		if (isSet($_GET['lang'])) {
-			self::setCurrent($_GET['lang']);
+		if (isSet($_GET['languageCode'])) {
+			self::setCurrent($_GET['languageCode']);
 
-			return $_GET['lang'];
+			return $_GET['languageCode'];
 		}
 
 		if (session_id() == '') {
@@ -31,27 +35,27 @@ class Language
 			return $_SESSION[self::LANGUAGE_IDENTITIFER];
 		}
 
-		if (isSet($_COOKIE['lang'])) {
-			return $_COOKIE['lang'];
+		if (isSet($_COOKIE['languageCode'])) {
+			return $_COOKIE['languageCode'];
 		}
 
-		return 'en';
+		return LANGUAGE_ENGLISH;
 	}
 
 
 	/**
 	 * Sélectionne la langue.
 	 *
-	 * @param $lang
+	 * @param $languageCode
 	 */
-	public static function setCurrent($lang)
+	public static function setCurrent($languageCode)
 	{
 		if (session_id() == '') {
 			session_start();
 		}
 
-		$_SESSION[self::LANGUAGE_IDENTITIFER] = $lang;
-		setcookie('lang', $lang, time() + (3600 * 24 * 30));
+		$_SESSION[self::LANGUAGE_IDENTITIFER] = $languageCode;
+		setcookie('languageCode', $languageCode, time() + (3600 * 24 * 30));
 	}
 
 
@@ -60,6 +64,6 @@ class Language
 	 */
 	public static function getLanguageFile()
 	{
-		return ROOT . 'languages/language.' . self::getCurrent() . '.php';
+		return ROOT . 'languages/language.' . strtolower(Language::getCurrent()) . '.php';
 	}
 }

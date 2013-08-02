@@ -41,7 +41,7 @@ if (file_exists($file = ROOT . 'pages/' . $page . '.php')) {
 	<title>Web Boutique - <?php echo $title; ?></title>
 
 	<!-- Sélection de la langue -->
-	<?php $language = Language::getCurrent(); ?>
+	<?php $languageCode = Language::getCurrent(); ?>
 
 	<!-- Accepte les caractères accentués. -->
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
@@ -58,7 +58,7 @@ if (file_exists($file = ROOT . 'pages/' . $page . '.php')) {
 
 	<!-- Jquery Validate plugin -->
 	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.js"></script>
-	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/localization/messages_<?php echo $language; ?>.js" charset="utf8"></script>
+	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/localization/messages_<?php echo strtolower($languageCode); ?>.js" charset="utf8"></script>
 
 	<!-- Noty -->
 	<script type="text/javascript" src="js/noty/jquery.noty.js"></script>
@@ -74,9 +74,9 @@ if (file_exists($file = ROOT . 'pages/' . $page . '.php')) {
 		<div id="header-wrapper">
 			<img id="logo-dutailier" src="img/dutailier.png">
 			<ul id="menu">
-				<?php if ($language == 'en') { ?>
+				<?php if ($languageCode == LANGUAGE_ENGLISH) { ?>
 					<li><a id="btnFrench">Français</a></li>
-				<?php } else if ($language == 'fr') { ?>
+				<?php } else if ($languageCode == LANGUAGE_FRENCH) { ?>
 					<li><a id="btnEnglish">English</a></li>
 				<?php } ?>
 
@@ -96,7 +96,7 @@ if (file_exists($file = ROOT . 'pages/' . $page . '.php')) {
 	</div>
 
 	<!-- Scripts internes. -->
-	<script src="js/languages/language.<?php echo $language; ?>.js" charset="utf8"></script>
+	<script src="js/languages/language.<?php echo strtolower($languageCode); ?>.js" charset="utf8"></script>
 
 	<script src="js/global/url.js"></script>
 	<script src="js/menu.js"></script>

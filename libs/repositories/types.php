@@ -26,7 +26,7 @@ class Types
 		$query .= '@code = "' . intval($code) . '", ';
 		$query .= '@languageCode = "' . Language::getCurrent() . '"';
 
-		$rows = Database::Execute($query);
+		$rows = Database::ODBCExecute($query);
 
 		if (empty($rows)) {
 			throw new Exception(ERROR_TYPE_DOESNT_EXIST);
@@ -52,7 +52,7 @@ class Types
 		$query .= '@userId = "' . intval($userId) . '", ';
 		$query .= '@languageCode = "' . Language::getCurrent() . '"';
 
-		$rows = Database::Execute($query);
+		$rows = Database::ODBCExecute($query);
 
 		$types = array();
 		foreach ($rows as $row) {

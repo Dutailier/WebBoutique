@@ -23,10 +23,10 @@ class Fabrics
 	public static function Find($code)
 	{
 		$query = 'EXEC [getFabricByCode]';
-		$query .= '@code = "' . $code . '", ';
+		$query .= '@code = "' . intval($code) . '", ';
 		$query .= '@languageCode = "' . Language::getCurrent() . '"';
 
-		$rows = Database::Execute($query);
+		$rows = Database::ODBCExecute($query);
 
 		if (empty($rows)) {
 			throw new Exception(ERROR_FABRIC_DOESNT_EXIST);
@@ -55,14 +55,14 @@ class Fabrics
 	public static function FilterByComponent($typeCode, $modelCode, $finishCode, $pipingCode, $userId)
 	{
 		$query = 'EXEC [getFabricsByComponent]';
-		$query .= '@typeCode = "' . $typeCode . '", ';
-		$query .= '@modelCode = "' . $modelCode . '", ';
-		$query .= '@finishCode = "' . $finishCode . '", ';
-		$query .= '@pipingCode = "' . $pipingCode . '", ';
-		$query .= '@userId = "' . $userId . '", ';
+		$query .= '@typeCode = "' . intval($typeCode) . '", ';
+		$query .= '@modelCode = "' . intval($modelCode) . '", ';
+		$query .= '@finishCode = "' . intval($finishCode) . '", ';
+		$query .= '@pipingCode = "' . intval($pipingCode) . '", ';
+		$query .= '@userId = "' . intval($userId) . '", ';
 		$query .= '@LanguageCode = "' . Language::getCurrent() . '"';
 
-		$rows = Database::Execute($query);
+		$rows = Database::ODBCExecute($query);
 
 		$fabrics = array();
 		foreach ($rows as $row) {

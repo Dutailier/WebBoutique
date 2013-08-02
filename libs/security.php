@@ -9,7 +9,7 @@ include_once(ROOT . 'libs/repositories/roles.php');
  */
 class Security
 {
-	const USER_IDENTIFIER = '_USER_';
+	const USER_IDENTIFIER = '__USER__';
 
 
 	/**
@@ -29,9 +29,8 @@ class Security
 
 		$_SESSION[self::USER_IDENTIFIER] = Users::FindByUsernameAndPassword(
 			$username,
-			$password);
-
-		Language::setCurrent(self::getUserConnected()->getLanguageCode());
+			$password
+		);
 
 		return !empty($_SESSION[self::USER_IDENTIFIER]);
 	}

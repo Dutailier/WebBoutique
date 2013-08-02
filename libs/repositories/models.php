@@ -23,10 +23,10 @@ class Models
 	public static function Find($code)
 	{
 		$query = 'EXEC [getModelByCode]';
-		$query .= '@code = "' . $code . '", ';
+		$query .= '@code = "' . intval($code) . '", ';
 		$query .= '@languageCode = "' . Language::getCurrent() . '"';
 
-		$rows = Database::Execute($query);
+		$rows = Database::ODBCExecute($query);
 
 		if (empty($rows)) {
 			throw new Exception(ERROR_MODEL_DOESNT_EXIST);
@@ -51,11 +51,11 @@ class Models
 	public static function FilterByComponent($typeCode, $userId)
 	{
 		$query = 'EXEC [getModelsByComponent]';
-		$query .= '@typeCode = "' . $typeCode . '", ';
+		$query .= '@typeCode = "' . intval($typeCode) . '", ';
 		$query .= '@userId = "' . intval($userId) . '", ';
 		$query .= '@LanguageCode = "' . Language::getCurrent() . '"';
 
-		$rows = Database::Execute($query);
+		$rows = Database::ODBCExecute($query);
 
 		$models = array();
 		foreach ($rows as $row) {

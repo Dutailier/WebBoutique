@@ -20,9 +20,9 @@ class Products
 	public static function Find($sku)
 	{
 		$query = 'EXEC [getProductBySku]';
-		$query .= '@sku = "' . trim($sku) . '"';
+		$query .= '@sku = "' . intval($sku) . '"';
 
-		$rows = Database::Execute($query);
+		$rows = Database::ODBCExecute($query);
 
 		if (empty($rows)) {
 			throw new Exception(ERROR_PRODUCT_DOESNT_EXIST);

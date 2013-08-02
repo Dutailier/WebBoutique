@@ -14,13 +14,13 @@ $title = LOGIN_TITLE;
 	<div id="logIn">
 		<form id="frmLogIn" method="post" onsubmit="return false;">
 			<p>
-				<label class="inline" for="username"><?php echo LOGIN_LBL_USERNAME; ?></label>
-				<input id="username" name="username" type="text" />
+				<label class="inline" for="txtUsername"><?php echo LOGIN_LBL_USERNAME; ?></label>
+				<input id="txtUsername" name="txtUsername" type="text" />
 			</p>
 
 			<p>
-				<label class="inline" for="password"><?php echo LOGIN_LBL_PASSWORD; ?></label>
-				<input id="password" name="password" type="password" />
+				<label class="inline" for="txtPassword"><?php echo LOGIN_LBL_PASSWORD; ?></label>
+				<input id="txtPassword" name="txtPassword" type="password" />
 			</p>
 
 			<p>

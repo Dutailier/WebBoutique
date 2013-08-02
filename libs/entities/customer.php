@@ -7,6 +7,9 @@
  */
 class Customer extends User
 {
+	const REGEX_EMAIL = '/[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}/i';
+	const REGEX_PHONE = '/^[1]?[.-]?[0-9]{3}[.-]?[0-9]{3}[.-]?[0-9]{4}$/';
+
 	private $greeting;
 	private $firstname;
 	private $lastname;
@@ -129,10 +132,19 @@ class Customer extends User
 	/**
 	 * Définit le numéro de téléphone du consommateur.
 	 *
-	 * @param mixed $phone
+	 * @param $phone
+	 *
+	 * @throws Exception
 	 */
 	private function setPhone($phone)
 	{
+		if (!preg_match(self::REGEX_PHONE, $phone)) {
+			throw new Exception(ERROR_STORE_PHONE_INVALID);
+		}
+
+		$phone = preg_replace('/\D/', '', $phone);
+		$phone = strlen($phone) == 10 ? 1 + $phone : $phone;
+
 		$this->phone = $phone;
 	}
 
@@ -151,10 +163,16 @@ class Customer extends User
 	/**
 	 * Définit l'adresse courriel du consommateur.
 	 *
-	 * @param mixed $email
+	 * @param $email
+	 *
+	 * @throws Exception
 	 */
 	private function setEmail($email)
 	{
+		if (!preg_match(self::REGEX_EMAIL, $email)) {
+			throw new Exception(ERROR_STORE_EMAIL_INVALID);
+		}
+
 		$this->email = $email;
 	}
 

@@ -6,6 +6,9 @@
  */
 class Store extends User
 {
+	const REGEX_EMAIL = '/[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}/i';
+	const REGEX_PHONE = '/^[1]?[.-]?[0-9]{3}[.-]?[0-9]{3}[.-]?[0-9]{4}$/';
+
 	private $ref;
 	private $name;
 	private $phone;
@@ -110,10 +113,19 @@ class Store extends User
 	/**
 	 * Définit le numéro de téléphone du commerçant.
 	 *
-	 * @param mixed $phone
+	 * @param $phone
+	 *
+	 * @throws Exception
 	 */
 	private function setPhone($phone)
 	{
+		if (!preg_match(self::REGEX_PHONE, $phone)) {
+			throw new Exception(ERROR_STORE_PHONE_INVALID);
+		}
+
+		$phone = preg_replace('/\D/', '', $phone);
+		$phone = strlen($phone) == 10 ? 1 + $phone : $phone;
+
 		$this->phone = $phone;
 	}
 
@@ -132,10 +144,16 @@ class Store extends User
 	/**
 	 * Définit l'adresse courriel du commerçant.
 	 *
-	 * @param mixed $email
+	 * @param $email
+	 *
+	 * @throws Exception
 	 */
 	private function setEmail($email)
 	{
+		if (!preg_match(self::REGEX_EMAIL, $email)) {
+			throw new Exception(ERROR_STORE_EMAIL_INVALID);
+		}
+
 		$this->email = $email;
 	}
 
@@ -154,10 +172,16 @@ class Store extends User
 	/**
 	 * Définit l'adresse courriel du réprensentant (Dutailier) du commerçant.
 	 *
-	 * @param mixed $emailRep
+	 * @param $emailRep
+	 *
+	 * @throws Exception
 	 */
 	private function setEmailRep($emailRep)
 	{
+		if (!preg_match(self::REGEX_EMAIL, $emailRep)) {
+			throw new Exception(ERROR_STORE_EMAIL_REP_INVALID);
+		}
+
 		$this->emailRep = $emailRep;
 	}
 
@@ -176,10 +200,16 @@ class Store extends User
 	/**
 	 * Définit l'adresse courriel de l'agent (Dutailier) du commerçant.
 	 *
-	 * @param mixed $emailAgent
+	 * @param $emailAgent
+	 *
+	 * @throws Exception
 	 */
 	private function setEmailAgent($emailAgent)
 	{
+		if (!preg_match(self::REGEX_EMAIL, $emailAgent)) {
+			throw new Exception(ERROR_STORE_EMAIL_AGENT_INVALID);
+		}
+
 		$this->emailAgent = $emailAgent;
 	}
 

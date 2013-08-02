@@ -25,7 +25,7 @@ class Lines
 		$query .= '@unitPrice = "' . $line->getUnitPrice() . '", ';
 		$query .= '@grossPrice = "' . $line->getGrossPrice() . '"';
 
-		$rows = Database::Execute($query);
+		$rows = Database::ODBCExecute($query);
 
 		if (Empty($rows)) {
 			throw new Exception(ERROR_LINE_WASNT_ADDED);
@@ -50,7 +50,7 @@ class Lines
 		$query = 'EXEC [getLineById]';
 		$query .= '@id = "' . intval($id) . '"';
 
-		$rows = Database::Execute($query);
+		$rows = Database::ODBCExecute($query);
 
 		if (empty($rows)) {
 			throw new Exception(ERROR_LINE_DOESNT_EXIST);
@@ -82,7 +82,7 @@ class Lines
 		$query = 'EXEC [getLinesByOrderId]';
 		$query .= '@orderId = "' . intval($orderId) . '"';
 
-		$rows = Database::Execute($query);
+		$rows = Database::ODBCExecute($query);
 
 		$lines = array();
 		foreach ($rows as $row) {

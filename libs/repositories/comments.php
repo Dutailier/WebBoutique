@@ -25,7 +25,7 @@ class Comments
 		$query .= '@text = "' . $comment->getText() . '", ';
 		$query .= '@commentId = "' . $comment->getCommentId() . '"';
 
-		$rows = Database::Execute($query);
+		$rows = Database::ODBCExecute($query);
 
 		if (Empty($rows)) {
 			throw new Exception(ERROR_COMMENT_WASNT_ADDED);
@@ -51,7 +51,7 @@ class Comments
 		$query = 'EXEC [getCommentById]';
 		$query .= '@id = "' . intval($id) . '"';
 
-		$rows = Database::Execute($query);
+		$rows = Database::ODBCExecute($query);
 
 		if (empty($rows)) {
 			throw new Exception(ERROR_COMMENT_DOESNT_EXIST);
@@ -83,7 +83,7 @@ class Comments
 		$query = 'EXEC [getCommentsByOrderId]';
 		$query .= '@orderId = "' . intval($orderId) . '"';
 
-		$rows = Database::Execute($query);
+		$rows = Database::ODBCExecute($query);
 
 		$comments = array();
 		foreach ($rows as $row) {
@@ -116,7 +116,7 @@ class Comments
 		$query = 'EXEC [getCommentsByCommentId]';
 		$query .= '@orderId = "' . intval($commentId) . '"';
 
-		$rows = Database::Execute($query);
+		$rows = Database::ODBCExecute($query);
 
 		$comments = array();
 		foreach ($rows as $row) {

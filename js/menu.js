@@ -1,11 +1,11 @@
 (function ($) {
 	$(document).ready(function () {
 		$('#btnFrench').click(function () {
-			$.URL.setParam('lang', 'fr');
+			$.URL.setParam('languageCode', 'FR');
 		});
 
 		$('#btnEnglish').click(function () {
-			$.URL.setParam('lang', 'en');
+			$.URL.setParam('languageCode', 'EN');
 		});
 
 		$('#btnLogOut').click(function () {

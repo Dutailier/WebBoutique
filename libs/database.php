@@ -14,9 +14,9 @@ class Database
 	 * @return array
 	 * @throws Exception
 	 */
-	public static function Execute($query)
+	public static function ODBCExecute($query)
 	{
-		$conn = self::getConnection();
+		$conn = self::getODBCConnection();
 
 		$result = odbc_exec($conn, $query);
 
@@ -48,7 +48,7 @@ class Database
 	 * @return resource
 	 * @throws Exception
 	 */
-	private static function getConnection()
+	private static function getODBCConnection()
 	{
 		$conn = odbc_connect(
 			DB_DSN,

@@ -28,7 +28,7 @@ class Users
 		$query .= '@username = "' . $user->getUsername() . '", ';
 		$query .= '@password = "' . $user->getPassword() . '"';
 
-		$rows = Database::Execute($query);
+		$rows = Database::ODBCExecute($query);
 
 		if (empty($rows)) {
 			throw new Exception(ERROR_USER_WASNT_ADDED);
@@ -53,7 +53,7 @@ class Users
 		$query = 'EXEC [getUserById]';
 		$query .= '@id = "' . intval($id) . '"';
 
-		$rows = Database::Execute($query);
+		$rows = Database::ODBCExecute($query);
 
 		if (empty($rows)) {
 			throw new Exception(ERROR_USER_DOESNT_EXIST);
@@ -122,7 +122,7 @@ class Users
 		$query .= '@username = "' . $username . '", ';
 		$query .= '@password = "' . $password . '"';
 
-		$rows = Database::Execute($query);
+		$rows = Database::ODBCExecute($query);
 
 		if (empty($rows)) {
 			throw new Exception(ERROR_CREDENTIELS_INCORRECT);

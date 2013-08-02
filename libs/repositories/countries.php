@@ -23,10 +23,10 @@ class Countries
 	public static function Find($code)
 	{
 		$query = 'EXEC [getCountryByCode]';
-		$query .= '@code = "' . intval($code) . '", ';
+		$query .= '@code = "' . $code . '", ';
 		$query .= '@languageCode = "' . Language::getCurrent() . '"';
 
-		$rows = Database::Execute($query);
+		$rows = Database::ODBCExecute($query);
 
 		if (empty($rows)) {
 			throw new Exception(ERROR_COUNTRY_DOESNT_EXIST);
@@ -49,7 +49,7 @@ class Countries
 		$query = 'EXEC [getCountries]';
 		$query .= '@languageCode = "' . Language::getCurrent() . '"';
 
-		$rows = Database::Execute($query);
+		$rows = Database::ODBCExecute($query);
 
 		$countries = array();
 		foreach ($rows as $row) {

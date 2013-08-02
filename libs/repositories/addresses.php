@@ -26,7 +26,7 @@ class Addresses
 		$query .= '@zipCode = "' . $address->getZipCode() . '", ';
 		$query .= '@stateCode = "' . $address->getStateCode() . '"';
 
-		$rows = Database::Execute($query);
+		$rows = Database::ODBCExecute($query);
 
 		if (empty($rows)) {
 			throw new Exception(ERROR_ADDRESS_WASNT_ADDED);
@@ -49,7 +49,7 @@ class Addresses
 		$query = 'EXEC [getAddressByUserId]';
 		$query .= '@userId = "' . intval($userId) . '"';
 
-		$rows = Database::Execute($query);
+		$rows = Database::ODBCExecute($query);
 
 		if (empty($rows)) {
 			throw new Exception(ERROR_ADDRESS_DOESNT_EXIST);

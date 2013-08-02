@@ -23,10 +23,10 @@ class Finishs
 	public static function Find($code)
 	{
 		$query = 'EXEC [getFinishByCode]';
-		$query .= '@code = "' . $code . '", ';
+		$query .= '@code = "' . intval($code) . '", ';
 		$query .= '@languageCode = "' . Language::getCurrent() . '"';
 
-		$rows = Database::Execute($query);
+		$rows = Database::ODBCExecute($query);
 
 		if (empty($rows)) {
 			throw new Exception(ERROR_FINISH_DOESNT_EXIST);
@@ -54,14 +54,14 @@ class Finishs
 	public static function FilterByComponent($typeCode, $modelCode, $fabricCode, $pipingCode, $userId)
 	{
 		$query = 'EXEC [getFinishsByComponent]';
-		$query .= '@typeCode = "' . $typeCode . '", ';
-		$query .= '@modelCode = "' . $modelCode . '", ';
-		$query .= '@fabricCode = "' . $fabricCode . '", ';
-		$query .= '@pipingCode = "' . $pipingCode . '", ';
-		$query .= '@userId = "' . $userId . '", ';
+		$query .= '@typeCode = "' . intval($typeCode) . '", ';
+		$query .= '@modelCode = "' . intval($modelCode) . '", ';
+		$query .= '@fabricCode = "' . intval($fabricCode) . '", ';
+		$query .= '@pipingCode = "' . intval($pipingCode) . '", ';
+		$query .= '@userId = "' . intval($userId) . '", ';
 		$query .= '@LanguageCode = "' . Language::getCurrent() . '"';
 
-		$rows = Database::Execute($query);
+		$rows = Database::ODBCExecute($query);
 
 		$finishs = array();
 		foreach ($rows as $row) {

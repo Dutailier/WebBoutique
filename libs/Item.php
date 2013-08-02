@@ -120,6 +120,8 @@ class Item implements IItem
 	 */
 	public function getGrossPrice()
 	{
+		// Si aucun prix d'ensemble n'a été définit,
+		// on retourne le prix par défaut.
 		return isSet($this->grossPrice) ?
 			$this->grossPrice : $this->quantity * $this->unitPrice;
 	}

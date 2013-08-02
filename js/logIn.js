@@ -4,24 +4,23 @@
 		$('#frmLogIn').validate({
 
 			rules: {
-				username: { required: true },
-				password: { required: true }
+				txtUsername: { required: true },
+				txtPassword: { required: true }
 			},
 
 			submitHandler: function () {
-
-				var $username = $('#username');
-				var $password = $('#password');
+				var $txtUsername = $('#txtUsername');
+				var $txtPassword = $('#txtPassword');
 				var $btnLogIn = $('#btnLogIn');
 
 				// Désactive temporairement les champs et le bouton.
-				$username.attr('disabled', true);
-				$password.attr('disabled', true);
+				$txtUsername.attr('disabled', true);
+				$txtPassword.attr('disabled', true);
 				$btnLogIn.attr('disabled', true);
 
 				var credentials = {
-					'username': $username.val(),
-					'password': $password.val()
+					'username': $txtUsername.val(),
+					'password': $txtPassword.val()
 				};
 
 				$.post('ajax/tryLogIn.php', credentials)
@@ -58,8 +57,8 @@
 					})
 					.always(function () {
 						// Active les champs et les boutons.
-						$username.removeAttr('disabled');
-						$password.removeAttr('disabled');
+						$txtUsername.removeAttr('disabled');
+						$txtPassword.removeAttr('disabled');
 						$btnLogIn.removeAttr('disabled');
 					})
 			}

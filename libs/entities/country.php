@@ -2,6 +2,9 @@
 
 include_once(ROOT . 'libs/repositories/states.php');
 
+define('CANADA_CODE', 'CA');
+define('UNITED_STATES_CODE', 'US');
+
 /**
  * Class Country
  * Représente un pays.
