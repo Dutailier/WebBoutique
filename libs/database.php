@@ -21,6 +21,8 @@ class Database
 		$result = odbc_exec($conn, $query);
 
 		if (empty($result)) {
+			// WARNING : Cette ligne devra être retirée lors de la publication.
+			echo $query;
 			throw new Exception(ERROR_DB_EXECUTION_FAILED);
 		}
 

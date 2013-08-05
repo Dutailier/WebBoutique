@@ -4,16 +4,22 @@
 	 *
 	 * @param numElementsByPage Nombre d'éléments à afficher par page.
 	 */
-	$.fn.paginate = function (numElementsByPage) {
+	$.fn.paginate = function (options) {
+
+		var defaults = {
+			numElementsByPage: 10
+		};
+
+		var options = $.extend({}, defaults, options);
 
 		var $elements = $(this);
-		var $container = $elements.closest('ul.paging');
+		var $container = $elements.closest('div.list');
 
 		// Si nécessaire, retire une précédente pagination.
 		$container.find('ul.paging').remove();
 
 		var numItems = $elements.length;
-		var numPages = Math.ceil(numItems / numElementsByPage);
+		var numPages = Math.ceil(numItems / options.numElementsByPage);
 
 		// Si le nombre de page est inférieur ou égale à une,
 		// il n'est pas nécessaire de créer une pagination.
@@ -35,7 +41,7 @@
 
 		// Sélectionne la première page et cache tous les éléments des autres pages.
 		$links.first().addClass('selected');
-		$elements.slice(numElementsByPage).hide();
+		$elements.slice(options.numElementsByPage).hide();
 
 		// Définit le coportement de la pagination créée.
 		$links.click(function () {
@@ -47,11 +53,11 @@
 			$(this).addClass('selected');
 
 			var currentPage = parseInt($(this).text()) - 1;
-			var firstItem = currentPage * numElementsByPage;
+			var firstItem = currentPage * options.numElementsByPage;
 
 			// Cache tous les éléments et affiche ceux de la page courante.
 			$elements.hide();
-			$elements.slice(firstItem, firstItem + numElementsByPage).show();
+			$elements.slice(firstItem, firstItem + options.numElementsByPage).show();
 		});
 	}
 })(jQuery);

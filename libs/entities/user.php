@@ -1,5 +1,7 @@
 <?php
 
+include_once(ROOT . 'libs/repositories/addresses.php');
+
 define('ROLE_ADMINISTRATOR', 0);
 define('ROLE_CUSTOMER', 1);
 define('ROLE_STORE', 2);
@@ -159,5 +161,16 @@ class User
 	public function getLanguageCode()
 	{
 		return $this->languageCode;
+	}
+
+
+	/**
+	 * Retourne l'adresse de l'utilisateur.
+	 *
+	 * @return Address
+	 */
+	public function getAddress()
+	{
+		return Addresses::FindByUserId($this->getId());
 	}
 }

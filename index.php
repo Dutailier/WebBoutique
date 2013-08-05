@@ -17,7 +17,17 @@ if (!Security::isAuthenticated()) {
 		case 'home':
 		case 'index':
 		case 'logIn':
-			$page = 'logIn';
+			switch (Security::getRole()) {
+				case ROLE_CUSTOMER:
+					$page = 'productConfigurator';
+					break;
+				case ROLE_STORE:
+					$page = 'storeManager';
+					break;
+				case ROLE_ADMINISTRATOR:
+					$page = 'adminManager';
+					break;
+			}
 			break;
 	}
 }
@@ -58,7 +68,10 @@ if (file_exists($file = ROOT . 'pages/' . $page . '.php')) {
 
 	<!-- Jquery Validate plugin -->
 	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.js"></script>
-	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/localization/messages_<?php echo strtolower($languageCode); ?>.js" charset="utf8"></script>
+
+	<?php if ($languageCode != LANGUAGE_ENGLISH) { ?>
+		<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/localization/messages_<?php echo strtolower($languageCode); ?>.js" charset="utf8"></script>
+	<?php } ?>
 
 	<!-- Noty -->
 	<script type="text/javascript" src="js/noty/jquery.noty.js"></script>

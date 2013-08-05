@@ -1,0 +1,15 @@
+
+
+#storesList > div.store > div.infos > label.ref {
+	font-size   : 1.7em;
+	font-weight : bold;
+	line-height : 50px;
+	float       : left;
+}
+
+#storesList > div.store > div.infos > label.name {
+	line-height : 50px;
+	float       : left;
+	font-style  : italic;
+	margin-left : 10px;
+}

@@ -47,7 +47,7 @@ class Addresses
 	public static function FindByUserId($userId)
 	{
 		$query = 'EXEC [getAddressByUserId]';
-		$query .= '@userId = "' . intval($userId) . '"';
+		$query .= '@userId = "' . $userId . '"';
 
 		$rows = Database::ODBCExecute($query);
 
@@ -57,10 +57,10 @@ class Addresses
 
 		return new Address(
 			$rows[0]['userId'],
+			$rows[0]['stateCode'],
 			$rows[0]['street'],
 			$rows[0]['city'],
-			$rows[0]['zipCode'],
-			$rows[0]['stateCode']
+			$rows[0]['zipCode']
 		);
 	}
 }

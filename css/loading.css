@@ -1,0 +1,12 @@
+div.loader {
+	text-align : center;
+	width      : 200px;
+	margin     : 20px auto;
+	display    : none;
+	overflow   : hidden; /* Clearfix */
+}
+
+div.loader * {
+	display: inline-block;
+	margin: 10px;
+}

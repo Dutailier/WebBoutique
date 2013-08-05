@@ -1,23 +1,37 @@
 <?php
 
-// Menu
+// Menu principal
 define('MENU_LBL_LOGOUT', 'Log Out');
 
-// Home
+// Page d'acceuil
 define('HOME_TITLE', 'Home');
 
-// Log In
+// Page de connexion
 define('LOGIN_TITLE', 'Log In');
 define('LOGIN_BTN_LOGIN', 'Log In');
 define('LOGIN_LBL_USERNAME', 'Username');
 define('LOGIN_LBL_PASSWORD', 'Password');
 
-// Error
+// Page d'erreur
 define('ERROR_TITLE', 'Error');
 define('ERROR_404', '404 - Page not found.');
 
-// Types
-define('TYPES_TITLE', 'Types');
+// Page du gestionnaire pour commerçant
+define('STORE_MANAGER_TITLE', 'Gestionnaire pour commerçant.');
+
+// Page du gestionnaire pour administrateur
+define('ADMIN_MANAGER_TITLE', 'Gestionnaire pour adiministrateur.');
+define('ADMIN_MANAGER_BTN_TAB_ORDERS_FEED', 'Orders Feed');
+define('ADMIN_MANAGER_BTN_TAB_PRODUCTS_LIST', 'Products List');
+define('ADMIN_MANAGER_BTN_TAB_LOGS_FEED', 'Logs Feed');
+define('ADMIN_MANAGER_BTN_TAB_CUSTOMERS_LIST', 'Customers List');
+define('ADMIN_MANAGER_BTN_TAB_STORES_LIST', 'Stores List');
+define('ADMIN_MANAGER_LBL_SEARCH', 'Search : ');
+define('ADMIN_MANAGER_BTN_ADD_STORE', 'Add Store');
+
+// Autres
+define('PLEASE_WAIT', 'Please wait...');
+define('NO_RESULT', 'No result was found.');
 
 // Erreurs du panier d'achats
 define('ERROR_ITEM_DOESNT_EXIST', 'The item isn\'t inside the cart.');
@@ -28,6 +42,7 @@ define('ERROR_ALREADY_LOGIN', 'You\'re already log In.');
 define('ERROR_CREDENTIELS_REQUIRED', 'Username and password are required.');
 define('ERROR_CREDENTIELS_INCORRECT', 'Username or password incorrect.');
 define('ERROR_AUTHENTIFICATION_REQUIRED', 'Your authentification is required.');
+define('ERROR_REQUIRED_ROLE_ADMINISTRATOR', 'You must be authenficated as administrator.');
 
 // Erreurs de transaction
 define('ERROR_TRANSACTION_ALREADY_CHECKOUT', 'You have already checkout.');

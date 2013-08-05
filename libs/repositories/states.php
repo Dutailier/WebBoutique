@@ -23,7 +23,7 @@ class States
 	public static function find($code)
 	{
 		$query = 'EXEC [getStateByCode]';
-		$query .= '@id = "' . $code . '" ,';
+		$query .= '@code = "' . $code . '" ,';
 		$query .= '@languageCode = "' . Language::getCurrent() . '"';
 
 		$rows = Database::ODBCExecute($query);
@@ -50,7 +50,7 @@ class States
 	public static function filterByCountryCode($countryCode)
 	{
 		$query = 'EXEC [getStatesByCountryCode]';
-		$query .= '@countryId = "' . $countryCode . '" , ';
+		$query .= '@countryCode = "' . $countryCode . '" , ';
 		$query .= '@languageCode = "' . Language::getCurrent() . '"';
 
 		$rows = Database::ODBCExecute($query);

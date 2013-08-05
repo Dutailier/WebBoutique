@@ -34,6 +34,48 @@ class Users
 			throw new Exception(ERROR_USER_WASNT_ADDED);
 		}
 
+		$user = null;
+		switch ($rows[0]['role']) {
+			case ROLE_ADMINISTRATOR:
+				$user = new User (
+					$rows[0]['languageCode'],
+					$rows[0]['role'],
+					$rows[0]['username'],
+					$rows[0]['password']
+				);
+				break;
+
+			case ROLE_CUSTOMER:
+				$user = new Customer (
+					$rows[0]['languageCode'],
+					$rows[0]['username'],
+					$rows[0]['password'],
+					$rows[0]['greeting'],
+					$rows[0]['firstname'],
+					$rows[0]['lastname'],
+					$rows[0]['phone'],
+					$rows[0]['email']
+				);
+				break;
+
+			case ROLE_STORE:
+				$user = new Store (
+					$rows[0]['languageCode'],
+					$rows[0]['username'],
+					$rows[0]['password'],
+					$rows[0]['ref'],
+					$rows[0]['name'],
+					$rows[0]['phone'],
+					$rows[0]['email'],
+					$rows[0]['emailRep'],
+					$rows[0]['emailAgent']
+				);
+				break;
+
+			default:
+				throw new Exception(ERROR_ROLE_INVALID);
+		}
+
 		$user->setId($rows[0]['id']);
 
 		return $user;
@@ -63,7 +105,7 @@ class Users
 		switch ($rows[0]['role']) {
 			case ROLE_ADMINISTRATOR:
 				$user = new User (
-					$rows[0]['LanguageCode'],
+					$rows[0]['languageCode'],
 					$rows[0]['role'],
 					$rows[0]['username'],
 					$rows[0]['password']
@@ -72,7 +114,7 @@ class Users
 
 			case ROLE_CUSTOMER:
 				$user = new Customer (
-					$rows[0]['LanguageCode'],
+					$rows[0]['languageCode'],
 					$rows[0]['username'],
 					$rows[0]['password'],
 					$rows[0]['greeting'],
@@ -85,7 +127,7 @@ class Users
 
 			case ROLE_STORE:
 				$user = new Store (
-					$rows[0]['LanguageCode'],
+					$rows[0]['languageCode'],
 					$rows[0]['username'],
 					$rows[0]['password'],
 					$rows[0]['ref'],

@@ -32,7 +32,7 @@ class Language
 		}
 
 		if (isSet($_SESSION[self::LANGUAGE_IDENTITIFER])) {
-			return $_SESSION[self::LANGUAGE_IDENTITIFER];
+			return strtoupper($_SESSION[self::LANGUAGE_IDENTITIFER]);
 		}
 
 		if (isSet($_COOKIE['languageCode'])) {

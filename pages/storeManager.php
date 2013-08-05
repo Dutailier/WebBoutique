@@ -1,5 +1,5 @@
 <?php
-$title = TYPES_TITLE;
+$title = STORE_MANAGER_TITLE;
 ?>
 
 <?php ob_start(); ?>

@@ -1,7 +1,6 @@
 <?php
 
 include_once(ROOT . 'libs/repositories/users.php');
-include_once(ROOT . 'libs/repositories/roles.php');
 
 /**
  * Class Security
@@ -64,6 +63,17 @@ class Security
 		}
 
 		return $_SESSION[self::USER_IDENTIFIER];
+	}
+
+
+	/**
+	 * Retourne le rôle de l'utilisateur connecté.
+	 *
+	 * @return mixed
+	 */
+	public static function getRole()
+	{
+		return self::getUserConnected()->getRole();
 	}
 
 

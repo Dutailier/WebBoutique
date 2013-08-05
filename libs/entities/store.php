@@ -61,7 +61,7 @@ class Store extends User
 			'phone'        => $this->getPhone(),
 			'email'        => $this->getEmail(),
 			'emailRep'     => $this->getEmailRep(),
-			'emailAgent'   => $this->getEmailAgent()
+			'emailAgent'   => $this->getEmailAgent(),
 		);
 	}
 

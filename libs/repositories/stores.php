@@ -1,12 +1,14 @@
 <?php
 
+include_once(ROOT . 'libs/language.php');
 include_once(ROOT . 'libs/database.php');
 include_once(ROOT . 'libs/entities/store.php');
-include_once(ROOT . 'libs/repositories/users.php');
+
+include_once(Language::getLanguageFile());
 
 /**
- * class Store
- * Gère les différentes méthodes manipulant l'entité Store.
+ * Class Stores
+ * Gère les méthodes manipulant l'entité Store.
  */
 class Stores
 {
@@ -21,7 +23,7 @@ class Stores
 	public static function Find($ref)
 	{
 		$query = 'EXEC [getStoreByRef]';
-		$query .= '@ref = "' . intval($ref) . '"';
+		$query .= '@ref = "' . $ref . '"';
 
 		$rows = Database::ODBCExecute($query);
 
@@ -29,12 +31,10 @@ class Stores
 			throw new Exception(ERROR_STORE_DOESNT_EXIST);
 		}
 
-		$user = Users::Find($rows[0]['userId']);
-
-		$store = new Store (
-			$user->getLanguageCode(),
-			$user->getUsername(),
-			$user->getPassword(),
+		$store = new Store(
+			$rows[0]['languageCode'],
+			$rows[0]['username'],
+			$rows[0]['password'],
 			$rows[0]['ref'],
 			$rows[0]['name'],
 			$rows[0]['phone'],
@@ -42,8 +42,39 @@ class Stores
 			$rows[0]['emailRep'],
 			$rows[0]['emailAgent']
 		);
-		$store->setId($user->getId());
+		$store->setId($rows[0]['id']);
 
 		return $store;
+	}
+
+
+	/**
+	 * Retourne tous les commerçants.
+	 */
+	public static function All()
+	{
+		$query = 'EXEC [getStores]';
+
+		$rows = Database::ODBCExecute($query);
+
+		$stores = array();
+		foreach ($rows as $row) {
+			$store = new Store(
+				$row['languageCode'],
+				$row['username'],
+				$row['password'],
+				$row['ref'],
+				$row['name'],
+				$row['phone'],
+				$row['email'],
+				$row['emailRep'],
+				$row['emailAgent']
+			);
+			$store->setId($row['id']);
+
+			$stores[] = $store;
+		}
+
+		return $stores;
 	}
 }
