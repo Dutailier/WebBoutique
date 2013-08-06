@@ -4,7 +4,7 @@ var errors = {
 }
 
 var label = {
-	'STORE_CONTACT_INFOS_LEGEND'     : 'Pour les rejoindre',
+	'STORE_CONTACT_INFOS_LEGEND'     : 'Informations de contact',
 	'STORE_CONTACT_INFOS_PHONE'      : 'Numéro de téléphone : ',
 	'STORE_CONTACT_INFOS_EMAIL'      : 'Adresse courriel : ',
 	'STORE_CONTACT_INFOS_EMAIL_REP'  : 'Adresse courriel du représentant : ',

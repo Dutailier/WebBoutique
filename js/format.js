@@ -34,3 +34,13 @@ function phoneFormat(phone) {
 function dateFormat(date) {
 	return date.substring(0, 16);
 }
+
+
+/**
+ * Retourne un lien hypertexte de l'adresse courriel.
+ * @param email
+ * @returns {string}
+ */
+function emailFormat(email) {
+	return '<a href="mailto:' + email + '">' + email + '</a>';
+}

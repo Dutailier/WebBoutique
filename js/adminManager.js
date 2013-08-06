@@ -7,8 +7,8 @@
 			selectTabOrdersFeed();
 		});
 
-		$('#btnTabProductsList').click(function () {
-			selectTabProductsList();
+		$('#btnTabModelsList').click(function () {
+			selectTabModelsList();
 		});
 
 		$('#btnTabLogsFeed').click(function () {
@@ -23,14 +23,18 @@
 			selectTabStoresList();
 		});
 
+		$('#languagesList').change(function () {
+			updateTypesList();
+		});
+
 		$('#storeKeyWords').keyup(function () {
 			filterStoresByKeyWords();
-		})
+		});
 
 		//noinspection FallthroughInSwitchStatementJS
 		switch ($.URL.getParam('tab')) {
 			case 'productsList':
-				selectTabProductsList();
+				selectTabModelsList();
 				break;
 
 			case 'logsFeed':
@@ -70,14 +74,19 @@
 
 
 	/**
-	 * Affiche le contenu de l'onglet de la liste de produits.
+	 * Affiche le contenu de l'onglet de la liste de modèles.
 	 */
-	function selectTabProductsList() {
+	function selectTabModelsList() {
 		$('div.tabs').find('li').removeClass('selected');
 		$('div.tab').hide();
 
-		$('#btnTabProductsList').addClass('selected');
-		$('#tabProductsList').show();
+		$('#btnTabModelsList').addClass('selected');
+		$('#tabModelsList').show();
+
+		if ($('div.type').length == 0 &&
+			$('#typesLoader').is(':hidden')) {
+			updateLanguagesList();
+		}
 	}
 
 
@@ -115,7 +124,132 @@
 		$('#btnTabStoresList').addClass('selected');
 		$('#tabStoresList').show();
 
-		updateStoresList();
+		if ($('div.store').length == 0 &&
+			$('#storesLoader').is(':hidden')) {
+			updateStoresList();
+		}
+	}
+
+
+	/**
+	 * Met à jour la liste des langues.
+	 */
+	function updateLanguagesList() {
+
+		$('#typesLoader').show();
+		$('#modelsFilters').find('input, select').attr('disabled', true);
+
+		$.post('ajax/getLanguages.php')
+			.done(function (data) {
+
+				if (data.hasOwnProperty('success') && data['success'] &&
+					data.hasOwnProperty('languages')) {
+
+					var languages = data['languages'];
+					var $languages = $('#languagesList');
+
+					$languages.find('option').remove();
+
+					for (var i in languages) {
+						if (languages.hasOwnProperty(i)) {
+							var language = languages[i];
+
+							if (language.hasOwnProperty('code') &&
+								language.hasOwnProperty('name')) {
+								addLanguageToLanguagesList(language);
+							}
+						}
+					}
+
+					// Déclanche le changement de langue.
+					$languages.trigger('change');
+
+				} else if (data.hasOwnProperty('message')) {
+					noty({
+						layout: 'topRight',
+						type  : 'error',
+						text  : data['message']
+					});
+
+				} else {
+					noty({
+						layout: 'topRight',
+						type  : 'error',
+						text  : errors['SERVER_UNREADABLE']
+					});
+				}
+			})
+			.fail(function () {
+				noty({
+					layout: 'topRight',
+					type  : 'error',
+					text  : errors['SERVER_FAILED']
+				});
+				$('div.store').show();
+			})
+			.always(function () {
+			})
+	}
+
+
+	/**
+	 * Met à jour la liste des types.
+	 */
+	function updateTypesList() {
+
+		var parameters = {
+			'languageCode' : $('#languagesList').val()
+		};
+
+		$.post('ajax/getTypesByLanguageCode.php', parameters)
+			.done(function (data) {
+
+				if (data.hasOwnProperty('success') && data['success'] &&
+					data.hasOwnProperty('types')) {
+
+					var types = data['types'];
+					var $types = $('#typesList').children('div.type');
+
+					$types.remove();
+
+					for (var i in types) {
+						if (types.hasOwnProperty(i)) {
+							var type = types[i];
+
+							if (type.hasOwnProperty('code') &&
+								type.hasOwnProperty('name')) {
+								addTypeToTypesList(type);
+							}
+						}
+					}
+
+				} else if (data.hasOwnProperty('message')) {
+					noty({
+						layout: 'topRight',
+						type  : 'error',
+						text  : data['message']
+					});
+
+				} else {
+					noty({
+						layout: 'topRight',
+						type  : 'error',
+						text  : errors['SERVER_UNREADABLE']
+					});
+				}
+			})
+			.fail(function () {
+				noty({
+					layout: 'topRight',
+					type  : 'error',
+					text  : errors['SERVER_FAILED']
+				});
+				$('div.store').show();
+			})
+			.always(function () {
+				$('#typesLoader').hide();
+				$('#modelsFilters').find('input, select').attr('disabled', false);
+			})
 	}
 
 
@@ -123,6 +257,8 @@
 	 * Met à jour la liste de commerçants.
 	 */
 	function updateStoresList() {
+
+		$('#storesFilters').find('input, select').attr('disabled', true);
 
 		$('div.store').hide();
 		$('#storeEmpty').hide();
@@ -176,6 +312,7 @@
 			})
 			.always(function () {
 				$('#storesLoader').hide();
+				$('#storesFilters').find('input, select').attr('disabled', false);
 			})
 	}
 
@@ -254,13 +391,51 @@
 	function filterStoresByKeyWords() {
 
 		var keyWords = $('#storeKeyWords').val();
-		var $stores = $('#storesList').children('div.store');
+		var $storesList = $('#storesList');
 
-		$stores
+		var $filtered = $storesList.children('div.store')
 			.filterByKeyWords(keyWords, {})
-			.paginate({});
+			.paginate($storesList, {});
+
+		if ($filtered.length > 0) {
+			$('#storesEmpty').hide();
+		} else {
+			$('#storesEmpty').show();
+		}
 	}
 
+
+	/**
+	 * Ajoute une language a la liste de langues.
+	 *
+	 * @param language
+	 */
+	function addLanguageToLanguagesList(language) {
+		var $language = $(
+			'<option value="' + language['code'] + '">' +
+				language['name'] +
+				'</option>'
+		);
+
+		$language.appendTo('#languagesList');
+	}
+
+
+	/**
+	 * Ajoute un type de produit à la liste des types de produits.
+	 *
+	 * @param type
+	 */
+	function addTypeToTypesList(type) {
+		var $type = $(
+			'<div class="type" data-code="' + type['code'] + '">' +
+				'</div>'
+		);
+
+		addInfosToType(type, $type);
+
+		$type.appendTo('#typesList');
+	}
 
 	/**
 	 * Ajoute un commerçant à la liste des commerçants.
@@ -268,11 +443,32 @@
 	 * @param store
 	 */
 	function addStoreToStoresList(store) {
-		var $store = $('<div class="store" data-ref="' + store['ref'] + '"></div>');
+		var $store = $(
+			'<div class="store" data-ref="' + store['ref'] + '">' +
+				'</div>'
+		);
 
 		addInfosToStore(store, $store);
 
 		$store.appendTo('#storesList');
+	}
+
+
+	/**
+	 * Ajoute les informations sommaires au type de produit.
+	 *
+	 * @param type
+	 * @param $type
+	 */
+	function addInfosToType(type, $type) {
+		var $infos = $(
+			'<div class="infos">' +
+				'<label class="code search">' + type['code'] + '</label>' +
+				'<label class="name search">' + type['name'] + '</label>' +
+				'</div>'
+		);
+
+		$infos.appendTo($type);
 	}
 
 
@@ -312,15 +508,15 @@
 				'</p>' +
 				'<p>' +
 				'<label class="properties">' + label['STORE_CONTACT_INFOS_EMAIL'] + '</label>' +
-				'<label class="values">' + store['email'] + '</label>' +
+				'<label class="values">' + emailFormat(store['email']) + '</label>' +
 				'</p>' +
 				'<p>' +
 				'<label class="properties">' + label['STORE_CONTACT_INFOS_EMAIL_REP'] + '</label>' +
-				'<label class="values">' + store['emailRep'] + '</label>' +
+				'<label class="values">' + emailFormat(store['emailRep']) + '</label>' +
 				'</p>' +
 				'<p>' +
 				'<label class="properties">' + label['STORE_CONTACT_INFOS_EMAIL_AGENT'] + '</label>' +
-				'<label class="values">' + store['emailAgent'] + '</label>' +
+				'<label class="values">' + emailFormat(store['emailAgent']) + '</label>' +
 				'</p>' +
 				'<p>' +
 				'<label class="properties">' + label['STORE_CONTACT_INFOS_ADDRESS'] + '</label>' +

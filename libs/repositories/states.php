@@ -1,10 +1,10 @@
 <?php
 
-include_once(ROOT . 'libs/language.php');
+include_once(ROOT . 'libs/localisation.php');
 include_once(ROOT . 'libs/database.php');
 include_once(ROOT . 'libs/entities/state.php');
 
-include_once(Language::getLanguageFile());
+include_once(Localisation::getLanguageFile());
 
 /**
  * Class States
@@ -24,7 +24,7 @@ class States
 	{
 		$query = 'EXEC [getStateByCode]';
 		$query .= '@code = "' . $code . '" ,';
-		$query .= '@languageCode = "' . Language::getCurrent() . '"';
+		$query .= '@languageCode = "' . Localisation::getCurrentLanguage() . '"';
 
 		$rows = Database::ODBCExecute($query);
 
@@ -51,7 +51,7 @@ class States
 	{
 		$query = 'EXEC [getStatesByCountryCode]';
 		$query .= '@countryCode = "' . $countryCode . '" , ';
-		$query .= '@languageCode = "' . Language::getCurrent() . '"';
+		$query .= '@languageCode = "' . Localisation::getCurrentLanguage() . '"';
 
 		$rows = Database::ODBCExecute($query);
 

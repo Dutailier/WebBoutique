@@ -1,13 +1,13 @@
 #background {
 	background : url(../img/background-login.png) no-repeat;
-	height     : 670px;
+	height     : 700px;
 }
 
 #login {
 	position : relative;
 	margin   : 0px auto;
-	width    : 380px;
-	top      : 83%;
+	width    : 390px;
+	top      : 80%;
 }
 
 #frmLogin > p {
@@ -18,12 +18,12 @@
 
 #frmLogin > p > label.inline {
 	display          : inline-block;
-	line-height      : 30px;
+	line-height      : 24px;
 	float            : left;
 	width            : 120px;
 	background-color : #D0D0D0;
 	text-align       : center;
-	padding          : 0px 20px;
+	padding          : 8px 20px;
 	margin           : 0px 10px;
 }
 
@@ -31,8 +31,6 @@
 	display : inline-block;
 	float   : left;
 	width   : 200px;
-	margin  : 0px;
-	padding : 6px;
 }
 
 #frmLogin > p > label.error {

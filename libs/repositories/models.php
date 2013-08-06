@@ -1,10 +1,10 @@
 <?php
 
-include_once(ROOT . 'libs/language.php');
+include_once(ROOT . 'libs/localisation.php');
 include_once(ROOT . 'libs/database.php');
 include_once(ROOT . 'libs/entities/model.php');
 
-include_once(Language::getLanguageFile());
+include_once(Localisation::getLanguageFile());
 
 /**
  * Class Models
@@ -12,6 +12,23 @@ include_once(Language::getLanguageFile());
  */
 class Models
 {
+	/**
+	 * Modifie le modèle du produit.
+	 *
+	 * @param Model $model
+	 * @param       $languageCode
+	 */
+	public static function Update(Model $model, $languageCode)
+	{
+		$query = 'EXEC [updateModel]';
+		$query .= '@name = "' . $model->getName() . '", ';
+		$query .= '@code = "' . $model->getCode() . '", ';
+		$query .= '@languageCode = "' . $languageCode . '"';
+
+		Database::ODBCExecute($query);
+	}
+
+
 	/**
 	 * Retourne le modèle.
 	 *
@@ -24,7 +41,7 @@ class Models
 	{
 		$query = 'EXEC [getModelByCode]';
 		$query .= '@code = "' . intval($code) . '", ';
-		$query .= '@languageCode = "' . Language::getCurrent() . '"';
+		$query .= '@languageCode = "' . Localisation::getCurrentLanguage() . '"';
 
 		$rows = Database::ODBCExecute($query);
 
@@ -53,7 +70,7 @@ class Models
 		$query = 'EXEC [getModelsByComponent]';
 		$query .= '@typeCode = "' . intval($typeCode) . '", ';
 		$query .= '@userId = "' . intval($userId) . '", ';
-		$query .= '@LanguageCode = "' . Language::getCurrent() . '"';
+		$query .= '@LanguageCode = "' . Localisation::getCurrentLanguage() . '"';
 
 		$rows = Database::ODBCExecute($query);
 

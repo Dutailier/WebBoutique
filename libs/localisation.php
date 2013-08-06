@@ -1,15 +1,13 @@
 <?php
 
 include_once(ROOT . 'libs/security.php');
-
-define('LANGUAGE_FRENCH', 'FR');
-define('LANGUAGE_ENGLISH', 'EN');
+include_once(ROOT . 'libs/entities/language.php');
 
 /**
- * Class Language
+ * Class Localisation
  * Gère les méthodes manipulant les langues.
  */
-class Language
+class Localisation
 {
 	const LANGUAGE_IDENTITIFER = '__LANGUAGE__';
 
@@ -19,12 +17,14 @@ class Language
 	 *
 	 * @return mixed
 	 */
-	public static function getCurrent()
+	public static function getCurrentLanguage()
 	{
 		if (isSet($_GET['languageCode'])) {
-			self::setCurrent($_GET['languageCode']);
+			if (self::Exists($_GET['languageCode'])) {
+				self::setCurrentLanguage($_GET['languageCode']);
 
-			return $_GET['languageCode'];
+				return $_GET['languageCode'];
+			}
 		}
 
 		if (session_id() == '') {
@@ -48,7 +48,7 @@ class Language
 	 *
 	 * @param $languageCode
 	 */
-	public static function setCurrent($languageCode)
+	public static function setCurrentLanguage($languageCode)
 	{
 		if (session_id() == '') {
 			session_start();
@@ -60,10 +60,29 @@ class Language
 
 
 	/**
+	 * Retourne vrai si la langue existe.
+	 *
+	 * @param $languageCode
+	 *
+	 * @return bool
+	 */
+	private static function Exists($languageCode)
+	{
+		return
+			$languageCode == LANGUAGE_ENGLISH ||
+			$languageCode == LANGUAGE_FRENCH;
+	}
+
+
+	/**
 	 * Retourne le fichier de la langue présentement sélectionnée.
 	 */
 	public static function getLanguageFile()
 	{
-		return ROOT . 'languages/language.' . strtolower(Language::getCurrent()) . '.php';
+		if (session_id() == '') {
+			session_start();
+		}
+
+		return ROOT . 'languages/language.' . strtolower($_SESSION[self::LANGUAGE_IDENTITIFER]) . '.php';
 	}
 }

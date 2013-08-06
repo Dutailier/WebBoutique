@@ -7,7 +7,7 @@ var label = {
 	'STORE_CONTACT_INFOS_LEGEND'     : 'Contact information',
 	'STORE_CONTACT_INFOS_PHONE'      : 'Phone number : ',
 	'STORE_CONTACT_INFOS_EMAIL'      : 'Email address: ',
-	'STORE_CONTACT_INFOS_EMAIL_REP'  : 'Representant\'s email address : ',
-	'STORE_CONTACT_INFOS_EMAIL_AGENT': 'Agent\'s email adress : ',
+	'STORE_CONTACT_INFOS_EMAIL_REP'  : 'Email address of the representative : ',
+	'STORE_CONTACT_INFOS_EMAIL_AGENT': 'Email address of the agent : ',
 	'STORE_CONTACT_INFOS_ADDRESS'    : 'Address : '
 }

@@ -2,9 +2,9 @@
 
 include_once('config.php');
 include_once(ROOT . 'libs/security.php');
-include_once(ROOT . 'libs/language.php');
+include_once(ROOT . 'libs/localisation.php');
 
-include_once(Language::getLanguageFile());
+include_once(Localisation::getLanguageFile());
 
 // WARNING : Le test d'authentification devra être retiré lors de la publication d'une version B2C.
 if (!Security::isAuthenticated()) {
@@ -51,7 +51,7 @@ if (file_exists($file = ROOT . 'pages/' . $page . '.php')) {
 	<title>Web Boutique - <?php echo $title; ?></title>
 
 	<!-- Sélection de la langue -->
-	<?php $languageCode = Language::getCurrent(); ?>
+	<?php $languageCode = Localisation::getCurrentLanguage(); ?>
 
 	<!-- Accepte les caractères accentués. -->
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />

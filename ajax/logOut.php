@@ -2,9 +2,9 @@
 
 include_once('../config.php');
 include_once(ROOT . 'libs/security.php');
-include_once(ROOT . 'libs/language.php');
+include_once(ROOT . 'libs/localisation.php');
 
-include_once(Language::getLanguageFile());
+include_once(Localisation::getLanguageFile());
 
 if (!Security::isAuthenticated()) {
 	$data['success'] = false;

@@ -3,31 +3,32 @@
 include_once('../config.php');
 include_once(ROOT . 'libs/security.php');
 include_once(ROOT . 'libs/localisation.php');
-include_once(ROOT . 'libs/repositories/stores.php');
+include_once(ROOT . 'libs/repositories/types.php');
 
 include_once(Localisation::getLanguageFile());
 
 if (!Security::isAuthenticated()) {
 	$data['success'] = false;
-	$data['message'] = 'You must be authenticated.';
+	$data['message'] = ERROR_AUTHENTIFICATION_REQUIRED;
 
 } else if (Security::getRole() != ROLE_ADMINISTRATOR) {
 	$data['success'] = false;
 	$data['message'] = ERROR_REQUIRED_ROLE_ADMINISTRATOR;
 
 } else {
-
-	if (empty($_POST['ref'])) {
+	if (empty($_POST['languageCode'])) {
 		$data['success'] = false;
-		$data['message'] = ERROR_REQUIRED_STORE_REF;
+		$data['message'] = ERROR_REQUIRED_LANGUAGE_CODE;
 
 	} else {
 		try {
-			$store   = Stores::Find($_POST['ref']);
-			$address = $store->getAddress();
+			$types = Types::filterByLanguageCode($_POST['languageCode']);
 
-			$data['store']   = $store->getInfoArray();
-			$data['address'] = $address->getInfoArray();
+			$data['types'] = array();
+			foreach ($types as $type) {
+				$data['types'][] = $type->getInfoArray();
+			}
+
 			$data['success'] = true;
 
 		} catch (Exception $e) {

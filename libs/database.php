@@ -35,7 +35,7 @@ class Database
 			$row = array();
 			for ($i = 1; $i <= odbc_num_fields($result); $i++) {
 				$column       = odbc_field_name($result, $i);
-				$row[$column] = odbc_result($result, $column);
+				$row[$column] = utf8_encode(odbc_result($result, $column));
 			}
 			$rows[] = $row;
 		}

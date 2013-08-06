@@ -22,16 +22,17 @@ define('STORE_MANAGER_TITLE', 'Gestionnaire pour commerçant.');
 // Page du gestionnaire pour administrateur
 define('ADMIN_MANAGER_TITLE', 'Gestionnaire pour adiministrateur.');
 define('ADMIN_MANAGER_BTN_TAB_ORDERS_FEED', 'Commandes');
-define('ADMIN_MANAGER_BTN_TAB_PRODUCTS_LIST', 'Produits');
+define('ADMIN_MANAGER_BTN_TAB_MODELS_LIST', 'Modèles');
 define('ADMIN_MANAGER_BTN_TAB_LOGS_FEED', 'Évènements');
 define('ADMIN_MANAGER_BTN_TAB_CUSTOMERS_LIST', 'Consommateurs');
 define('ADMIN_MANAGER_BTN_TAB_STORES_LIST', 'Commerçants');
 define('ADMIN_MANAGER_LBL_SEARCH', 'Recherche : ');
 define('ADMIN_MANAGER_BTN_ADD_STORE', 'Ajouter un commerçant');
+define('ADMIN_MANAGER_LBL_LANGUAGE', 'Langue : ');
 
 // Autres
 define('PLEASE_WAIT', 'Veuillez patienter...');
-define('NO_RESULT', 'Aucun résult ne fût trouvé.');
+define('NO_RESULT', 'Aucun résult trouvé.');
 
 // Erreurs du panier d'achats
 define('ERROR_ITEM_DOESNT_EXIST', 'L\'item n\'est pas contenu dans le panier d\'achats.');
@@ -43,6 +44,10 @@ define('ERROR_CREDENTIELS_REQUIRED', 'Le nom d\'utilisateur et le mot de passe s
 define('ERROR_CREDENTIELS_INCORRECT', 'Le nom d\'utilisateur ou le mot de passe est incorrect.');
 define('ERROR_AUTHENTIFICATION_REQUIRED', 'Vous devez être authentifié.');
 define('ERROR_REQUIRED_ROLE_ADMINISTRATOR', 'Vous devez être authentifié en tant qu\'administrateur.');
+
+// Erreurs AJAX
+define('ERROR_REQUIRED_LANGUAGE_CODE', 'Le code de la langue des requis.');
+define('ERROR_REQUIRED_STORE_REF', 'La référence du commerçant est requise.');
 
 // Erreurs de transaction
 define('ERROR_TRANSACTION_ALREADY_CHECKOUT', 'Vous avez déjà finalisé vos achats.');

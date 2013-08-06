@@ -1,24 +1,27 @@
 (function ($) {
 	/**
-	 * Filtre les éléments en gardent que ceux dont la classe est "search" et qu'ils
-	 * ont un texte correspondant aux mots clés. De plus, cette fonction surligne les
-	 * mots clés recherchés.
+	 * Filtre les éléments en gardant ceux qui ont des éléments de la classe 'search'
+	 * et qui correspondent aux mots clés.
 	 *
-	 * @param keyWords Mots clés.
+	 * @param keyWords Mot clés
+	 * @param options  Options
+	 * @returns {*}    Éléments filtrés
 	 */
 	$.fn.filterByKeyWords = function (keyWords, options) {
 
 		var defaults = {
-			minLength: 1
+			minLength     : 1,
+			matchedClass  : 'matched',
+			highlightClass: 'highlight'
 		};
 
-		var options = $.extend({}, defaults, options);
+		options = $.extend({}, defaults, options);
 
 		var $elements = $(this);
 		var regex = new RegExp(keyWords, 'gi');
 
 		$elements.hide();
-		$elements.removeClass('matched');
+		$elements.removeClass(options.matchedClass);
 
 		$elements.each(function () {
 			var $element = $(this);
@@ -31,18 +34,28 @@
 					$label.text().replace(
 						regex,
 						function (match) {
-							$element.addClass('matched');
+							$element.addClass(options.matchedClass);
 
-							// Si aucun mots clés n'a été inscrit, on réinitialise la valeur du label.
-							// Autrement, on surligne les mot clés.
-							return keyWords.length < options.minLength ? match :
-								'<span class="highlight">' + match + '</span>';
+							// Si aucun mots clés n'est rechercé, on retourne chaque caractère.
+							if (keyWords.length < options.minLength) {
+								return match;
+							}
+
+							// On crée un span qui surlignera les mots clés.
+							var $span = $('<span></span>')
+								.addClass(options.highlightClass)
+								.text(match);
+
+							// On retourne l'élément HTML ainsi créé.
+							return  $span.get(0).outerHTML;
 						}
 					)
 				);
 			});
 		});
 
-		return  $elements.filter('.matched').show();
+		return  $elements.filter(function () {
+			return $(this).hasClass(options.matchedClass);
+		}).show();
 	}
 })(jQuery);

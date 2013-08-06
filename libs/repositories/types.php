@@ -1,10 +1,10 @@
 <?php
 
-include_once(ROOT . 'libs/language.php');
+include_once(ROOT . 'libs/localisation.php');
 include_once(ROOT . 'libs/database.php');
 include_once(ROOT . 'libs/entities/type.php');
 
-include_once(Language::getLanguageFile());
+include_once(Localisation::getLanguageFile());
 
 /**
  * Class Types
@@ -12,6 +12,23 @@ include_once(Language::getLanguageFile());
  */
 class Types
 {
+	/**
+	 * Modifie le type de produit.
+	 *
+	 * @param Type $type
+	 * @param      $languageCode
+	 */
+	public static function Update(Type $type, $languageCode)
+	{
+		$query = 'EXEC [updateType]';
+		$query .= '@name = "' . $type->getName() . '", ';
+		$query .= '@code = "' . $type->getCode() . '", ';
+		$query .= '@languageCode = "' . $languageCode . '"';
+
+		Database::ODBCExecute($query);
+	}
+
+
 	/**
 	 * Retourne un type de produit.
 	 *
@@ -24,7 +41,7 @@ class Types
 	{
 		$query = 'EXEC [getTypeByCode]';
 		$query .= '@code = "' . intval($code) . '", ';
-		$query .= '@languageCode = "' . Language::getCurrent() . '"';
+		$query .= '@languageCode = "' . Localisation::getCurrentLanguage() . '"';
 
 		$rows = Database::ODBCExecute($query);
 
@@ -50,7 +67,33 @@ class Types
 	{
 		$query = 'EXEC [getTypesByComponent]';
 		$query .= '@userId = "' . intval($userId) . '", ';
-		$query .= '@languageCode = "' . Language::getCurrent() . '"';
+		$query .= '@languageCode = "' . Localisation::getCurrentLanguage() . '"';
+
+		$rows = Database::ODBCExecute($query);
+
+		$types = array();
+		foreach ($rows as $row) {
+			$types[] = new Type(
+				$row['code'],
+				$row['name']
+			);
+		}
+
+		return $types;
+	}
+
+
+	/**
+	 * Retourne tous les types de produits dans la langue sélectionnée.
+	 *
+	 * @param $languageCode
+	 *
+	 * @return array
+	 */
+	public static function filterByLanguageCode($languageCode)
+	{
+		$query = 'EXEC [getTypes]';
+		$query .= '@languageCode = "' . $languageCode . '"';
 
 		$rows = Database::ODBCExecute($query);
 

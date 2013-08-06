@@ -22,12 +22,13 @@ define('STORE_MANAGER_TITLE', 'Gestionnaire pour commerçant.');
 // Page du gestionnaire pour administrateur
 define('ADMIN_MANAGER_TITLE', 'Gestionnaire pour adiministrateur.');
 define('ADMIN_MANAGER_BTN_TAB_ORDERS_FEED', 'Orders Feed');
-define('ADMIN_MANAGER_BTN_TAB_PRODUCTS_LIST', 'Products List');
+define('ADMIN_MANAGER_BTN_TAB_MODELS_LIST', 'Models List');
 define('ADMIN_MANAGER_BTN_TAB_LOGS_FEED', 'Logs Feed');
 define('ADMIN_MANAGER_BTN_TAB_CUSTOMERS_LIST', 'Customers List');
 define('ADMIN_MANAGER_BTN_TAB_STORES_LIST', 'Stores List');
 define('ADMIN_MANAGER_LBL_SEARCH', 'Search : ');
 define('ADMIN_MANAGER_BTN_ADD_STORE', 'Add Store');
+define('ADMIN_MANAGER_LBL_LANGUAGE', 'Localisation : ');
 
 // Autres
 define('PLEASE_WAIT', 'Please wait...');
@@ -36,6 +37,10 @@ define('NO_RESULT', 'No result was found.');
 // Erreurs du panier d'achats
 define('ERROR_ITEM_DOESNT_EXIST', 'The item isn\'t inside the cart.');
 define('ERROR_POSITIVE_QUANTITY_REQUIRED', 'A positive quantity is required.');
+
+// Erreurs AJAX
+define('ERROR_REQUIRED_LANGUAGE_CODE', 'The language code is required.');
+define('ERROR_REQUIRED_STORE_REF', 'The store ref is required.');
 
 // Erreurs de sécurité
 define('ERROR_ALREADY_LOGIN', 'You\'re already log In.');

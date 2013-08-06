@@ -2,9 +2,9 @@
 
 include_once('../config.php');
 include_once(ROOT . 'libs/security.php');
-include_once(ROOT . 'libs/language.php');
+include_once(ROOT . 'libs/localisation.php');
 
-include_once(Language::getLanguageFile());
+include_once(Localisation::getLanguageFile());
 
 if (empty($_POST['username']) || empty($_POST['password'])) {
 	$data['success'] = false;
@@ -13,7 +13,7 @@ if (empty($_POST['username']) || empty($_POST['password'])) {
 } else {
 	try {
 		if ($data['valid'] = Security::TryLogin($_POST['username'], $_POST['password'])) {
-			Language::setCurrent(Security::getUserConnected()->getLanguageCode());
+			Localisation::setCurrentLanguage(Security::getUserConnected()->getLanguageCode());
 		}
 
 		$data['success'] = true;

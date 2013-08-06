@@ -1,10 +1,10 @@
 <?php
 
-include_once(ROOT . 'libs/language.php');
+include_once(ROOT . 'libs/localisation.php');
 include_once(ROOT . 'libs/database.php');
 include_once(ROOT . 'libs/entities/piping.php');
 
-include_once(Language::getLanguageFile());
+include_once(Localisation::getLanguageFile());
 
 /**
  * Class Pipings
@@ -24,7 +24,7 @@ class Pipings
 	{
 		$query = 'EXEC [getPipingByCode]';
 		$query .= '@code = "' . intval($code) . '", ';
-		$query .= '@languageCode = "' . Language::getCurrent() . '"';
+		$query .= '@languageCode = "' . Localisation::getCurrentLanguage() . '"';
 
 		$rows = Database::ODBCExecute($query);
 
@@ -59,7 +59,7 @@ class Pipings
 		$query .= '@finishCode = "' . intval($finishCode) . '", ';
 		$query .= '@fabricCode = "' . intval($fabricCode) . '", ';
 		$query .= '@userId = "' . intval($userId) . '", ';
-		$query .= '@LanguageCode = "' . Language::getCurrent() . '"';
+		$query .= '@LanguageCode = "' . Localisation::getCurrentLanguage() . '"';
 
 		$rows = Database::ODBCExecute($query);
 

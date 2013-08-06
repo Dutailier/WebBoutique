@@ -157,7 +157,7 @@ class Address
 					throw new Exception(ERROR_ADDRESS_ZIP_CODE_CA_INVALID);
 				}
 
-				$this->zipCode = preg_replace(' ', '', $zipCode);
+				$this->zipCode = preg_replace('/\s/', '', $zipCode);
 				break;
 
 			case UNITED_STATES_CODE:
