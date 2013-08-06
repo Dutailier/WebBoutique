@@ -7,8 +7,8 @@
 			selectTabOrdersFeed();
 		});
 
-		$('#btnTabModelsList').click(function () {
-			selectTabModelsList();
+		$('#btnTabModelsAndTypesList').click(function () {
+			selectTabModelsAndTypesList();
 		});
 
 		$('#btnTabLogsFeed').click(function () {
@@ -34,7 +34,7 @@
 		//noinspection FallthroughInSwitchStatementJS
 		switch ($.URL.getParam('tab')) {
 			case 'productsList':
-				selectTabModelsList();
+				selectTabModelsAndTypesList();
 				break;
 
 			case 'logsFeed':
@@ -76,12 +76,12 @@
 	/**
 	 * Affiche le contenu de l'onglet de la liste de modèles.
 	 */
-	function selectTabModelsList() {
+	function selectTabModelsAndTypesList() {
 		$('div.tabs').find('li').removeClass('selected');
 		$('div.tab').hide();
 
-		$('#btnTabModelsList').addClass('selected');
-		$('#tabModelsList').show();
+		$('#btnTabModelsAndTypesList').addClass('selected');
+		$('#tabModelsAndTypesList').show();
 
 		if ($('div.type').length == 0 &&
 			$('#typesLoader').is(':hidden')) {

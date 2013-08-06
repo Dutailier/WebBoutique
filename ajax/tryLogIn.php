@@ -13,7 +13,8 @@ if (empty($_POST['username']) || empty($_POST['password'])) {
 } else {
 	try {
 		if ($data['valid'] = Security::TryLogin($_POST['username'], $_POST['password'])) {
-			Localisation::setCurrentLanguage(Security::getUserConnected()->getLanguageCode());
+			$languageCode = strtoupper(Security::getUserConnected()->getLanguageCode());
+			Localisation::setCurrentLanguage($languageCode);
 		}
 
 		$data['success'] = true;

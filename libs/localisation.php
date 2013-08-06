@@ -20,11 +20,9 @@ class Localisation
 	public static function getCurrentLanguage()
 	{
 		if (isSet($_GET['languageCode'])) {
-			if (self::Exists($_GET['languageCode'])) {
-				self::setCurrentLanguage($_GET['languageCode']);
+			self::setCurrentLanguage($_GET['languageCode']);
 
-				return $_GET['languageCode'];
-			}
+			return $_GET['languageCode'];
 		}
 
 		if (session_id() == '') {
@@ -50,6 +48,10 @@ class Localisation
 	 */
 	public static function setCurrentLanguage($languageCode)
 	{
+		if (!self::Exists($languageCode)) {
+			return;
+		}
+
 		if (session_id() == '') {
 			session_start();
 		}
@@ -79,10 +81,6 @@ class Localisation
 	 */
 	public static function getLanguageFile()
 	{
-		if (session_id() == '') {
-			session_start();
-		}
-
-		return ROOT . 'languages/language.' . strtolower($_SESSION[self::LANGUAGE_IDENTITIFER]) . '.php';
+		return ROOT . 'languages/language.' . strtolower(self::getCurrentLanguage()) . '.php';
 	}
 }

@@ -17,12 +17,12 @@ define('ERROR_TITLE', 'Error');
 define('ERROR_404', '404 - Page not found.');
 
 // Page du gestionnaire pour commerçant
-define('STORE_MANAGER_TITLE', 'Gestionnaire pour commerçant.');
+define('STORE_MANAGER_TITLE', 'Store Manager');
 
 // Page du gestionnaire pour administrateur
-define('ADMIN_MANAGER_TITLE', 'Gestionnaire pour adiministrateur.');
+define('ADMIN_MANAGER_TITLE', 'Administrator Manager');
 define('ADMIN_MANAGER_BTN_TAB_ORDERS_FEED', 'Orders Feed');
-define('ADMIN_MANAGER_BTN_TAB_MODELS_LIST', 'Models List');
+define('ADMIN_MANAGER_BTN_TAB_MODELS_AND_TYPES_LIST', 'Models & Types List');
 define('ADMIN_MANAGER_BTN_TAB_LOGS_FEED', 'Logs Feed');
 define('ADMIN_MANAGER_BTN_TAB_CUSTOMERS_LIST', 'Customers List');
 define('ADMIN_MANAGER_BTN_TAB_STORES_LIST', 'Stores List');

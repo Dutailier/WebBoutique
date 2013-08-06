@@ -22,7 +22,7 @@ define('STORE_MANAGER_TITLE', 'Gestionnaire pour commerçant.');
 // Page du gestionnaire pour administrateur
 define('ADMIN_MANAGER_TITLE', 'Gestionnaire pour adiministrateur.');
 define('ADMIN_MANAGER_BTN_TAB_ORDERS_FEED', 'Commandes');
-define('ADMIN_MANAGER_BTN_TAB_MODELS_LIST', 'Modèles');
+define('ADMIN_MANAGER_BTN_TAB_MODELS_AND_TYPES_LIST', 'Modèles & Types');
 define('ADMIN_MANAGER_BTN_TAB_LOGS_FEED', 'Évènements');
 define('ADMIN_MANAGER_BTN_TAB_CUSTOMERS_LIST', 'Consommateurs');
 define('ADMIN_MANAGER_BTN_TAB_STORES_LIST', 'Commerçants');
