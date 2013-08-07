@@ -19,11 +19,11 @@ class Lines
 	public static function Attach(Line $line)
 	{
 		$query = 'EXEC [addLine]';
-		$query .= '@orderId = "' . $line->getOrderId() . '", ';
-		$query .= '@productSku = "' . $line->getProductSku() . '", ';
-		$query .= '@quantity = "' . $line->getQuantity() . '", ';
-		$query .= '@unitPrice = "' . $line->getUnitPrice() . '", ';
-		$query .= '@grossPrice = "' . $line->getGrossPrice() . '"';
+		$query .= '@orderId = \'' . $line->getOrderId() . '\', ';
+		$query .= '@productSku = \'' . $line->getProductSku() . '\', ';
+		$query .= '@quantity = \'' . $line->getQuantity() . '\', ';
+		$query .= '@unitPrice = \'' . $line->getUnitPrice() . '\', ';
+		$query .= '@grossPrice = \'' . $line->getGrossPrice() . '\'';
 
 		$rows = Database::ODBCExecute($query);
 
@@ -48,7 +48,7 @@ class Lines
 	public static function Find($id)
 	{
 		$query = 'EXEC [getLineById]';
-		$query .= '@id = "' . intval($id) . '"';
+		$query .= '@id = \'' . intval($id) . '\'';
 
 		$rows = Database::ODBCExecute($query);
 
@@ -80,7 +80,7 @@ class Lines
 	public static function FilterByOrderId($orderId)
 	{
 		$query = 'EXEC [getLinesByOrderId]';
-		$query .= '@orderId = "' . intval($orderId) . '"';
+		$query .= '@orderId = \'' . intval($orderId) . '\'';
 
 		$rows = Database::ODBCExecute($query);
 

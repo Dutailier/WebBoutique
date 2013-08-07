@@ -20,14 +20,14 @@ class RecipientInfos
 	public static function Attach(RecipientInfo $recipient)
 	{
 		$query = 'EXEC [addRecipientInfo]';
-		$query .= '@orderId = "' . $recipient->getOrderId() . '", ';
-		$query .= '@languageCode = "' . $recipient->getLanguageCode() . '", ';
-		$query .= '@greeting = "' . $recipient->getGreeting() . '", ';
-		$query .= '@name = "' . $recipient->getName() . '", ';
-		$query .= '@firstname = "' . $recipient->getFirstname() . '", ';
-		$query .= '@lastname = "' . $recipient->getLastname() . '", ';
-		$query .= '@phone = "' . $recipient->getPhone() . '", ';
-		$query .= '@email = "' . $recipient->getEmail() . '"';
+		$query .= '@orderId = \'' . $recipient->getOrderId() . '\', ';
+		$query .= '@languageCode = \'' . $recipient->getLanguageCode() . '\', ';
+		$query .= '@greeting = \'' . $recipient->getGreeting() . '\', ';
+		$query .= '@name = \'' . $recipient->getName() . '\', ';
+		$query .= '@firstname = \'' . $recipient->getFirstname() . '\', ';
+		$query .= '@lastname = \'' . $recipient->getLastname() . '\', ';
+		$query .= '@phone = \'' . $recipient->getPhone() . '\', ';
+		$query .= '@email = \'' . $recipient->getEmail() . '\'';
 
 		$rows = Database::ODBCExecute($query);
 
@@ -59,7 +59,7 @@ class RecipientInfos
 	public static function Find($id)
 	{
 		$query = 'EXEC [getRecipientInfoById]';
-		$query .= '@id = "' . intval($id) . '"';
+		$query .= '@id = \'' . intval($id) . '\'';
 
 		$rows = Database::ODBCExecute($query);
 

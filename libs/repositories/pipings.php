@@ -23,8 +23,8 @@ class Pipings
 	public static function Find($code)
 	{
 		$query = 'EXEC [getPipingByCode]';
-		$query .= '@code = "' . intval($code) . '", ';
-		$query .= '@languageCode = "' . Localisation::getCurrentLanguage() . '"';
+		$query .= '@code = \'' . intval($code) . '\', ';
+		$query .= '@languageCode = \'' . Localisation::getCurrentLanguage() . '\'';
 
 		$rows = Database::ODBCExecute($query);
 
@@ -54,12 +54,12 @@ class Pipings
 	public static function FilterByComponent($typeCode, $modelCode, $finishCode, $fabricCode, $userId)
 	{
 		$query = 'EXEC [getPipingsByComponent]';
-		$query .= '@typeCode = "' . intval($typeCode) . '", ';
-		$query .= '@modelCode = "' . intval($modelCode) . '", ';
-		$query .= '@finishCode = "' . intval($finishCode) . '", ';
-		$query .= '@fabricCode = "' . intval($fabricCode) . '", ';
-		$query .= '@userId = "' . intval($userId) . '", ';
-		$query .= '@LanguageCode = "' . Localisation::getCurrentLanguage() . '"';
+		$query .= '@typeCode = \'' . intval($typeCode) . '\', ';
+		$query .= '@modelCode = \'' . intval($modelCode) . '\', ';
+		$query .= '@finishCode = \'' . intval($finishCode) . '\', ';
+		$query .= '@fabricCode = \'' . intval($fabricCode) . '\', ';
+		$query .= '@userId = \'' . intval($userId) . '\', ';
+		$query .= '@LanguageCode = \'' . Localisation::getCurrentLanguage() . '\'';
 
 		$rows = Database::ODBCExecute($query);
 

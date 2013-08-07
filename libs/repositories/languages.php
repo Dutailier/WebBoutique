@@ -20,7 +20,7 @@ class Languages
 	public static function All()
 	{
 		$query = 'EXEC [getLanguages]';
-		$query .= '@languageCode = "' . Localisation::getCurrentLanguage() . '"';
+		$query .= '@languageCode = \'' . Localisation::getCurrentLanguage() . '\'';
 
 		$rows = Database::ODBCExecute($query);
 

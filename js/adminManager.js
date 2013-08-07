@@ -27,8 +27,12 @@
 			updateTypesList();
 		});
 
-		$('#storeKeyWords').keyup(function () {
+		$('#storesKeyWords').keyup(function () {
 			filterStoresByKeyWords();
+		});
+
+		$('#typesKeyWords').keyup(function () {
+			filterTypesByKeyWords();
 		});
 
 		//noinspection FallthroughInSwitchStatementJS
@@ -59,46 +63,76 @@
 	// Gère les évènements liés aux éléments générés dynamiquement.
 
 	$(document).on('click', 'div.store > div.infos', function () {
-		firstClickOnStore($(this).closest('div.store'));
+		var $store = $(this).closest('div.store');
+
+		if ($store.find('div.details').length) {
+			$store.children('div.details').stop().slideToggle();
+		} else {
+			firstClickOnStore($store);
+		}
 	});
 
+
 	$(document).on('click', 'div.type > div.infos', function () {
-		firstClickOnType($(this).closest('div.type'));
+		var $type = $(this).closest('div.type');
+
+		if ($type.find('div.details').length) {
+			$type.children('div.details').stop().slideToggle();
+		} else {
+			firstClickOnType($type);
+		}
 	});
+
 
 	$(document).on('click', 'input.btnEdit', function (e) {
 		e.stopPropagation();
 
 		var $btnEdit = $(this);
+		var $btnValid = $('<input class="btnValid" type="button" />');
 		var $lblEdit = $btnEdit.prev();
-		var $txtEdit = $('<input class="txtEdit" type="text" />');
+		var $txtEdit = $lblEdit.is('label.description') ?
+			$('<textarea class="txtEdit"></textarea>') :
+			$('<input class="txtEdit" type="text" />');
 
-		$txtEdit.val($lblEdit.text());
+		$txtEdit.val($lblEdit.html());
 		$txtEdit.width($lblEdit.width() + 15);
 		$txtEdit.insertBefore($btnEdit);
+		$btnValid.insertBefore($btnEdit);
 		$lblEdit.hide();
 		$btnEdit.hide();
+		$txtEdit.select();
 	});
 
-	$(document).on('click', 'input.txtEdit', function (e) {
+
+	$(document).on('click', '.txtEdit', function (e) {
 		e.stopPropagation();
 	});
 
-	$(document).on('keyup', 'input.txtEdit', function (e) {
-		// Seulement si la touche entrée est "ENTER".
-		if (e.keyCode == 13) {
-			var $txtEdit = $(this);
-			var $lblEdit = $txtEdit.prev();
-			var $btnEdit = $txtEdit.siblings('input.btnEdit');
-			var $element = $txtEdit.closest('div.type, div.model');
 
-			if ($element.is('div.type')) {
-				updateTypeName($txtEdit.val(), $element, function () {
-					$lblEdit.text($txtEdit.val());
-					$lblEdit.show();
-					$btnEdit.show();
-					$txtEdit.remove();
-				});
+	$(document).on('click', 'input.btnValid', function (e) {
+		e.stopPropagation();
+
+		var $btnValid = $(this);
+		var $txtEdit = $btnValid.siblings('.txtEdit');
+		var $lblEdit = $txtEdit.prev();
+		var $btnEdit = $btnValid.siblings('input.btnEdit');
+		var $element = $btnValid.closest('div.type, div.model');
+
+		var callback = function () {
+			$lblEdit.html($txtEdit.val());
+			$lblEdit.show();
+			$btnEdit.show();
+			$txtEdit.remove();
+			$btnValid.remove();
+		};
+
+		if ($element.is('div.type')) {
+			updateTypeName($txtEdit.val(), $element, callback);
+		} else if ($element.is('div.model')) {
+			if ($lblEdit.is('label.name')) {
+				updateModelName($txtEdit.val(), $element, callback);
+			} else if ($lblEdit.is('label.description')) {
+				updateModelDescription($txtEdit.val(), $element, callback);
 			}
 		}
 	});
@@ -228,9 +262,6 @@
 					type  : 'error',
 					text  : errors['SERVER_FAILED']
 				});
-				$('div.store').show();
-			})
-			.always(function () {
 			})
 	}
 
@@ -266,6 +297,8 @@
 						}
 					}
 
+					filterTypesByKeyWords();
+
 				} else if (data.hasOwnProperty('message')) {
 					noty({
 						layout: 'topRight',
@@ -287,7 +320,6 @@
 					type  : 'error',
 					text  : errors['SERVER_FAILED']
 				});
-				$('div.store').show();
 			})
 			.always(function () {
 				$('#typesLoader').hide();
@@ -301,6 +333,7 @@
 	 *
 	 * @param name
 	 * @param $type
+	 * @param callback
 	 */
 	function updateTypeName(name, $type, callback) {
 
@@ -338,11 +371,96 @@
 					type  : 'error',
 					text  : errors['SERVER_FAILED']
 				});
-				$('div.store').show();
-			})
-			.always(function () {
 			})
 	}
+
+
+	/**
+	 * Met à jour le nom d'un model.
+	 *
+	 * @param name
+	 * @param $model
+	 * @param callback
+	 */
+	function updateModelName(name, $model, callback) {
+
+		var parameters = {
+			'name'        : name,
+			'modelCode'   : $model.data('code'),
+			'languageCode': $('#languagesList').val()
+		};
+
+		$.post('ajax/updateModelName.php', parameters)
+			.done(function (data) {
+
+				if (data.hasOwnProperty('success') && data['success']) {
+
+					callback();
+
+				} else if (data.hasOwnProperty('message')) {
+					noty({
+						layout: 'topRight',
+						model : 'error',
+						text  : data['message']
+					});
+
+				} else {
+					noty({
+						layout: 'topRight',
+						model : 'error',
+						text  : errors['SERVER_UNREADABLE']
+					});
+				}
+			})
+			.fail(function () {
+				noty({
+					layout: 'topRight',
+					model : 'error',
+					text  : errors['SERVER_FAILED']
+				});
+			})
+	}
+
+
+	function updateModelDescription(description, $model, callback) {
+
+		var parameters = {
+			'description' : description,
+			'modelCode'   : $model.data('code'),
+			'languageCode': $('#languagesList').val()
+		};
+
+		$.post('ajax/updateModelDescription.php', parameters)
+			.done(function (data) {
+
+				if (data.hasOwnProperty('success') && data['success']) {
+
+					callback();
+
+				} else if (data.hasOwnProperty('message')) {
+					noty({
+						layout: 'topRight',
+						model : 'error',
+						text  : data['message']
+					});
+
+				} else {
+					noty({
+						layout: 'topRight',
+						model : 'error',
+						text  : errors['SERVER_UNREADABLE']
+					});
+				}
+			})
+			.fail(function () {
+				noty({
+					layout: 'topRight',
+					model : 'error',
+					text  : errors['SERVER_FAILED']
+				});
+			})
+	}
+
 
 	/**
 	 * Met à jour la liste de commerçants.
@@ -421,7 +539,6 @@
 			'languageCode': $('#languagesList').val()
 		};
 
-		$infos.click(false);
 		$infos.animate({'opacity': 0.5});
 
 		$.post('ajax/getModelsByTypeCodeAndLanguageCode.php', parameters)
@@ -435,9 +552,6 @@
 					addTypeDetailsToType(models, $type);
 
 					$infos.animate({'opacity': 1});
-					$infos.click(function () {
-						$type.children('div.details').stop().slideToggle();
-					});
 
 				} else if (data.hasOwnProperty('message')) {
 					noty({
@@ -476,7 +590,6 @@
 			'ref': $store.data('ref')
 		};
 
-		$infos.click(false);
 		$infos.animate({'opacity': 0.5});
 
 		$.post('ajax/getStoreDetails.php', parameters)
@@ -501,9 +614,6 @@
 						addStoreDetailsToStore(store, address, $store);
 
 						$infos.animate({'opacity': 1});
-						$infos.click(function () {
-							$store.children('div.details').stop().slideToggle();
-						})
 					}
 
 				} else if (data.hasOwnProperty('message')) {
@@ -536,7 +646,7 @@
 	 */
 	function filterStoresByKeyWords() {
 
-		var keyWords = $('#storeKeyWords').val();
+		var keyWords = $('#storesKeyWords').val();
 		var $storesList = $('#storesList');
 
 		var $filtered = $storesList.children('div.store')
@@ -547,6 +657,26 @@
 			$('#storesEmpty').hide();
 		} else {
 			$('#storesEmpty').show();
+		}
+	}
+
+
+	/**
+	 * Filtre les types de produits par mot clés et crée une pagination.
+	 */
+	function filterTypesByKeyWords() {
+
+		var keyWords = $('#typesKeyWords').val();
+		var typesList = $('#typesList');
+
+		var $filtered = typesList.children('div.type')
+			.filterByKeyWords(keyWords, {})
+			.paginate(typesList, {});
+
+		if ($filtered.length > 0) {
+			$('#typesEmpty').hide();
+		} else {
+			$('#typesEmpty').show();
 		}
 	}
 
@@ -662,33 +792,35 @@
 		var $modelsList = $('<div class="modelsList"></div>');
 
 		for (var i in models) {
-			var model = models[i];
+			if (models.hasOwnProperty(i)) {
+				var model = models[i];
 
-			if (model.hasOwnProperty('code') &&
-				model.hasOwnProperty('name') &&
-				model.hasOwnProperty('description')) {
+				if (model.hasOwnProperty('code') &&
+					model.hasOwnProperty('name') &&
+					model.hasOwnProperty('description')) {
 
-				model['description'] = model['description'] == null ?
-					label['TYPE_MODEL_EMPTY_DESCRIPTION'] :
-					model['description'];
+					model['description'] = model['description'] == "" ?
+						label['TYPE_MODEL_EMPTY_DESCRIPTION'] :
+						model['description'];
 
-				var $model = $(
-					'<div class="model" data-code="' + model['code'] + '">' +
-						'<div class="infos">' +
-						'<label class="code search">' + model['code'] + '</label>' +
-						'<label class="name search">' + model['name'] + '</label>' +
-						'<input class="btnEdit" type="button" />' +
-						'</div>' +
-						'<div class="details">' +
-						'<label class="description">' + model['description'] + '</label>' +
-						'<input class="btnEdit" type="button" />' +
-						'</div>' +
-						'</div>'
-				);
-				$model.appendTo($modelsList);
+					var $model = $(
+						'<div class="model" data-code="' + model['code'] + '">' +
+							'<div class="infos">' +
+							'<label class="code search">' + model['code'] + '</label>' +
+							'<label class="name search">' + model['name'] + '</label>' +
+							'<input class="btnEdit" type="button" />' +
+							'</div>' +
+							'<div class="details">' +
+							'<label class="description">' + model['description'] + '</label>' +
+							'<input class="btnEdit" type="button" />' +
+							'</div>' +
+							'</div>'
+					);
+					$model.appendTo($modelsList);
+				}
 			}
+			$modelsList.appendTo($details);
 		}
-		$modelsList.appendTo($details);
 	}
 
 
@@ -697,6 +829,7 @@
 	 *
 	 * @param store
 	 * @param $store
+	 * @param address
 	 */
 	function addStoreDetailsToStore(store, address, $store) {
 		var $details = $('<div class="details"></div>');

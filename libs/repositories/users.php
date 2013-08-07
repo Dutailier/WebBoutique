@@ -23,10 +23,10 @@ class Users
 	public static function Attach(User $user)
 	{
 		$query = 'EXEC [addUser]';
-		$query .= '@languageCode = "' . $user->getLanguageCode() . '", ';
-		$query .= '@role = "' . $user->getRole() . '", ';
-		$query .= '@username = "' . $user->getUsername() . '", ';
-		$query .= '@password = "' . $user->getPassword() . '"';
+		$query .= '@languageCode = \'' . $user->getLanguageCode() . '\', ';
+		$query .= '@role = \'' . $user->getRole() . '\', ';
+		$query .= '@username = \'' . $user->getUsername() . '\', ';
+		$query .= '@password = \'' . $user->getPassword() . '\'';
 
 		$rows = Database::ODBCExecute($query);
 
@@ -93,7 +93,7 @@ class Users
 	public static function Find($id)
 	{
 		$query = 'EXEC [getUserById]';
-		$query .= '@id = "' . intval($id) . '"';
+		$query .= '@id = \'' . intval($id) . '\'';
 
 		$rows = Database::ODBCExecute($query);
 
@@ -161,8 +161,8 @@ class Users
 	public static function FindByUsernameAndPassword($username, $password)
 	{
 		$query = 'EXEC [getUserByUsernameAndPassword]';
-		$query .= '@username = "' . $username . '", ';
-		$query .= '@password = "' . $password . '"';
+		$query .= '@username = \'' . $username . '\', ';
+		$query .= '@password = \'' . $password . '\'';
 
 		$rows = Database::ODBCExecute($query);
 

@@ -20,7 +20,7 @@ class Products
 	public static function Find($sku)
 	{
 		$query = 'EXEC [getProductBySku]';
-		$query .= '@sku = "' . intval($sku) . '"';
+		$query .= '@sku = \'' . intval($sku) . '\'';
 
 		$rows = Database::ODBCExecute($query);
 

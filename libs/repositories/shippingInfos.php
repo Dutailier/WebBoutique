@@ -20,11 +20,11 @@ class ShippingInfos
 	public static function Attach(ShippingInfo $shippingInfo)
 	{
 		$query = 'EXEC [addShippingInfo]';
-		$query .= '@orderId = "' . $shippingInfo->getOrderId() . '", ';
-		$query .= '@street = "' . $shippingInfo->getStreet() . '", ';
-		$query .= '@city = "' . $shippingInfo->getCity() . '", ';
-		$query .= '@zipCode = "' . $shippingInfo->getZipCode() . '", ';
-		$query .= '@stateCode = "' . $shippingInfo->getStateCode() . '"';
+		$query .= '@orderId = \'' . $shippingInfo->getOrderId() . '\', ';
+		$query .= '@street = \'' . $shippingInfo->getStreet() . '\', ';
+		$query .= '@city = \'' . $shippingInfo->getCity() . '\', ';
+		$query .= '@zipCode = \'' . $shippingInfo->getZipCode() . '\', ';
+		$query .= '@stateCode = \'' . $shippingInfo->getStateCode() . '\'';
 
 		$rows = Database::ODBCExecute($query);
 
@@ -53,7 +53,7 @@ class ShippingInfos
 	public static function Find($id)
 	{
 		$query = 'EXEC [getShippingInfoById]';
-		$query .= '@id = "' . intval($id) . '"';
+		$query .= '@id = \'' . intval($id) . '\'';
 
 		$rows = Database::ODBCExecute($query);
 

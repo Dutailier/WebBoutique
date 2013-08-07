@@ -30,9 +30,11 @@ if (!Security::isAuthenticated()) {
 
 	} else {
 		try {
-			$type = new Type($_POST['typeCode'], $_POST['name']);
-
-			Types::Update($type, $_POST['languageCode']);
+			Types::UpdateName(
+				$_POST['name'],
+				$_POST['typeCode'],
+				$_POST['languageCode']
+			);
 
 			$data['success'] = true;
 

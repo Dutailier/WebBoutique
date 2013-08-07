@@ -23,8 +23,8 @@ class Fabrics
 	public static function Find($code)
 	{
 		$query = 'EXEC [getFabricByCode]';
-		$query .= '@code = "' . intval($code) . '", ';
-		$query .= '@languageCode = "' . Localisation::getCurrentLanguage() . '"';
+		$query .= '@code = \'' . intval($code) . '\', ';
+		$query .= '@languageCode = \'' . Localisation::getCurrentLanguage() . '\'';
 
 		$rows = Database::ODBCExecute($query);
 
@@ -55,12 +55,12 @@ class Fabrics
 	public static function FilterByComponent($typeCode, $modelCode, $finishCode, $pipingCode, $userId)
 	{
 		$query = 'EXEC [getFabricsByComponent]';
-		$query .= '@typeCode = "' . intval($typeCode) . '", ';
-		$query .= '@modelCode = "' . intval($modelCode) . '", ';
-		$query .= '@finishCode = "' . intval($finishCode) . '", ';
-		$query .= '@pipingCode = "' . intval($pipingCode) . '", ';
-		$query .= '@userId = "' . intval($userId) . '", ';
-		$query .= '@LanguageCode = "' . Localisation::getCurrentLanguage() . '"';
+		$query .= '@typeCode = \'' . intval($typeCode) . '\', ';
+		$query .= '@modelCode = \'' . intval($modelCode) . '\', ';
+		$query .= '@finishCode = \'' . intval($finishCode) . '\', ';
+		$query .= '@pipingCode = \'' . intval($pipingCode) . '\', ';
+		$query .= '@userId = \'' . intval($userId) . '\', ';
+		$query .= '@LanguageCode = \'' . Localisation::getCurrentLanguage() . '\'';
 
 		$rows = Database::ODBCExecute($query);
 

@@ -20,10 +20,10 @@ class Comments
 	public static function Attach(Comment $comment)
 	{
 		$query = 'EXEC [addComment]';
-		$query .= '@userId = "' . $comment->getUserId() . '", ';
-		$query .= '@orderId = "' . $comment->getOrderId() . '", ';
-		$query .= '@text = "' . $comment->getText() . '", ';
-		$query .= '@commentId = "' . $comment->getCommentId() . '"';
+		$query .= '@userId = \'' . $comment->getUserId() . '\', ';
+		$query .= '@orderId = \'' . $comment->getOrderId() . '\', ';
+		$query .= '@text = \'' . $comment->getText() . '\', ';
+		$query .= '@commentId = \'' . $comment->getCommentId() . '\'';
 
 		$rows = Database::ODBCExecute($query);
 
@@ -49,7 +49,7 @@ class Comments
 	public static function Find($id)
 	{
 		$query = 'EXEC [getCommentById]';
-		$query .= '@id = "' . intval($id) . '"';
+		$query .= '@id = \'' . intval($id) . '\'';
 
 		$rows = Database::ODBCExecute($query);
 
@@ -81,7 +81,7 @@ class Comments
 	public static function FilterByOrderId($orderId)
 	{
 		$query = 'EXEC [getCommentsByOrderId]';
-		$query .= '@orderId = "' . intval($orderId) . '"';
+		$query .= '@orderId = \'' . intval($orderId) . '\'';
 
 		$rows = Database::ODBCExecute($query);
 
@@ -114,7 +114,7 @@ class Comments
 	public static function FilterByCommentId($commentId)
 	{
 		$query = 'EXEC [getCommentsByCommentId]';
-		$query .= '@orderId = "' . intval($commentId) . '"';
+		$query .= '@orderId = \'' . intval($commentId) . '\'';
 
 		$rows = Database::ODBCExecute($query);
 

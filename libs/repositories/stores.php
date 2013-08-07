@@ -23,7 +23,7 @@ class Stores
 	public static function Find($ref)
 	{
 		$query = 'EXEC [getStoreByRef]';
-		$query .= '@ref = "' . $ref . '"';
+		$query .= '@ref = \'' . $ref . '\'';
 
 		$rows = Database::ODBCExecute($query);
 

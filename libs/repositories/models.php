@@ -13,17 +13,36 @@ include_once(Localisation::getLanguageFile());
 class Models
 {
 	/**
-	 * Modifie le modèle du produit.
+	 * Modifie le nom du modèle.
 	 *
-	 * @param Model $model
-	 * @param       $languageCode
+	 * @param $name
+	 * @param $code
+	 * @param $languageCode
 	 */
-	public static function Update(Model $model, $languageCode)
+	public static function UpdateName($name, $code, $languageCode)
 	{
-		$query = 'EXEC [updateModel]';
-		$query .= '@name = "' . $model->getName() . '", ';
-		$query .= '@code = "' . $model->getCode() . '", ';
-		$query .= '@languageCode = "' . $languageCode . '"';
+		$query = 'EXEC [updateModelName]';
+		$query .= '@name = \'' . $name . '\', ';
+		$query .= '@code = \'' . $code . '\', ';
+		$query .= '@languageCode = \'' . $languageCode . '\'';
+
+		Database::ODBCExecute($query);
+	}
+
+
+	/**
+	 * Modifie la description du modèle.
+	 *
+	 * @param $description
+	 * @param $code
+	 * @param $languageCode
+	 */
+	public static function UpdateDescription($description, $code, $languageCode)
+	{
+		$query = 'EXEC [updateModelDescription]';
+		$query .= '@description = \'' . htmlentities($description, ENT_QUOTES ) . '\', ';
+		$query .= '@code = \'' . $code . '\', ';
+		$query .= '@languageCode = \'' . $languageCode . '\'';
 
 		Database::ODBCExecute($query);
 	}
@@ -40,8 +59,8 @@ class Models
 	public static function Find($code)
 	{
 		$query = 'EXEC [getModelByCode]';
-		$query .= '@code = "' . intval($code) . '", ';
-		$query .= '@languageCode = "' . Localisation::getCurrentLanguage() . '"';
+		$query .= '@code = \'' . intval($code) . '\', ';
+		$query .= '@languageCode = \'' . Localisation::getCurrentLanguage() . '\'';
 
 		$rows = Database::ODBCExecute($query);
 
@@ -49,12 +68,14 @@ class Models
 			throw new Exception(ERROR_MODEL_DOESNT_EXIST);
 		}
 
-		return new Model (
+		$model = new Model (
 			$rows[0]['code'],
-			$rows[0]['typeCode'],
 			$rows[0]['name'],
 			$rows[0]['description']
 		);
+		$model->setTypeCode($rows[0]['typeCode']);
+
+		return $model;
 	}
 
 
@@ -70,20 +91,20 @@ class Models
 	public static function FilterByComponent($typeCode, $userId)
 	{
 		$query = 'EXEC [getModelsByComponent]';
-		$query .= '@typeCode = "' . intval($typeCode) . '", ';
-		$query .= '@userId = "' . intval($userId) . '", ';
-		$query .= '@LanguageCode = "' . Localisation::getCurrentLanguage() . '"';
+		$query .= '@typeCode = \'' . intval($typeCode) . '\', ';
+		$query .= '@userId = \'' . intval($userId) . '\', ';
+		$query .= '@LanguageCode = \'' . Localisation::getCurrentLanguage() . '\'';
 
 		$rows = Database::ODBCExecute($query);
 
 		$models = array();
 		foreach ($rows as $row) {
-			$models[] = new Model (
+			$model = $models[] = new Model (
 				$row['code'],
-				$row['typeCode'],
 				$row['name'],
 				$row['description']
 			);
+			$model->setTypeCode($row['typeCode']);
 		}
 
 		return $models;
@@ -98,22 +119,22 @@ class Models
 	 *
 	 * @return array
 	 */
-	public static function filterByModelCodeAndLanguageCode($typeCode, $languageCode)
+	public static function filterByTypeCodeAndLanguageCode($typeCode, $languageCode)
 	{
 		$query = 'EXEC [getModelsByTypeCode]';
-		$query .= '@typeCode = "' . $typeCode . '", ';
-		$query .= '@languageCode = "' . $languageCode . '"';
+		$query .= '@typeCode = \'' . $typeCode . '\', ';
+		$query .= '@languageCode = \'' . $languageCode . '\'';
 
 		$rows = Database::ODBCExecute($query);
 
 		$models = array();
 		foreach ($rows as $row) {
-			$models[] = new Model(
+			$model = $models[] = new Model (
 				$row['code'],
-				$row['typeCode'],
 				$row['name'],
 				$row['description']
 			);
+			$model->setTypeCode($row['typeCode']);
 		}
 
 		return $models;

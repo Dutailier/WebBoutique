@@ -16,16 +16,14 @@ class Model
 	 * Initialise le modèle.
 	 *
 	 * @param      $code
-	 * @param      $typeCode
 	 * @param      $name
 	 * @param null $description
 	 */
-	function __construct($code, $typeCode, $name, $description = null)
+	function __construct($code, $name, $description = null)
 	{
 		$this->setCode($code);
-		$this->setTypeCode($typeCode);
 		$this->setName($name);
-		$this->getDescription($description);
+		$this->setDescription($description);
 	}
 
 
@@ -72,7 +70,7 @@ class Model
 	 *
 	 * @param mixed $typeCode
 	 */
-	private function setTypeCode($typeCode)
+	public function setTypeCode($typeCode)
 	{
 		$this->typeCode = $typeCode;
 	}

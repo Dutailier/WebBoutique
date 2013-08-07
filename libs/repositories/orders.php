@@ -20,7 +20,7 @@ class Orders
 	public static function Attach(Order $order)
 	{
 		$query = 'EXEC [addOrder]';
-		$query .= '@userId = "' . $order->getUserId() . '", ';
+		$query .= '@userId = \'' . $order->getUserId() . '\', ';
 
 		$rows = Database::ODBCExecute($query);
 
@@ -53,7 +53,7 @@ class Orders
 	public static function Find($id)
 	{
 		$query = 'EXEC [getOrderById]';
-		$query .= '@id = "' . intval($id) . '"';
+		$query .= '@id = \'' . intval($id) . '\'';
 
 		$rows = Database::ODBCExecute($query);
 

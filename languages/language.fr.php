@@ -49,6 +49,9 @@ define('ERROR_REQUIRED_ROLE_ADMINISTRATOR', 'Vous devez être authentifié en ta
 define('ERROR_REQUIRED_LANGUAGE_CODE', 'Le code de la langue est requis.');
 define('ERROR_REQUIRED_TYPE_NAME', 'Le nom du type de produit est requis.');
 define('ERROR_REQUIRED_TYPE_CODE', 'Le code du type de produit est requis.');
+define('ERROR_REQUIRED_MODEL_NAME', 'Le nom du modèle est requis.');
+define('ERROR_REQUIRED_MODEL_DESCRIPTION', 'La description du modèle est requises.');
+define('ERROR_REQUIRED_MODEL_CODE', 'Le code du modèle est requis.');
 define('ERROR_REQUIRED_STORE_REF', 'La référence du commerçant est requise.');
 
 // Erreurs de transaction

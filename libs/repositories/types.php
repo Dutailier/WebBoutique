@@ -13,17 +13,18 @@ include_once(Localisation::getLanguageFile());
 class Types
 {
 	/**
-	 * Modifie le type de produit.
+	 * Modifie le nom du type de produit.
 	 *
-	 * @param Type $type
-	 * @param      $languageCode
+	 * @param $name
+	 * @param $code
+	 * @param $languageCode
 	 */
-	public static function Update(Type $type, $languageCode)
+	public static function UpdateName($name, $code, $languageCode)
 	{
-		$query = 'EXEC [updateType]';
-		$query .= '@name = "' . $type->getName() . '", ';
-		$query .= '@code = "' . $type->getCode() . '", ';
-		$query .= '@languageCode = "' . $languageCode . '"';
+		$query = 'EXEC [updateTypeName]';
+		$query .= '@name = \'' . $name . '\', ';
+		$query .= '@code = \'' . $code . '\', ';
+		$query .= '@languageCode = \'' . $languageCode . '\'';
 
 		Database::ODBCExecute($query);
 	}
@@ -40,8 +41,8 @@ class Types
 	public static function Find($code)
 	{
 		$query = 'EXEC [getTypeByCode]';
-		$query .= '@code = "' . intval($code) . '", ';
-		$query .= '@languageCode = "' . Localisation::getCurrentLanguage() . '"';
+		$query .= '@code = \'' . intval($code) . '\', ';
+		$query .= '@languageCode = \'' . Localisation::getCurrentLanguage() . '\'';
 
 		$rows = Database::ODBCExecute($query);
 
@@ -66,8 +67,8 @@ class Types
 	public static function FilterByComponent($userId)
 	{
 		$query = 'EXEC [getTypesByComponent]';
-		$query .= '@userId = "' . intval($userId) . '", ';
-		$query .= '@languageCode = "' . Localisation::getCurrentLanguage() . '"';
+		$query .= '@userId = \'' . intval($userId) . '\', ';
+		$query .= '@languageCode = \'' . Localisation::getCurrentLanguage() . '\'';
 
 		$rows = Database::ODBCExecute($query);
 
@@ -93,7 +94,7 @@ class Types
 	public static function filterByLanguageCode($languageCode)
 	{
 		$query = 'EXEC [getTypes]';
-		$query .= '@languageCode = "' . $languageCode . '"';
+		$query .= '@languageCode = \'' . $languageCode . '\'';
 
 		$rows = Database::ODBCExecute($query);
 

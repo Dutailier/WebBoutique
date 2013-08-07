@@ -42,6 +42,9 @@ define('ERROR_POSITIVE_QUANTITY_REQUIRED', 'A positive quantity is required.');
 define('ERROR_REQUIRED_LANGUAGE_CODE', 'The language code is required.');
 define('ERROR_REQUIRED_TYPE_NAME', 'The type name is required.');
 define('ERROR_REQUIRED_TYPE_CODE', 'The type code is required.');
+define('ERROR_REQUIRED_MODEL_NAME', 'The model name is required.');
+define('ERROR_REQUIRED_MODEL_DESCRIPTION', 'The model description is required.');
+define('ERROR_REQUIRED_MODEL_CODE', 'The model code is required.');
 define('ERROR_REQUIRED_STORE_REF', 'The store ref is required.');
 
 // Erreurs de sécurité

@@ -23,8 +23,8 @@ class States
 	public static function find($code)
 	{
 		$query = 'EXEC [getStateByCode]';
-		$query .= '@code = "' . $code . '" ,';
-		$query .= '@languageCode = "' . Localisation::getCurrentLanguage() . '"';
+		$query .= '@code = \'' . $code . '\' ,';
+		$query .= '@languageCode = \'' . Localisation::getCurrentLanguage() . '\'';
 
 		$rows = Database::ODBCExecute($query);
 
@@ -50,8 +50,8 @@ class States
 	public static function filterByCountryCode($countryCode)
 	{
 		$query = 'EXEC [getStatesByCountryCode]';
-		$query .= '@countryCode = "' . $countryCode . '" , ';
-		$query .= '@languageCode = "' . Localisation::getCurrentLanguage() . '"';
+		$query .= '@countryCode = \'' . $countryCode . '\' , ';
+		$query .= '@languageCode = \'' . Localisation::getCurrentLanguage() . '\'';
 
 		$rows = Database::ODBCExecute($query);
 

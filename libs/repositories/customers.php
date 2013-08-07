@@ -23,12 +23,12 @@ class Customers
 		$user = Users::Attach($customer);
 
 		$query = 'EXEC [addCustomer]';
-		$query .= '@userId = "' . $user->getId() . '", ';
-		$query .= '@greeting = "' . $customer->getGreeting() . '", ';
-		$query .= '@firstname = "' . $customer->getFirstname() . '", ';
-		$query .= '@lastname = "' . $customer->getLastname() . '", ';
-		$query .= '@phone = "' . $customer->getPhone() . '", ';
-		$query .= '@email = "' . $customer->getEmail() . '"';
+		$query .= '@userId = \'' . $user->getId() . '\', ';
+		$query .= '@greeting = \'' . $customer->getGreeting() . '\', ';
+		$query .= '@firstname = \'' . $customer->getFirstname() . '\', ';
+		$query .= '@lastname = \'' . $customer->getLastname() . '\', ';
+		$query .= '@phone = \'' . $customer->getPhone() . '\', ';
+		$query .= '@email = \'' . $customer->getEmail() . '\'';
 
 		$rows = Database::ODBCExecute($query);
 

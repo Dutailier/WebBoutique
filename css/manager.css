@@ -79,7 +79,7 @@ div.details {
 	position : relative;
 	top      : -1px; /* Pour n'avoir qu'une seule ligne. */
 	border   : 1px solid #484848;
-	padding  : 10px 20px;
+	padding  : 10px 15px 20px 15px;
 	overflow : hidden; /* Clearfix */
 	margin   : 0px 10px;
 }

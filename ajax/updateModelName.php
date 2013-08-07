@@ -16,9 +16,13 @@ if (!Security::isAuthenticated()) {
 	$data['message'] = ERROR_REQUIRED_ROLE_ADMINISTRATOR;
 
 } else {
-	if (empty($_POST['typeCode'])) {
+	if (empty($_POST['name'])) {
 		$data['success'] = false;
-		$data['message'] = ERROR_REQUIRED_TYPE_CODE;
+		$data['message'] = ERROR_REQUIRED_MODEL_NAME;
+
+	} else if (empty($_POST['modelCode'])) {
+		$data['success'] = false;
+		$data['message'] = ERROR_REQUIRED_MODEL_CODE;
 
 	} else if (empty($_POST['languageCode'])) {
 		$data['success'] = false;
@@ -26,13 +30,11 @@ if (!Security::isAuthenticated()) {
 
 	} else {
 		try {
-			$models = Models::filterByTypeCodeAndLanguageCode(
-				$_POST['typeCode'], $_POST['languageCode']);
-
-			$data['models'] = array();
-			foreach ($models as $model) {
-				$data['models'][] = $model->getInfoArray();
-			}
+			Models::UpdateName(
+				$_POST['name'],
+				$_POST['modelCode'],
+				$_POST['languageCode']
+			);
 
 			$data['success'] = true;
 

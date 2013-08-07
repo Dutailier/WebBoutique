@@ -20,7 +20,7 @@ class Logs
 	public static function Find($id)
 	{
 		$query = 'EXEC [getLogById]';
-		$query .= '@id = "' . intval($id) . '"';
+		$query .= '@id = \'' . intval($id) . '\'';
 
 		$rows = Database::ODBCExecute($query);
 
@@ -48,7 +48,7 @@ class Logs
 	public static function FilterByOrderId($orderId)
 	{
 		$query = 'EXEC [getLogsByOrderId]';
-		$query .= '@orderId = "' . intval($orderId) . '"';
+		$query .= '@orderId = \'' . intval($orderId) . '\'';
 
 		$rows = Database::ODBCExecute($query);
 

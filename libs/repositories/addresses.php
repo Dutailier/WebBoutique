@@ -20,11 +20,11 @@ class Addresses
 	public static function Attach(Address $address)
 	{
 		$query = 'EXEC [addAddress]';
-		$query .= '@userId = "' . $address->getUserId() . '", ';
-		$query .= '@street = "' . $address->getStreet() . '", ';
-		$query .= '@city = "' . $address->getCity() . '", ';
-		$query .= '@zipCode = "' . $address->getZipCode() . '", ';
-		$query .= '@stateCode = "' . $address->getStateCode() . '"';
+		$query .= '@userId = \'' . $address->getUserId() . '\', ';
+		$query .= '@street = \'' . $address->getStreet() . '\', ';
+		$query .= '@city = \'' . $address->getCity() . '\', ';
+		$query .= '@zipCode = \'' . $address->getZipCode() . '\', ';
+		$query .= '@stateCode = \'' . $address->getStateCode() . '\'';
 
 		$rows = Database::ODBCExecute($query);
 
@@ -47,7 +47,7 @@ class Addresses
 	public static function FindByUserId($userId)
 	{
 		$query = 'EXEC [getAddressByUserId]';
-		$query .= '@userId = "' . $userId . '"';
+		$query .= '@userId = \'' . $userId . '\'';
 
 		$rows = Database::ODBCExecute($query);
 

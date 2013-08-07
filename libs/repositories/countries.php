@@ -23,8 +23,8 @@ class Countries
 	public static function Find($code)
 	{
 		$query = 'EXEC [getCountryByCode]';
-		$query .= '@code = "' . $code . '", ';
-		$query .= '@languageCode = "' . Localisation::getCurrentLanguage() . '"';
+		$query .= '@code = \'' . $code . '\', ';
+		$query .= '@languageCode = \'' . Localisation::getCurrentLanguage() . '\'';
 
 		$rows = Database::ODBCExecute($query);
 
@@ -47,7 +47,7 @@ class Countries
 	public static function All()
 	{
 		$query = 'EXEC [getCountries]';
-		$query .= '@languageCode = "' . Localisation::getCurrentLanguage() . '"';
+		$query .= '@languageCode = \'' . Localisation::getCurrentLanguage() . '\'';
 
 		$rows = Database::ODBCExecute($query);
 
