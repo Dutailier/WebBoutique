@@ -33,7 +33,7 @@
 
 		//noinspection FallthroughInSwitchStatementJS
 		switch ($.URL.getParam('tab')) {
-			case 'productsList':
+			case 'modelsAndTypesList':
 				selectTabModelsAndTypesList();
 				break;
 
@@ -56,8 +56,51 @@
 		}
 	});
 
-	$(document).on('click', 'div.store', function () {
-		firstClickInStore($(this));
+	// Gère les évènements liés aux éléments générés dynamiquement.
+
+	$(document).on('click', 'div.store > div.infos', function () {
+		firstClickOnStore($(this).closest('div.store'));
+	});
+
+	$(document).on('click', 'div.type > div.infos', function () {
+		firstClickOnType($(this).closest('div.type'));
+	});
+
+	$(document).on('click', 'input.btnEdit', function (e) {
+		e.stopPropagation();
+
+		var $btnEdit = $(this);
+		var $lblEdit = $btnEdit.prev();
+		var $txtEdit = $('<input class="txtEdit" type="text" />');
+
+		$txtEdit.val($lblEdit.text());
+		$txtEdit.width($lblEdit.width() + 15);
+		$txtEdit.insertBefore($btnEdit);
+		$lblEdit.hide();
+		$btnEdit.hide();
+	});
+
+	$(document).on('click', 'input.txtEdit', function (e) {
+		e.stopPropagation();
+	});
+
+	$(document).on('keyup', 'input.txtEdit', function (e) {
+		// Seulement si la touche entrée est "ENTER".
+		if (e.keyCode == 13) {
+			var $txtEdit = $(this);
+			var $lblEdit = $txtEdit.prev();
+			var $btnEdit = $txtEdit.siblings('input.btnEdit');
+			var $element = $txtEdit.closest('div.type, div.model');
+
+			if ($element.is('div.type')) {
+				updateTypeName($txtEdit.val(), $element, function () {
+					$lblEdit.text($txtEdit.val());
+					$lblEdit.show();
+					$btnEdit.show();
+					$txtEdit.remove();
+				});
+			}
+		}
 	});
 
 
@@ -198,7 +241,7 @@
 	function updateTypesList() {
 
 		var parameters = {
-			'languageCode' : $('#languagesList').val()
+			'languageCode': $('#languagesList').val()
 		};
 
 		$.post('ajax/getTypesByLanguageCode.php', parameters)
@@ -252,6 +295,54 @@
 			})
 	}
 
+
+	/**
+	 * Met à jour le nom d'un type.
+	 *
+	 * @param name
+	 * @param $type
+	 */
+	function updateTypeName(name, $type, callback) {
+
+		var parameters = {
+			'name'        : name,
+			'typeCode'    : $type.data('code'),
+			'languageCode': $('#languagesList').val()
+		};
+
+		$.post('ajax/updateTypeName.php', parameters)
+			.done(function (data) {
+
+				if (data.hasOwnProperty('success') && data['success']) {
+
+					callback();
+
+				} else if (data.hasOwnProperty('message')) {
+					noty({
+						layout: 'topRight',
+						type  : 'error',
+						text  : data['message']
+					});
+
+				} else {
+					noty({
+						layout: 'topRight',
+						type  : 'error',
+						text  : errors['SERVER_UNREADABLE']
+					});
+				}
+			})
+			.fail(function () {
+				noty({
+					layout: 'topRight',
+					type  : 'error',
+					text  : errors['SERVER_FAILED']
+				});
+				$('div.store').show();
+			})
+			.always(function () {
+			})
+	}
 
 	/**
 	 * Met à jour la liste de commerçants.
@@ -318,11 +409,67 @@
 
 
 	/**
+	 * Gère le premier click sur un type de produit.
+	 *
+	 * @param $type
+	 */
+	function firstClickOnType($type) {
+		var $infos = $type.children('div.infos');
+
+		var parameters = {
+			'typeCode'    : $type.data('code'),
+			'languageCode': $('#languagesList').val()
+		};
+
+		$infos.click(false);
+		$infos.animate({'opacity': 0.5});
+
+		$.post('ajax/getModelsByTypeCodeAndLanguageCode.php', parameters)
+			.done(function (data) {
+
+				if (data.hasOwnProperty('success') && data['success'] &&
+					data.hasOwnProperty('models')) {
+
+					var models = data['models'];
+
+					addTypeDetailsToType(models, $type);
+
+					$infos.animate({'opacity': 1});
+					$infos.click(function () {
+						$type.children('div.details').stop().slideToggle();
+					});
+
+				} else if (data.hasOwnProperty('message')) {
+					noty({
+						layout: 'topRight',
+						type  : 'error',
+						text  : data['message']
+					});
+
+				} else {
+					noty({
+						layout: 'topRight',
+						type  : 'error',
+						text  : errors['SERVER_UNREADABLE']
+					});
+				}
+			})
+			.fail(function () {
+				noty({
+					layout: 'topRight',
+					type  : 'error',
+					text  : errors['SERVER_FAILED']
+				});
+			})
+	}
+
+
+	/**
 	 * Gère le premier click sur un commerçant.
 	 *
 	 * @param $store
 	 */
-	function firstClickInStore($store) {
+	function firstClickOnStore($store) {
 		var $infos = $store.children('div.infos');
 
 		var parameters = {
@@ -352,6 +499,11 @@
 						address.hasOwnProperty('zipCode') &&
 						address.hasOwnProperty('stateCode')) {
 						addStoreDetailsToStore(store, address, $store);
+
+						$infos.animate({'opacity': 1});
+						$infos.click(function () {
+							$store.children('div.details').stop().slideToggle();
+						})
 					}
 
 				} else if (data.hasOwnProperty('message')) {
@@ -375,12 +527,6 @@
 					type  : 'error',
 					text  : errors['SERVER_FAILED']
 				});
-			})
-			.always(function () {
-				$infos.animate({'opacity': 1});
-				$infos.click(function () {
-					$store.children('div.details').stop().slideToggle();
-				})
 			})
 	}
 
@@ -465,6 +611,7 @@
 			'<div class="infos">' +
 				'<label class="code search">' + type['code'] + '</label>' +
 				'<label class="name search">' + type['name'] + '</label>' +
+				'<input class="btnEdit" type="button" />' +
 				'</div>'
 		);
 
@@ -487,6 +634,61 @@
 		);
 
 		$infos.appendTo($store);
+	}
+
+
+	/**
+	 * Ajoute les informations détaillées du type de produit.
+	 *
+	 * @param models
+	 * @param $type
+	 */
+	function addTypeDetailsToType(models, $type) {
+		var $details = $('<div class="details"></div>');
+
+		addModelsListToTypeDetails(models, $details);
+
+		$details.hide().appendTo($type).slideDown();
+	}
+
+
+	/**
+	 * Génère la liste de modèles du type de produit.
+	 *
+	 * @param models
+	 * @param $details
+	 */
+	function addModelsListToTypeDetails(models, $details) {
+		var $modelsList = $('<div class="modelsList"></div>');
+
+		for (var i in models) {
+			var model = models[i];
+
+			if (model.hasOwnProperty('code') &&
+				model.hasOwnProperty('name') &&
+				model.hasOwnProperty('description')) {
+
+				model['description'] = model['description'] == null ?
+					label['TYPE_MODEL_EMPTY_DESCRIPTION'] :
+					model['description'];
+
+				var $model = $(
+					'<div class="model" data-code="' + model['code'] + '">' +
+						'<div class="infos">' +
+						'<label class="code search">' + model['code'] + '</label>' +
+						'<label class="name search">' + model['name'] + '</label>' +
+						'<input class="btnEdit" type="button" />' +
+						'</div>' +
+						'<div class="details">' +
+						'<label class="description">' + model['description'] + '</label>' +
+						'<input class="btnEdit" type="button" />' +
+						'</div>' +
+						'</div>'
+				);
+				$model.appendTo($modelsList);
+			}
+		}
+		$modelsList.appendTo($details);
 	}
 
 

@@ -165,7 +165,7 @@ class Address
 					throw new Exception(ERROR_ADDRESS_ZIP_CODE_US_INVALID);
 				}
 
-				$this->zipCode = intval($zipCode);
+				$this->zipCode = $zipCode;
 				break;
 		}
 	}

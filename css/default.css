@@ -4,11 +4,12 @@ select {
 	text-align  : center;
 	font-size   : 1.2em;
 	line-height : 20px;
-	padding     : 8px;
+	padding     : 6px;
 	margin      : 0px 5px;
 }
 
-label.error {
+label.error,
+span.error {
 	color : red;
 }
 
@@ -21,8 +22,7 @@ textarea.error {
 a.button,
 input[type=button],
 input[type=submit] {
-	font-size : 1.1em;
-	cursor    : pointer;
+	cursor : pointer;
 }
 
 .hidden {

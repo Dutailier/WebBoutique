@@ -3,7 +3,7 @@
 include_once('../config.php');
 include_once(ROOT . 'libs/security.php');
 include_once(ROOT . 'libs/localisation.php');
-include_once(ROOT . 'libs/repositories/types.php');
+include_once(ROOT . 'libs/repositories/models.php');
 
 include_once(Localisation::getLanguageFile());
 
@@ -16,17 +16,22 @@ if (!Security::isAuthenticated()) {
 	$data['message'] = ERROR_REQUIRED_ROLE_ADMINISTRATOR;
 
 } else {
-	if (empty($_POST['languageCode'])) {
+	if (empty($_POST['typeCode'])) {
+		$data['success'] = false;
+		$data['message'] = ERROR_REQUIRED_TYPE_CODE;
+
+	} else if (empty($_POST['languageCode'])) {
 		$data['success'] = false;
 		$data['message'] = ERROR_REQUIRED_LANGUAGE_CODE;
 
 	} else {
 		try {
-			$models = Types::filterByLanguageCode($_POST['languageCode']);
+			$models = Models::filterByModelCodeAndLanguageCode(
+				$_POST['typeCode'], $_POST['languageCode']);
 
-			$data['types'] = array();
-			foreach ($models as $type) {
-				$data['types'][] = $type->getInfoArray();
+			$data['models'] = array();
+			foreach ($models as $model) {
+				$data['models'][] = $model->getInfoArray();
 			}
 
 			$data['success'] = true;

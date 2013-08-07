@@ -18,7 +18,7 @@ class Database
 	{
 		$conn = self::getODBCConnection();
 
-		$result = odbc_exec($conn, $query);
+		$result = odbc_exec($conn, utf8_decode($query));
 
 		if (empty($result)) {
 			// WARNING : Cette ligne devra être retirée lors de la publication.

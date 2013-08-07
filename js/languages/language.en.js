@@ -9,5 +9,6 @@ var label = {
 	'STORE_CONTACT_INFOS_EMAIL'      : 'Email address: ',
 	'STORE_CONTACT_INFOS_EMAIL_REP'  : 'Email address of the representative : ',
 	'STORE_CONTACT_INFOS_EMAIL_AGENT': 'Email address of the agent : ',
-	'STORE_CONTACT_INFOS_ADDRESS'    : 'Address : '
+	'STORE_CONTACT_INFOS_ADDRESS'    : 'Address : ',
+	'TYPE_MODEL_EMPTY_DESCRIPTION'   : 'Empty description.'
 }

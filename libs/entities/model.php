@@ -7,19 +7,25 @@
 class Model
 {
 	private $code;
+	private $typeCode;
 	private $name;
+	private $description;
 
 
 	/**
 	 * Initialise le modèle.
 	 *
-	 * @param $code
-	 * @param $name
+	 * @param      $code
+	 * @param      $typeCode
+	 * @param      $name
+	 * @param null $description
 	 */
-	function __construct($code, $name)
+	function __construct($code, $typeCode, $name, $description = null)
 	{
 		$this->setCode($code);
+		$this->setTypeCode($typeCode);
 		$this->setName($name);
+		$this->getDescription($description);
 	}
 
 
@@ -31,8 +37,10 @@ class Model
 	public function getInfoArray()
 	{
 		return array(
-			'code' => $this->getCode(),
-			'name' => $this->getName()
+			'code'        => $this->getCode(),
+			'typeCode'    => $this->getTypeCode(),
+			'name'        => $this->getName(),
+			'description' => $this->getDescription()
 		);
 	}
 
@@ -60,6 +68,28 @@ class Model
 
 
 	/**
+	 * Définit le code du type du modèle.
+	 *
+	 * @param mixed $typeCode
+	 */
+	private function setTypeCode($typeCode)
+	{
+		$this->typeCode = $typeCode;
+	}
+
+
+	/**
+	 * Retourne le code du type du modèle.
+	 *
+	 * @return mixed
+	 */
+	public function getTypeCode()
+	{
+		return $this->typeCode;
+	}
+
+
+	/**
 	 * Définit le nom du modèle.
 	 *
 	 * @param mixed $name
@@ -78,5 +108,27 @@ class Model
 	public function getName()
 	{
 		return $this->name;
+	}
+
+
+	/**
+	 * Définit la description du modèle.
+	 *
+	 * @param mixed $description
+	 */
+	public function setDescription($description)
+	{
+		$this->description = $description;
+	}
+
+
+	/**
+	 * Retourne la description du modèle.
+	 *
+	 * @return mixed
+	 */
+	public function getDescription()
+	{
+		return $this->description;
 	}
 }

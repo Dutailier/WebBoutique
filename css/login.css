@@ -1,18 +1,18 @@
 #background {
 	background : url(../img/background-login.png) no-repeat;
-	height     : 700px;
+	height     : 685px;
 }
 
 #login {
 	position : relative;
 	margin   : 0px auto;
 	width    : 390px;
-	top      : 80%;
+	top      : 81%;
 }
 
 #frmLogin > p {
 	clear    : both;
-	margin   : 5px 0px;
+	margin   : 3px 0px;
 	overflow : hidden; /* Clearfix */
 }
 

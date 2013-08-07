@@ -85,7 +85,7 @@ if (file_exists($file = ROOT . 'pages/' . $page . '.php')) {
 <div id="wrapper">
 	<div id="header-band">
 		<div id="header-wrapper">
-			<img id="logo-dutailier" src="img/dutailier.png">
+			<img id="logo-dutailier" src="img/logo-dutailier.png">
 			<ul id="menu">
 				<?php if ($languageCode == LANGUAGE_ENGLISH) { ?>
 					<li><a id="btnFrench">Français</a></li>

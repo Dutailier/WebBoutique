@@ -75,10 +75,6 @@ div.infos {
 	clear            : both;
 }
 
-div.infos * {
-	cursor : pointer;
-}
-
 div.details {
 	position : relative;
 	top      : -1px; /* Pour n'avoir qu'une seule ligne. */
@@ -100,21 +96,21 @@ div.details > fieldset > legend {
 	font-weight : bold;
 }
 
-div.details > fieldset > p {
+div.details p {
 	float    : left;
 	margin   : 5px 0px;
 	overflow : hidden; /* Clearfix */
 	clear    : both;
 }
 
-div.details > fieldset > p > label.properties {
+div.details label.properties {
 	display     : block;
 	float       : left;
 	font-weight : bold;
 	clear       : both;
 }
 
-div.details > fieldset > p > label.values {
+div.details label.values {
 	display : block;
 	float   : left;
 	clear   : both;

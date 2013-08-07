@@ -51,7 +51,9 @@ class Models
 
 		return new Model (
 			$rows[0]['code'],
-			$rows[0]['name']
+			$rows[0]['typeCode'],
+			$rows[0]['name'],
+			$rows[0]['description']
 		);
 	}
 
@@ -78,7 +80,39 @@ class Models
 		foreach ($rows as $row) {
 			$models[] = new Model (
 				$row['code'],
-				$row['name']
+				$row['typeCode'],
+				$row['name'],
+				$row['description']
+			);
+		}
+
+		return $models;
+	}
+
+
+	/**
+	 * Retourne tous les modèles de produits dans la langue et pour le type de produit sélectionnés.
+	 *
+	 * @param $typeCode
+	 * @param $languageCode
+	 *
+	 * @return array
+	 */
+	public static function filterByModelCodeAndLanguageCode($typeCode, $languageCode)
+	{
+		$query = 'EXEC [getModelsByTypeCode]';
+		$query .= '@typeCode = "' . $typeCode . '", ';
+		$query .= '@languageCode = "' . $languageCode . '"';
+
+		$rows = Database::ODBCExecute($query);
+
+		$models = array();
+		foreach ($rows as $row) {
+			$models[] = new Model(
+				$row['code'],
+				$row['typeCode'],
+				$row['name'],
+				$row['description']
 			);
 		}
 

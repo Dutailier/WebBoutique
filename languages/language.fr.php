@@ -46,7 +46,9 @@ define('ERROR_AUTHENTIFICATION_REQUIRED', 'Vous devez être authentifié.');
 define('ERROR_REQUIRED_ROLE_ADMINISTRATOR', 'Vous devez être authentifié en tant qu\'administrateur.');
 
 // Erreurs AJAX
-define('ERROR_REQUIRED_LANGUAGE_CODE', 'Le code de la langue des requis.');
+define('ERROR_REQUIRED_LANGUAGE_CODE', 'Le code de la langue est requis.');
+define('ERROR_REQUIRED_TYPE_NAME', 'Le nom du type de produit est requis.');
+define('ERROR_REQUIRED_TYPE_CODE', 'Le code du type de produit est requis.');
 define('ERROR_REQUIRED_STORE_REF', 'La référence du commerçant est requise.');
 
 // Erreurs de transaction
