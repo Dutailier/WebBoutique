@@ -4,6 +4,7 @@ div.tabs {
 	height          : 38px;
 	border-bottom   : 2px solid #484848;
 	overflow        : visible;
+	margin          : 10px 0px;
 }
 
 div.tabs > ul > li {
@@ -73,6 +74,12 @@ div.infos {
 	cursor           : pointer;
 	background-color : rgb(250, 250, 250);
 	clear            : both;
+}
+
+div.infos > div.infosWrapper {
+	height   : 50px;
+	margin   : auto 0px;
+	overflow : hidden;
 }
 
 div.details {

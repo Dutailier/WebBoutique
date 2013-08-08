@@ -1,0 +1,53 @@
+h2 {
+	text-decoration : underline;
+	font-size       : 1.3em;
+	font-weight     : normal;
+	margin          : 20px 0px 5px 0px;
+}
+
+ul.bxslider {
+	clear  : none;
+	margin : 0px;
+}
+
+div.bx-wrapper {
+	float  : left;
+	margin : 10px 15px;
+	height : 150px;
+}
+
+#slidersWrapper {
+	margin        : 10px 0px;
+	border-top    : 1px solid #484848;
+	border-bottom : 1px solid #484848;
+}
+
+#separator {
+	float       : left;
+	height      : 150px;
+	margin      : 10px 0px;
+	border-left : 1px solid #484848;
+}
+
+div.type,
+div.model {
+	text-align : center;
+	margin     : 0px 40px;
+	width      : 130px;
+	height     : 150px;
+	text-align : center;
+}
+
+div.type > img,
+div.model > img {
+	height : 130px;
+	margin : -10px auto -10 auto;
+}
+
+div.type > label.name,
+div.model > label.name {
+	font-size   : 0.8em;
+	text-align  : center;
+	font-weight : bold;
+	color       : #653679;
+}

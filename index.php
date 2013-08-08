@@ -51,6 +51,7 @@ if (file_exists($file = ROOT . 'pages/' . $page . '.php')) {
 	<title>Web Boutique - <?php echo $title; ?></title>
 
 	<!-- Sélection de la langue -->
+	<?php $role = Security::getRole(); ?>
 	<?php $languageCode = Localisation::getCurrentLanguage(); ?>
 
 	<!-- Accepte les caractères accentués. -->
@@ -87,6 +88,9 @@ if (file_exists($file = ROOT . 'pages/' . $page . '.php')) {
 		<div id="header-wrapper">
 			<img id="logo-dutailier" src="img/logo-dutailier.png">
 			<ul id="menu">
+				<?php if ($role == ROLE_ADMINISTRATOR) { ?>
+					<li><a id="btnAdminManager"><?php echo MENU_LBL_MANAGER; ?></a></li>
+				<?php } ?>
 				<?php if ($languageCode == LANGUAGE_ENGLISH) { ?>
 					<li><a id="btnFrench">Français</a></li>
 				<?php } else if ($languageCode == LANGUAGE_FRENCH) { ?>

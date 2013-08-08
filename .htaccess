@@ -6,3 +6,21 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_URI} !^(.*)/ajax/(.*)$
 
 RewriteRule ^(.+).php$  index.php?page=$1&%{QUERY_STRING} [L]
+
+ExpiresActive On
+ExpiresDefault A0
+
+# 1 Année
+<FilesMatch "\.(flv|ico|pdf|avi|mov|ppt|doc|mp3|wmv|wav)$">
+ExpiresDefault A29030400
+</FilesMatch>
+
+# 1 Semaine
+<FilesMatch "\.(jpg|jpeg|png|gif|swf)$">
+ExpiresDefault A604800
+</FilesMatch>
+
+# 3 heure
+<FilesMatch "\.(txt|xml|js|css)$">
+ExpiresDefault A10800
+</FilesMatch>

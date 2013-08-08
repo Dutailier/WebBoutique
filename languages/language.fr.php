@@ -1,6 +1,7 @@
 <?php
 
 // Menu principal
+define('MENU_LBL_MANAGER', 'Gestionnaire');
 define('MENU_LBL_LOGOUT', 'Se déconnecter');
 
 // Page d'acceuil
@@ -16,6 +17,9 @@ define('LOGIN_LBL_PASSWORD', 'Mot de passe');
 define('ERROR_TITLE', 'Erreur');
 define('ERROR_404', '404 - La page demandée n\'existe pas.');
 
+// Page du configurateur de produit
+define('CONFIGURATOR_TITLE', 'Product configurator');
+
 // Page du gestionnaire pour commerçant
 define('STORE_MANAGER_TITLE', 'Gestionnaire pour commerçant.');
 
@@ -27,7 +31,6 @@ define('ADMIN_MANAGER_BTN_TAB_LOGS_FEED', 'Évènements');
 define('ADMIN_MANAGER_BTN_TAB_CUSTOMERS_LIST', 'Consommateurs');
 define('ADMIN_MANAGER_BTN_TAB_STORES_LIST', 'Commerçants');
 define('ADMIN_MANAGER_LBL_SEARCH', 'Recherche : ');
-define('ADMIN_MANAGER_BTN_ADD_STORE', 'Ajouter un commerçant');
 define('ADMIN_MANAGER_LBL_LANGUAGE', 'Langue : ');
 
 // Autres

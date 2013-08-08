@@ -56,7 +56,15 @@ div.modelsList > div.model > div.infos > label.name {
 div.modelsList > div.model > div.details > label.description {
 	display   : inline-block;
 	float     : left;
-	max-width : 800px;
+	max-width : 810px;
+}
+
+div.modelsList > div.model > div.details > label.description > div,
+div.modelsList > div.model > div.details > label.description > p,
+div.modelsList > div.model > div.details > label.description > ul {
+	margin : 0px 0px 10px 0px;
+	border : 1px dotted lightgray;
+	clear  : both;
 }
 
 input.btnEdit,
@@ -66,15 +74,15 @@ input.btnValid {
 	height  : 16px;
 	padding : 0px;
 	border  : 0px;
-	margin  : 0px 7px 5px 13px;
+	margin  : 0px 0px 0px 10px;
 }
 
 input.btnEdit {
-	background : url(../img/icons-edit.png) no-repeat right top;
+	background : url(../img/icons-edit.png) no-repeat left top;
 }
 
 input.btnValid {
-	background : url(../img/icons-edit.png) no-repeat right bottom;
+	background : url(../img/icons-edit.png) no-repeat left bottom;
 }
 
 input.txtEdit, textarea {
@@ -84,18 +92,18 @@ input.txtEdit, textarea {
 	margin     : 6px 10px;
 }
 
-div.infos > input.btnValid,
-div.infos > input.btnEdit {
-	margin : 17px 10px;
+div.type > div.infos > input.btnEdit,
+div.type > div.infos > input.btnValid {
+	margin : 17px 5px;
+}
+
+div.model > div.infos > input.btnEdit,
+div.model > div.infos > input.btnValid {
+	margin : 12px 5px;
 }
 
 div.infos > input.txtEdit {
 	margin : 8px 5px 8px 10px;
-}
-
-div.model > div.infos > input.btnValid,
-div.model > div.infos > input.btnEdit {
-	margin : 12px 10px;
 }
 
 div.model > div.infos > input.txtEdit {
@@ -103,12 +111,8 @@ div.model > div.infos > input.txtEdit {
 }
 
 div.model > div.details > textarea.txtEdit {
-	margin : 4px 5px;
-	width  : 790px !important;
-	height : 150px;
-	resize : vertical;
-}
-
-div.model > div.details > label.description > div {
-	border : 1px dotted lightgray;
+	height   : 200px;
+	width    : 810px !important;
+	margin   : 0px;
+	overflow : visible;
 }

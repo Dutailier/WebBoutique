@@ -40,7 +40,7 @@ class Models
 	public static function UpdateDescription($description, $code, $languageCode)
 	{
 		$query = 'EXEC [updateModelDescription]';
-		$query .= '@description = \'' . htmlentities($description, ENT_QUOTES ) . '\', ';
+		$query .= '@description = \'' . htmlentities($description, ENT_QUOTES) . '\', ';
 		$query .= '@code = \'' . $code . '\', ';
 		$query .= '@languageCode = \'' . $languageCode . '\'';
 
@@ -138,5 +138,21 @@ class Models
 		}
 
 		return $models;
+	}
+
+
+	/**
+	 * Retourne tous les modèles pour un type de produit.
+	 *
+	 * @param $typeCode
+	 *
+	 * @return array
+	 */
+	public static function filterByTypeCode($typeCode)
+	{
+		return self::filterByTypeCodeAndLanguageCode(
+			$typeCode,
+			Localisation::getCurrentLanguage()
+		);
 	}
 }

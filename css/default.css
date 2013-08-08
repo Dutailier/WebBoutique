@@ -1,7 +1,11 @@
-﻿input,
+﻿div, p, ul, label, textarea {
+	overflow : hidden; /* Clearfix */
+	margin   : 0px;
+}
+
+input,
 textarea,
 select {
-	text-align  : center;
 	font-size   : 1.2em;
 	line-height : 20px;
 	padding     : 6px;

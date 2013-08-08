@@ -1,6 +1,6 @@
 (function ($) {
-// Évènements définis une fois le document HTML complètement généré.
 
+	// Évènements définis une fois le document HTML complètement généré.
 	$(document).ready(function () {
 
 		$('#btnTabOrdersFeed').click(function () {

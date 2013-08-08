@@ -1,5 +1,9 @@
 (function ($) {
 	$(document).ready(function () {
+		$('#btnAdminManager').click(function () {
+			window.location = 'adminManager.php';
+		});
+
 		$('#btnFrench').click(function () {
 			$.URL.setParam('languageCode', 'FR');
 		});

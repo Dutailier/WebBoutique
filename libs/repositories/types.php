@@ -108,4 +108,14 @@ class Types
 
 		return $types;
 	}
+
+
+	/**
+	 * Retourne tous les types.
+	 * @return array
+	 */
+	public static function All()
+	{
+		return self::filterByLanguageCode(Localisation::getCurrentLanguage());
+	}
 }
