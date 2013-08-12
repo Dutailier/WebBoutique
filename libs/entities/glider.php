@@ -2,7 +2,7 @@
 
 include_once(ROOT . 'libs/entities/product.php');
 include_once(ROOT . 'libs/repositories/models.php');
-include_once(ROOT . 'libs/repositories/finish.php');
+include_once(ROOT . 'libs/repositories/finishs.php');
 include_once(ROOT . 'libs/repositories/fabrics.php');
 include_once(ROOT . 'libs/repositories/pipings.php');
 
@@ -21,14 +21,15 @@ class Glider extends Product
 	/**
 	 * Initiliase la chaise oscillante.
 	 *
+	 * @param $imageName
 	 * @param $modelCode
 	 * @param $finishCode
 	 * @param $fabricCode
 	 * @param $pipingCode
 	 */
-	function __construct($modelCode, $finishCode, $fabricCode, $pipingCode = null)
+	function __construct($imageName, $modelCode, $finishCode, $fabricCode, $pipingCode = null)
 	{
-		parent::__construct(TYPE_GLIDER);
+		parent::__construct(TYPE_GLIDER, $imageName);
 
 		$this->setModelCode($modelCode);
 		$this->setFinishCode($finishCode);
@@ -45,6 +46,7 @@ class Glider extends Product
 		return array(
 			'sku'        => parent::getSku(),
 			'typeCode'   => parent::getTypeCode(),
+			'imageName'  => parent::getImageName(),
 			'modelCode'  => $this->getModelCode(),
 			'finishCode' => $this->getModelCode(),
 			'fabricCode' => $this->getFabricCode(),

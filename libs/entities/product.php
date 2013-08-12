@@ -9,6 +9,7 @@ abstract class Product
 {
 	private $sku;
 	private $typeCode;
+	private $imageName;
 
 
 	/**
@@ -16,9 +17,10 @@ abstract class Product
 	 *
 	 * @param $typeCode
 	 */
-	function __construct($typeCode)
+	function __construct($typeCode, $imageName)
 	{
 		$this->setTypeCode($typeCode);
+		$this->setImageName($imageName);
 	}
 
 
@@ -28,8 +30,9 @@ abstract class Product
 	public function getInfoArray()
 	{
 		return array(
-			'sku'      => $this->getSku(),
-			'typeCode' => $this->getTypeCode()
+			'sku'       => $this->getSku(),
+			'typeCode'  => $this->getTypeCode(),
+			'imageName' => $this->getImageName()
 		);
 	}
 
@@ -75,6 +78,28 @@ abstract class Product
 	public function getTypeCode()
 	{
 		return $this->typeCode;
+	}
+
+
+	/**
+	 * Définit le nom du fichier image du produit.
+	 *
+	 * @param mixed $imageName
+	 */
+	public function setImageName($imageName)
+	{
+		$this->imageName = $imageName;
+	}
+
+
+	/**
+	 * Retourne le nom du fichier image du produit.
+	 *
+	 * @return mixed
+	 */
+	public function getImageName()
+	{
+		return $this->imageName;
 	}
 
 

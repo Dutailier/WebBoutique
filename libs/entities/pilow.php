@@ -17,12 +17,13 @@ class Pilow extends Product
 	/**
 	 * Initialise le coussin lombaire.
 	 *
+	 * @param imageName
 	 * @param $modelCode
 	 * @param $fabricCode
 	 */
-	function __construct($modelCode, $fabricCode)
+	function __construct($imageName, $modelCode, $fabricCode)
 	{
-		parent::__construct(TYPE_PILOW);
+		parent::__construct(TYPE_PILOW, $imageName);
 
 		$this->setModelCode($modelCode);
 		$this->setFabricCode($fabricCode);
@@ -39,6 +40,7 @@ class Pilow extends Product
 		return array(
 			'sku'        => parent::getSku(),
 			'typeCode'   => parent::getTypeCode(),
+			'imageName'  => parent::getImageName(),
 			'modelCode'  => $this->getModelCode(),
 			'fabricCode' => $this->getFabricCode()
 		);

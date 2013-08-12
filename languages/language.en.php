@@ -19,6 +19,9 @@ define('ERROR_404', '404 - Page not found.');
 
 // Page du configurateur de produit
 define('CONFIGURATOR_TITLE', 'Product configurator');
+define('CONFIGURATOR_LBL_FINISH_NAME', 'Finish : ');
+define('CONFIGURATOR_LBL_FABRIC_NAME', 'Fabric : ');
+define('CONFIGURATOR_LBL_PIPING_NAME', 'Piping : ');
 
 // Page du gestionnaire pour commerçant
 define('STORE_MANAGER_TITLE', 'Store Manager');

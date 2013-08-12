@@ -18,6 +18,31 @@ $title = CONFIGURATOR_TITLE;
 	<ul id="modelsSlider" class="bxslider">
 	</ul>
 </div>
+<div id="product">
+	<div id="productInfos">
+		<div id="modelDetails">
+			<label id="modelName"></label>
+			<label id="modelDescription"></label>
+		</div>
+		<div id="configuration">
+			<p>
+				<label id="finishName" for="finishsList"><?php echo CONFIGURATOR_LBL_FINISH_NAME; ?></label>
+				<select id="finishsList"></select>
+			</p>
+
+			<p>
+				<label id="fabricName" for="fabricsList"><?php echo CONFIGURATOR_LBL_FABRIC_NAME; ?></label>
+				<select id="fabricsList"></select>
+			</p>
+
+			<p>
+				<label id="pipingName" for="pipingsList"><?php echo CONFIGURATOR_LBL_PIPING_NAME; ?></label>
+				<select id="pipingsList"></select>
+			</p>
+		</div>
+	</div>
+	<img id="productImage" />
+</div>
 
 <script src="js/bxslider/jquery.bxslider.min.js"></script>
 <script src="js/productConfigurator.js"></script>

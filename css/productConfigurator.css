@@ -41,7 +41,7 @@ div.model {
 div.type > img,
 div.model > img {
 	height : 130px;
-	margin : -10px auto -10 auto;
+	margin : -10px auto -10px auto;
 }
 
 div.type > label.name,
@@ -50,4 +50,56 @@ div.model > label.name {
 	text-align  : center;
 	font-weight : bold;
 	color       : #653679;
+}
+
+div.model * {
+	cursor : pointer;
+}
+
+#productInfos {
+	margin : 10px 0px;
+	float  : right;
+	width  : 450px;
+}
+
+#modelName,
+#modelDescription {
+	float  : left;
+	margin : 10px 0px;
+	clear  : both;
+}
+
+#modelName {
+	font-weight : bold;
+	color       : #653679;
+	font-size   : 1.5em;
+}
+
+#modelDescription > div,
+#modelDescription > ul,
+#modelDescription > p {
+	margin : 0px 0px 20px 0px;
+	clear  : both;
+}
+
+#configuration > p {
+	margin : 10px 0px;
+	clear  : both;
+}
+
+#configuration > p > label {
+	float       : left;
+	font-weight : bold;
+	line-height : 39px;
+}
+
+#configuration > p > select {
+	float : right;
+	width : 250px;
+}
+
+#productImage {
+	width  : 500px;
+	height : 500px;
+	float  : left;
 }

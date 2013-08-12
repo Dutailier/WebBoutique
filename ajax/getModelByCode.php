@@ -12,17 +12,15 @@ if (!Security::isAuthenticated()) {
 	$data['message'] = ERROR_AUTHENTIFICATION_REQUIRED;
 
 } else {
-	if (empty($_POST['typeCode'])) {
+	if (empty($_POST['modelCode'])) {
 		$data['success'] = false;
-		$data['message'] = ERROR_REQUIRED_TYPE_CODE;
+		$data['message'] = ERROR_REQUIRED_MODEL_CODE;
+
 	} else {
 		try {
-			$finishs = Models::filterByTypeCode($_POST['typeCode']);
+			$model = Models::Find($_POST['modelCode']);
 
-			$data['models'] = array();
-			foreach ($finishs as $model) {
-				$data['models'][] = $model->getInfoArray();
-			}
+			$data['model'] = $model->getInfoArray();
 
 			$data['success'] = true;
 

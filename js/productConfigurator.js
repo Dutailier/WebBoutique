@@ -19,7 +19,7 @@
 
 					updateModelsByTypeCode($type.data('code'), function () {
 						$modelsSlider = $('#modelsSlider').bxSlider({
-							controls        : false,
+							//controls        : false,
 							maxSlides       : 4,
 							slideWidth      : 170,
 							slideMargin     : 0,
@@ -27,6 +27,8 @@
 							infiniteLoop    : false,
 							easing          : 'ease-in-out'
 						});
+
+						updateProductInfos($('div.model').first().data('code'));
 					})
 				},
 				onSlideBefore   : function () {
@@ -39,6 +41,12 @@
 				}
 			});
 		});
+	});
+
+	// Gère les évènements des éléments générés dynamiquement.
+
+	$(document).on('click', 'div.model', function () {
+		updateProductInfos($(this).data('code'));
 	});
 
 
@@ -154,6 +162,379 @@
 
 
 	/**
+	 * Met à jour les informations sur le produit.
+	 *
+	 * @param modelCode
+	 */
+	function updateProductInfos(modelCode) {
+		getModelByCode(modelCode, function (model) {
+			updateModelDetails(model);
+		});
+
+		updateConfiguration(modelCode, function (modelCode, finishCode, fabricCode, pipingCode) {
+			getProductInfos(modelCode, finishCode, fabricCode, pipingCode, function (product) {
+				$('#productImage').attr('src', 'img/products/' + product['imageName']);
+			});
+		});
+	}
+
+
+	/**
+	 * Met à jour la liste de finis disponibles.
+	 *
+	 * @param modelCode
+	 * @param fabricCode
+	 * @param pipingCode
+	 * @param callback
+	 */
+	function updateFinishsListComponent(modelCode, fabricCode, pipingCode, callback) {
+
+		var parameters = {
+			'modelCode' : modelCode,
+			'fabricCode': fabricCode,
+			'pipingCode': pipingCode
+		};
+
+		$.post('ajax/getFinishsByComponent.php', parameters)
+			.done(function (data) {
+
+				if (data.hasOwnProperty('success') && data['success'] &&
+					data.hasOwnProperty('finishs')) {
+
+					var $finishs = $('#finishsList').children();
+					var finishs = data['finishs'];
+
+					$finishs.remove();
+
+					for (var i in finishs) {
+						if (finishs.hasOwnProperty(i)) {
+							var finish = finishs[i];
+
+							if (finish.hasOwnProperty('code') &&
+								finish.hasOwnProperty('name')) {
+								addFinishInfosToFinishsList(finish);
+							}
+						}
+					}
+
+					callback();
+
+				} else if (data.hasOwnProperty('message')) {
+					noty({
+						layout: 'topRight',
+						model : 'error',
+						text  : data['message']
+					});
+
+				} else {
+					noty({
+						layout: 'topRight',
+						model : 'error',
+						text  : errors['SERVER_UNREADABLE']
+					});
+				}
+			})
+			.fail(function () {
+				noty({
+					layout: 'topRight',
+					model : 'error',
+					text  : errors['SERVER_FAILED']
+				});
+			})
+	}
+
+
+	/**
+	 * Met à jour la liste de tissus disponibles.
+	 *
+	 * @param modelCode
+	 * @param finishCode
+	 * @param pipingCode
+	 * @param callback
+	 */
+	function updateFabricsListComponent(modelCode, finishCode, pipingCode, callback) {
+
+		var parameters = {
+			'modelCode' : modelCode,
+			'finishCode': finishCode,
+			'pipingCode': pipingCode
+		};
+
+		$.post('ajax/getFabricsByComponent.php', parameters)
+			.done(function (data) {
+
+				if (data.hasOwnProperty('success') && data['success'] &&
+					data.hasOwnProperty('fabrics')) {
+
+					var $fabrics = $('#fabricsList').children();
+					var fabrics = data['fabrics'];
+
+					$fabrics.remove();
+
+					for (var i in fabrics) {
+						if (fabrics.hasOwnProperty(i)) {
+							var fabric = fabrics[i];
+
+							if (fabric.hasOwnProperty('code') &&
+								fabric.hasOwnProperty('name')) {
+								addFabricInfosToFabricsList(fabric);
+							}
+						}
+					}
+
+					callback();
+
+				} else if (data.hasOwnProperty('message')) {
+					noty({
+						layout: 'topRight',
+						model : 'error',
+						text  : data['message']
+					});
+
+				} else {
+					noty({
+						layout: 'topRight',
+						model : 'error',
+						text  : errors['SERVER_UNREADABLE']
+					});
+				}
+			})
+			.fail(function () {
+				noty({
+					layout: 'topRight',
+					model : 'error',
+					text  : errors['SERVER_FAILED']
+				});
+			})
+	}
+
+
+	/**
+	 * Met à jour la liste de passepoils disponibles.
+	 *
+	 * @param modelCode
+	 * @param finishCode
+	 * @param fabricCode
+	 * @param callback
+	 */
+	function updatePipingsListComponent(modelCode, finishCode, fabricCode, callback) {
+
+		var parameters = {
+			'modelCode' : modelCode,
+			'finishCode': finishCode,
+			'fabricCode': fabricCode
+		};
+
+		$.post('ajax/getPipingsByComponent.php', parameters)
+			.done(function (data) {
+
+				if (data.hasOwnProperty('success') && data['success'] &&
+					data.hasOwnProperty('pipings')) {
+
+					var $pipings = $('#pipingsList').children();
+					var pipings = data['pipings'];
+
+					$pipings.remove();
+
+					for (var i in pipings) {
+						if (pipings.hasOwnProperty(i)) {
+							var piping = pipings[i];
+
+							if (piping.hasOwnProperty('code') &&
+								piping.hasOwnProperty('name')) {
+								addPipingInfosToPipingsList(piping);
+							}
+						}
+					}
+
+					callback();
+
+				} else if (data.hasOwnProperty('message')) {
+					noty({
+						layout: 'topRight',
+						model : 'error',
+						text  : data['message']
+					});
+
+				} else {
+					noty({
+						layout: 'topRight',
+						model : 'error',
+						text  : errors['SERVER_UNREADABLE']
+					});
+				}
+			})
+			.fail(function () {
+				noty({
+					layout: 'topRight',
+					model : 'error',
+					text  : errors['SERVER_FAILED']
+				});
+			})
+	}
+
+
+	/**
+	 * Récupère les informations détaillées sur le modèle sélectionné.
+	 *
+	 * @param modelCode
+	 * @param callback
+	 */
+	function getModelByCode(modelCode, callback) {
+		var parameters = {
+			'modelCode': modelCode
+		};
+
+		$.post('ajax/getModelByCode.php', parameters)
+			.done(function (data) {
+
+				if (data.hasOwnProperty('success') && data['success'] &&
+					data.hasOwnProperty('model')) {
+
+					var model = data['model'];
+
+					if (model.hasOwnProperty('code') &&
+						model.hasOwnProperty('name') &&
+						model.hasOwnProperty('description')) {
+						callback(model);
+					}
+
+				} else if (data.hasOwnProperty('message')) {
+					noty({
+						layout: 'topRight',
+						model : 'error',
+						text  : data['message']
+					});
+
+				} else {
+					noty({
+						layout: 'topRight',
+						model : 'error',
+						text  : errors['SERVER_UNREADABLE']
+					});
+				}
+			})
+			.fail(function () {
+				noty({
+					layout: 'topRight',
+					model : 'error',
+					text  : errors['SERVER_FAILED']
+				});
+			})
+	}
+
+
+	/**
+	 * Récupère les informations du produit configuré.
+	 *
+	 * @param modelCode
+	 * @param finishCode
+	 * @param fabricCode
+	 * @param pipingCode
+	 * @param callback
+	 */
+	function getProductInfos(modelCode, finishCode, fabricCode, pipingCode, callback) {
+		var parameters = {
+			'modelCode' : modelCode,
+			'finishCode': finishCode,
+			'fabricCode': fabricCode,
+			'pipingCode': pipingCode
+		};
+
+		$.post('ajax/getProductByComponent.php', parameters)
+			.done(function (data) {
+
+				if (data.hasOwnProperty('success') && data['success'] &&
+					data.hasOwnProperty('product')) {
+
+					var product = data['product'];
+
+					if (product.hasOwnProperty('sku') &&
+						product.hasOwnProperty('imageName')) {
+						callback(product);
+					}
+
+				} else if (data.hasOwnProperty('message')) {
+					noty({
+						layout: 'topRight',
+						model : 'error',
+						text  : data['message']
+					});
+
+				} else {
+					noty({
+						layout: 'topRight',
+						model : 'error',
+						text  : errors['SERVER_UNREADABLE']
+					});
+				}
+			})
+			.fail(function () {
+				noty({
+					layout: 'topRight',
+					model : 'error',
+					text  : errors['SERVER_FAILED']
+				});
+			})
+	}
+
+
+	/**
+	 * Met à jour les informations détaillées du modèle sélectionné.
+	 *
+	 * @param model
+	 */
+	function updateModelDetails(model) {
+		var $modelDetails = $('#modelDetails');
+		var $modelName = $('#modelName');
+		var $modelDescription = $('#modelDescription');
+
+		$modelDetails.attr('data-code', model['code']);
+		$modelName.html(model['name']);
+		$modelDescription.html(model['description']);
+	}
+
+
+	/**
+	 * Met à jour les différents options disponibles pour ce modèle.
+	 *
+	 * @param modelCode
+	 * @param callback
+	 */
+	function updateConfiguration(modelCode, callback) {
+		updateFinishsListComponent(modelCode, null, null, function () {
+			var $finishsList = $('#finishsList');
+
+			if ($finishsList.children().length) {
+				$finishsList.parent('P').show();
+			} else {
+				$finishsList.parent('p').hide();
+			}
+
+			var finishCode = $finishsList.find('option:selected').val();
+
+			updateFabricsListComponent(modelCode, finishCode, null, function () {
+				var fabricCode = $('#fabricsList').find('option:selected').val();
+
+				updatePipingsListComponent(modelCode, finishCode, fabricCode, function () {
+					var $pipingsList = $('#pipingsList');
+
+					if ($pipingsList.children().length) {
+						$pipingsList.parent('P').show();
+					} else {
+						$pipingsList.parent('p').hide();
+					}
+
+					var pipingCode = $pipingsList.find('option:selected').val();
+
+					callback(modelCode, finishCode, fabricCode, pipingCode);
+				});
+			});
+		});
+	}
+
+
+	/**
 	 * Ajoute un type à la liste de types de produit.
 	 *
 	 * @param type
@@ -161,11 +542,11 @@
 	function addTypeToTypesSlider(type) {
 		var $type = $(
 			'<li>' +
-				'<div class="type" data-code="' + type['code'] + '">' +
-				'<img src="img/types/' + type['code'] + '.png" />' +
-				'<label class="name">' + type['name'] + '</label>' +
-				'</div>' +
-				'</li>'
+			'<div class="type" data-code="' + type['code'] + '">' +
+			'<img src="img/types/' + type['code'] + '.png" />' +
+			'<label class="name">' + type['name'] + '</label>' +
+			'</div>' +
+			'</li>'
 		);
 		$type.appendTo('#typesSlider');
 	}
@@ -179,12 +560,54 @@
 	function addModelToModelsSlider(model) {
 		var $model = $(
 			'<li>' +
-				'<div class="model" data-code="' + model['code'] + '">' +
-				'<img src="img/models/' + model['code'] + '.png" />' +
-				'<label class="name">' + model['name'] + '</label>' +
-				'</div>' +
-				'</li>'
+			'<div class="model" data-code="' + model['code'] + '">' +
+			'<img src="img/models/' + model['code'] + '.png" />' +
+			'<label class="name">' + model['name'] + '</label>' +
+			'</div>' +
+			'</li>'
 		);
 		$model.appendTo('#modelsSlider');
+	}
+
+
+	/**
+	 * Ajoute un fini à la liste de finis.
+	 *
+	 * @param finish
+	 */
+	function addFinishInfosToFinishsList(finish) {
+		$('#finishsList').append(
+			$('<option class="finish"></option>')
+				.val(finish['code'])
+				.text(finish['name'])
+		);
+	}
+
+
+	/**
+	 * Ajoute un tissu à la liste de tissus.
+	 *
+	 * @param fabric
+	 */
+	function addFabricInfosToFabricsList(fabric) {
+		$('#fabricsList').append(
+			$('<option class="fabric"></option>')
+				.val(fabric['code'])
+				.text(fabric['name'])
+		);
+	}
+
+
+	/**
+	 * Ajoute un passepoil à la liste de passepoils.
+	 *
+	 * @param piping
+	 */
+	function addPipingInfosToPipingsList(piping) {
+		$('#pipingsList').append(
+			$('<option class="piping"></option>')
+				.val(piping['code'])
+				.text(piping['name'])
+		);
 	}
 })(jQuery);

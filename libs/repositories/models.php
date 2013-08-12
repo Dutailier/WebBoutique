@@ -59,7 +59,7 @@ class Models
 	public static function Find($code)
 	{
 		$query = 'EXEC [getModelByCode]';
-		$query .= '@code = \'' . intval($code) . '\', ';
+		$query .= '@code = \'' . $code . '\', ';
 		$query .= '@languageCode = \'' . Localisation::getCurrentLanguage() . '\'';
 
 		$rows = Database::ODBCExecute($query);

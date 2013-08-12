@@ -42,9 +42,8 @@ class Fabrics
 
 	/**
 	 * Retourne les tissus disponibles pour l'utilisteur selon
-	 * le type, le modèle, le fini et le passepoil sélectionné.
+	 * le modèle, le fini et le passepoil sélectionné.
 	 *
-	 * @param $typeCode
 	 * @param $modelCode
 	 * @param $finishCode
 	 * @param $pipingCode
@@ -52,14 +51,20 @@ class Fabrics
 	 *
 	 * @return array
 	 */
-	public static function FilterByComponent($typeCode, $modelCode, $finishCode, $pipingCode, $userId)
+	public static function FilterByComponent($modelCode, $finishCode, $pipingCode, $userId)
 	{
 		$query = 'EXEC [getFabricsByComponent]';
-		$query .= '@typeCode = \'' . intval($typeCode) . '\', ';
-		$query .= '@modelCode = \'' . intval($modelCode) . '\', ';
-		$query .= '@finishCode = \'' . intval($finishCode) . '\', ';
-		$query .= '@pipingCode = \'' . intval($pipingCode) . '\', ';
-		$query .= '@userId = \'' . intval($userId) . '\', ';
+		$query .= '@modelCode = \'' . $modelCode . '\', ';
+
+		if (!empty($finishCode)) {
+			$query .= '@finishCode = \'' . $finishCode . '\', ';
+		}
+
+		if (!empty($pipingCode)) {
+			$query .= '@pipingCode = \'' . $pipingCode . '\', ';
+		}
+
+		$query .= '@userId = \'' . $userId . '\', ';
 		$query .= '@LanguageCode = \'' . Localisation::getCurrentLanguage() . '\'';
 
 		$rows = Database::ODBCExecute($query);
