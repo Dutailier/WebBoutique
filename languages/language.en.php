@@ -19,10 +19,13 @@ define('ERROR_404', '404 - Page not found.');
 
 // Page du configurateur de produit
 define('CONFIGURATOR_TITLE', 'Product configurator');
-define('CONFIGURATOR_LBL_FINISH_NAME', 'Finish : ');
-define('CONFIGURATOR_LBL_FABRIC_NAME', 'Fabric : ');
-define('CONFIGURATOR_LBL_PIPING_NAME', 'Piping : ');
-define('CONFIGURATOR_LBL_PRODUCT_PRICE', 'Price : ');
+define('CONFIGURATOR_LBL_FINISH_NAME', 'Finish :');
+define('CONFIGURATOR_LBL_FABRIC_NAME', 'Fabric :');
+define('CONFIGURATOR_LBL_PIPING_NAME', 'Piping :');
+define('CONFIGURATOR_LBL_PRODUCT_PRICE', 'Price :');
+define('CONFIGURATOR_LBL_SHIPPING_FEE', 'Shipping Fee :');
+define('CONFIGURATOR_BTN_ADD_TO_CART', 'Add to Cart');
+define('CONFIGURATOR_LBL_WARNING', '* Sales taxes not included in the price.');
 
 // Page du gestionnaire pour commerçant
 define('STORE_MANAGER_TITLE', 'Store Manager');

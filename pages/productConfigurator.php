@@ -35,21 +35,37 @@ $title = CONFIGURATOR_TITLE;
 					<div id="configuration">
 						<p>
 							<select id="finishsList"></select>
-							<label class="label-field" for="finishsList"><?php echo CONFIGURATOR_LBL_FINISH_NAME; ?></label>
+							<label for="finishsList"><?php echo CONFIGURATOR_LBL_FINISH_NAME; ?></label>
 						</p>
 
 						<p>
 							<select id="fabricsList"></select>
-							<label class="label-field" for="fabricsList"><?php echo CONFIGURATOR_LBL_FABRIC_NAME; ?></label>
+							<label for="fabricsList"><?php echo CONFIGURATOR_LBL_FABRIC_NAME; ?></label>
 						</p>
 
 						<p>
 							<select id="pipingsList"></select>
-							<label class="label-field" for="pipingsList"><?php echo CONFIGURATOR_LBL_PIPING_NAME; ?></label>
+							<label for="pipingsList"><?php echo CONFIGURATOR_LBL_PIPING_NAME; ?></label>
 						</p>
 					</div>
-					<label id="productPrice"></label>
-					<label class="label-total" for="productPrice"><?php echo CONFIGURATOR_LBL_PRODUCT_PRICE; ?></label>
+					<div id="productCosts">
+						<p>
+							<label id="productPrice"></label>
+							<label for="productPrice"><?php echo CONFIGURATOR_LBL_PRODUCT_PRICE; ?></label>
+						</p>
+
+						<p>
+							<label id="shippingFee"></label>
+							<label for="shippingFee"><?php echo CONFIGURATOR_LBL_SHIPPING_FEE; ?></label>
+						</p>
+					</div>
+
+					<div id="summary">
+						<input id="addToCart" type="button" value="<?php echo CONFIGURATOR_BTN_ADD_TO_CART; ?>" />
+					</div>
+					<div id="warnings">
+						<label><?php echo CONFIGURATOR_LBL_WARNING; ?></label>
+					</div>
 				</div>
 			</td>
 		</tr>

@@ -11,6 +11,7 @@ abstract class Product
 	private $typeCode;
 	private $imageName;
 	private $price;
+	private $shippingFee;
 
 
 	/**
@@ -19,12 +20,14 @@ abstract class Product
 	 * @param $typeCode
 	 * @param $imageName
 	 * @param $price
+	 * @param $shippingFee
 	 */
-	function __construct($typeCode, $imageName, $price)
+	function __construct($typeCode, $imageName, $price, $shippingFee)
 	{
 		$this->setTypeCode($typeCode);
 		$this->setImageName($imageName);
 		$this->setPrice($price);
+		$this->setShippingFee($shippingFee);
 	}
 
 
@@ -34,10 +37,11 @@ abstract class Product
 	public function getInfoArray()
 	{
 		return array(
-			'sku'       => $this->getSku(),
-			'typeCode'  => $this->getTypeCode(),
-			'imageName' => $this->getImageName(),
-			'price'     => $this->getPrice()
+			'sku'         => $this->getSku(),
+			'typeCode'    => $this->getTypeCode(),
+			'imageName'   => $this->getImageName(),
+			'price'       => $this->getPrice(),
+			'shippingFee' => $this->getShippingFee()
 		);
 	}
 
@@ -138,5 +142,27 @@ abstract class Product
 	public function getPrice()
 	{
 		return $this->price;
+	}
+
+
+	/**
+	 * Définit les frais d'expédition.
+	 *
+	 * @param mixed $shippingFee
+	 */
+	public function setShippingFee($shippingFee)
+	{
+		$this->shippingFee = $shippingFee;
+	}
+
+
+	/**
+	 * Retourne les frais d'expédition.
+	 *
+	 * @return mixed
+	 */
+	public function getShippingFee()
+	{
+		return $this->shippingFee;
 	}
 }

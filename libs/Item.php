@@ -8,10 +8,22 @@ include_once(ROOT . 'libs/interfaces/iitem.php');
  */
 class Item implements IItem
 {
-	private $quantity;
 	private $product;
-	private $unitPrice;
-	private $grossPrice;
+	private $quantity;
+
+
+	/**
+	 * Initialise l'item.
+	 *
+	 * @param Product $product
+	 */
+	function __construct(Product $product)
+	{
+		$this->setProduct($product);
+		$this->setPrice($price);
+		$this->setShippingFee($shippingFee);
+		$this->setQuantity($quantity);
+	}
 
 
 	/**
@@ -78,53 +90,4 @@ class Item implements IItem
 	{
 		return $this->product;
 	}
-
-
-	/**
-	 * Définit le prix à l'unité du produit.
-	 *
-	 * @param mixed $unitPrice
-	 */
-	public function setUnitPrice($unitPrice)
-	{
-		$this->unitPrice = $unitPrice;
-	}
-
-
-	/**
-	 * Retourne le prix à l'unité du produit.
-	 *
-	 * @return mixed
-	 */
-	public function getUnitPrice()
-	{
-		return $this->unitPrice;
-	}
-
-
-	/**
-	 * Définit le prix d'ensemble.
-	 *
-	 * @param mixed $grossPrice
-	 */
-	public function setGrossPrice($grossPrice)
-	{
-		$this->grossPrice = $grossPrice;
-	}
-
-
-	/**
-	 * Retourne le prix d'ensemble.
-	 *
-	 * @return mixed
-	 */
-	public function getGrossPrice()
-	{
-		// Si aucun prix d'ensemble n'a été définit,
-		// on retourne le prix par défaut.
-		return isSet($this->grossPrice) ?
-			$this->grossPrice : $this->quantity * $this->unitPrice;
-	}
-
-
 }

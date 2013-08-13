@@ -39,6 +39,7 @@ class Products
 				$product = new Glider (
 					$rows[0]['imageName'],
 					$rows[0]['price'],
+					$rows[0]['shippingFee'],
 					$rows[0]['modelCode'],
 					$rows[0]['finishCode'],
 					$rows[0]['fabricCode'],
@@ -50,6 +51,7 @@ class Products
 				$product = new Ottoman (
 					$rows[0]['imageName'],
 					$rows[0]['price'],
+					$rows[0]['shippingFee'],
 					$rows[0]['modelCode'],
 					$rows[0]['finishCode'],
 					$rows[0]['fabricCode'],
@@ -61,6 +63,7 @@ class Products
 				$product = new Pilow (
 					$rows[0]['imageName'],
 					$rows[0]['price'],
+					$rows[0]['shippingFee'],
 					$rows[0]['modelCode'],
 					$rows[0]['fabricCode']
 				);
@@ -106,6 +109,7 @@ class Products
 				$product = new Glider (
 					$rows[0]['imageName'],
 					$rows[0]['price'],
+					$rows[0]['shippingFee'],
 					$rows[0]['modelCode'],
 					$rows[0]['finishCode'],
 					$rows[0]['fabricCode'],
@@ -117,6 +121,7 @@ class Products
 				$product = new Ottoman (
 					$rows[0]['imageName'],
 					$rows[0]['price'],
+					$rows[0]['shippingFee'],
 					$rows[0]['modelCode'],
 					$rows[0]['finishCode'],
 					$rows[0]['fabricCode'],
@@ -128,6 +133,7 @@ class Products
 				$product = new Pilow (
 					$rows[0]['imageName'],
 					$rows[0]['price'],
+					$rows[0]['shippingFee'],
 					$rows[0]['modelCode'],
 					$rows[0]['fabricCode']
 				);

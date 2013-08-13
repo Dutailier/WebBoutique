@@ -12,10 +12,11 @@ body {
 }
 
 #wrapper {
-	position   : relative;
-	min-width  : 960px;
-	min-height : 100%;
-	overflow   : auto;
+	position         : relative;
+	min-width        : 960px;
+	min-height       : 100%;
+	overflow         : auto;
+	background-color : #FBFBFB;
 }
 
 #header-band,
@@ -24,10 +25,11 @@ body {
 }
 
 #content {
-	width          : 960px;
-	margin         : 0px auto;
-	padding-bottom : 110px;
-	overflow       : hidden; /* Clearfix */
+	width            : 960px;
+	margin           : 0px auto;
+	padding          : 0px 50px 110px 50px;
+	overflow         : hidden; /* Clearfix */
+	background-color : white;
 }
 
 #header-band {

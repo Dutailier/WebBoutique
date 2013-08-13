@@ -19,10 +19,13 @@ define('ERROR_404', '404 - La page demandée n\'existe pas.');
 
 // Page du configurateur de produit
 define('CONFIGURATOR_TITLE', 'Product configurator');
-define('CONFIGURATOR_LBL_FINISH_NAME', 'Fini : ');
-define('CONFIGURATOR_LBL_FABRIC_NAME', 'Tissu : ');
-define('CONFIGURATOR_LBL_PIPING_NAME', 'Passepoil : ');
-define('CONFIGURATOR_LBL_PRODUCT_PRICE', 'Prix : ');
+define('CONFIGURATOR_LBL_FINISH_NAME', 'Fini :');
+define('CONFIGURATOR_LBL_FABRIC_NAME', 'Tissu :');
+define('CONFIGURATOR_LBL_PIPING_NAME', 'Passepoil :');
+define('CONFIGURATOR_LBL_PRODUCT_PRICE', 'Prix :');
+define('CONFIGURATOR_LBL_SHIPPING_FEE', 'Frais de livraison :');
+define('CONFIGURATOR_BTN_ADD_TO_CART', 'Ajouter au panier');
+define('CONFIGURATOR_LBL_WARNING', '* Taxes de ventes non incluses dans le prix.');
 
 // Page du gestionnaire pour commerçant
 define('STORE_MANAGER_TITLE', 'Gestionnaire pour commerçant.');

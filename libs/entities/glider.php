@@ -23,14 +23,15 @@ class Glider extends Product
 	 *
 	 * @param $imageName
 	 * @param $price
+	 * @param $shippingFee
 	 * @param $modelCode
 	 * @param $finishCode
 	 * @param $fabricCode
 	 * @param $pipingCode
 	 */
-	function __construct($imageName, $price, $modelCode, $finishCode, $fabricCode, $pipingCode = null)
+	function __construct($imageName, $price, $shippingFee, $modelCode, $finishCode, $fabricCode, $pipingCode = null)
 	{
-		parent::__construct(TYPE_GLIDER, $imageName, $price);
+		parent::__construct(TYPE_GLIDER, $imageName, $price, $shippingFee);
 
 		$this->setModelCode($modelCode);
 		$this->setFinishCode($finishCode);

@@ -286,6 +286,7 @@
 	function updateProductInfos(product) {
 		$('#productImage').attr('src', 'img/products/' + product['imageName']);
 		$('#productPrice').text(currencyFormat(product['price']));
+		$('#shippingFee').text(currencyFormat(product['shippingFee']));
 	}
 
 
@@ -595,7 +596,6 @@
 	 * @param model
 	 */
 	function updateModelDetails(model) {
-		var $modelDetails = $('#modelDetails');
 		var $modelName = $('#modelName');
 		var $modelDescription = $('#modelDescription');
 
