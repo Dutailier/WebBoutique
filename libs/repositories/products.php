@@ -16,14 +16,16 @@ class Products
 	 * Retourne le produit.
 	 *
 	 * @param $sku
+	 * @param $userId
 	 *
 	 * @return Glider|Ottoman|Pilow
 	 * @throws Exception
 	 */
-	public static function Find($sku)
+	public static function Find($sku, $userId)
 	{
 		$query = 'EXEC [getProductBySku]';
-		$query .= '@sku = \'' . $sku . '\'';
+		$query .= '@sku = \'' . $sku . '\', ';
+		$query .= '@userId = \'' . $userId . '\'';
 
 		$rows = Database::ODBCExecute($query);
 
@@ -36,6 +38,7 @@ class Products
 			case TYPE_GLIDER:
 				$product = new Glider (
 					$rows[0]['imageName'],
+					$rows[0]['price'],
 					$rows[0]['modelCode'],
 					$rows[0]['finishCode'],
 					$rows[0]['fabricCode'],
@@ -46,6 +49,7 @@ class Products
 			case TYPE_OTTOMAN:
 				$product = new Ottoman (
 					$rows[0]['imageName'],
+					$rows[0]['price'],
 					$rows[0]['modelCode'],
 					$rows[0]['finishCode'],
 					$rows[0]['fabricCode'],
@@ -56,6 +60,7 @@ class Products
 			case TYPE_PILOW:
 				$product = new Pilow (
 					$rows[0]['imageName'],
+					$rows[0]['price'],
 					$rows[0]['modelCode'],
 					$rows[0]['fabricCode']
 				);
@@ -100,6 +105,7 @@ class Products
 			case TYPE_GLIDER:
 				$product = new Glider (
 					$rows[0]['imageName'],
+					$rows[0]['price'],
 					$rows[0]['modelCode'],
 					$rows[0]['finishCode'],
 					$rows[0]['fabricCode'],
@@ -110,6 +116,7 @@ class Products
 			case TYPE_OTTOMAN:
 				$product = new Ottoman (
 					$rows[0]['imageName'],
+					$rows[0]['price'],
 					$rows[0]['modelCode'],
 					$rows[0]['finishCode'],
 					$rows[0]['fabricCode'],
@@ -120,6 +127,7 @@ class Products
 			case TYPE_PILOW:
 				$product = new Pilow (
 					$rows[0]['imageName'],
+					$rows[0]['price'],
 					$rows[0]['modelCode'],
 					$rows[0]['fabricCode']
 				);

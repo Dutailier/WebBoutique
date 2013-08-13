@@ -10,17 +10,21 @@ abstract class Product
 	private $sku;
 	private $typeCode;
 	private $imageName;
+	private $price;
 
 
 	/**
 	 * Initialise le produit.
 	 *
 	 * @param $typeCode
+	 * @param $imageName
+	 * @param $price
 	 */
-	function __construct($typeCode, $imageName)
+	function __construct($typeCode, $imageName, $price)
 	{
 		$this->setTypeCode($typeCode);
 		$this->setImageName($imageName);
+		$this->setPrice($price);
 	}
 
 
@@ -32,7 +36,8 @@ abstract class Product
 		return array(
 			'sku'       => $this->getSku(),
 			'typeCode'  => $this->getTypeCode(),
-			'imageName' => $this->getImageName()
+			'imageName' => $this->getImageName(),
+			'price'     => $this->getPrice()
 		);
 	}
 
@@ -111,5 +116,27 @@ abstract class Product
 	public function getType()
 	{
 		return Types::Find($this->getTypeCode());
+	}
+
+
+	/**
+	 * Définit le prix du produit.
+	 *
+	 * @param mixed $price
+	 */
+	public function setPrice($price)
+	{
+		$this->price = $price;
+	}
+
+
+	/**
+	 * Retourne le prix du produit.
+	 *
+	 * @return mixed
+	 */
+	public function getPrice()
+	{
+		return $this->price;
 	}
 }

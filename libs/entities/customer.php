@@ -50,15 +50,15 @@ class Customer extends User
 	 */
 	public function getInfoArray()
 	{
-		return array(
-			'userId'       => parent::getId(),
-			'languageCode' => parent::getLanguageCode(),
-			'username'     => parent::getUsername(),
-			'greeting'     => $this->getGreeting(),
-			'firstname'    => $this->getFirstname(),
-			'lastname'     => $this->getLastname(),
-			'phone'        => $this->getPhone(),
-			'email'        => $this->getEmail()
+		return array_merge(
+			parent::getInfoArray(),
+			array(
+				'greeting'  => $this->getGreeting(),
+				'firstname' => $this->getFirstname(),
+				'lastname'  => $this->getLastname(),
+				'phone'     => $this->getPhone(),
+				'email'     => $this->getEmail()
+			)
 		);
 	}
 

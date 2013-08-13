@@ -22,6 +22,7 @@ define('CONFIGURATOR_TITLE', 'Product configurator');
 define('CONFIGURATOR_LBL_FINISH_NAME', 'Finish : ');
 define('CONFIGURATOR_LBL_FABRIC_NAME', 'Fabric : ');
 define('CONFIGURATOR_LBL_PIPING_NAME', 'Piping : ');
+define('CONFIGURATOR_LBL_PRODUCT_PRICE', 'Price : ');
 
 // Page du gestionnaire pour commerçant
 define('STORE_MANAGER_TITLE', 'Store Manager');

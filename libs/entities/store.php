@@ -52,16 +52,16 @@ class Store extends User
 	 */
 	public function getInfoArray()
 	{
-		return array(
-			'userId'       => parent::getId(),
-			'languageCode' => parent::getLanguageCode(),
-			'username'     => parent::getUsername(),
-			'ref'          => $this->getRef(),
-			'name'         => $this->getName(),
-			'phone'        => $this->getPhone(),
-			'email'        => $this->getEmail(),
-			'emailRep'     => $this->getEmailRep(),
-			'emailAgent'   => $this->getEmailAgent(),
+		return array_merge(
+			parent::getInfoArray(),
+			array(
+				'ref'        => $this->getRef(),
+				'name'       => $this->getName(),
+				'phone'      => $this->getPhone(),
+				'email'      => $this->getEmail(),
+				'emailRep'   => $this->getEmailRep(),
+				'emailAgent' => $this->getEmailAgent(),
+			)
 		);
 	}
 

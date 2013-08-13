@@ -1,6 +1,7 @@
 (function ($) {
 	var $modelsSlider;
 	var $typesSlider;
+	var modelCode;
 
 	// Évènements définis une fois le document HTML complètement généré.
 	$(document).ready(function () {
@@ -19,7 +20,7 @@
 
 					updateModelsByTypeCode($type.data('code'), function () {
 						$modelsSlider = $('#modelsSlider').bxSlider({
-							//controls        : false,
+							controls        : false,
 							maxSlides       : 4,
 							slideWidth      : 170,
 							slideMargin     : 0,
@@ -28,7 +29,7 @@
 							easing          : 'ease-in-out'
 						});
 
-						updateProductInfos($('div.model').first().data('code'));
+						updateProduct($('div.model').first().data('code'));
 					})
 				},
 				onSlideBefore   : function () {
@@ -46,7 +47,111 @@
 	// Gère les évènements des éléments générés dynamiquement.
 
 	$(document).on('click', 'div.model', function () {
-		updateProductInfos($(this).data('code'));
+		updateProduct($(this).data('code'));
+	});
+
+	$(document).on('change', '#finishsList', function () {
+		var finishCode = $('#finishsList').val();
+		var fabricCode = $('#fabricsList').val();
+		var pipingCode = $('#pipingsList').val();
+
+		updateFabricsListComponent(modelCode, finishCode, pipingCode, function () {
+			var $fabricsList = $('#fabricsList');
+
+			if ($fabricsList.children().length) {
+				$fabricsList.parent('p').show();
+			} else {
+				$fabricsList.parent('p').hide();
+			}
+
+			$fabricsList.val(fabricCode);
+
+			updatePipingsListComponent(modelCode, finishCode, fabricCode, function () {
+				var $pipingsList = $('#pipingsList');
+
+				if ($pipingsList.children().length) {
+					$pipingsList.parent('p').show();
+				} else {
+					$pipingsList.parent('p').hide();
+				}
+
+				$pipingsList.val(pipingCode);
+
+				getProductInfos(modelCode, finishCode, fabricCode, pipingCode, function (product) {
+					updateProductInfos(product);
+				});
+			});
+		});
+	});
+
+
+	$(document).on('change', '#fabricsList', function () {
+		var finishCode = $('#finishsList').val();
+		var fabricCode = $('#fabricsList').val();
+		var pipingCode = $('#pipingsList').val();
+
+		updateFinishsListComponent(modelCode, fabricCode, pipingCode, function () {
+			var $finishsList = $('#finishsList');
+
+			if ($finishsList.children().length) {
+				$finishsList.parent('p').show();
+			} else {
+				$finishsList.parent('p').hide();
+			}
+
+			$finishsList.val(finishCode);
+
+			updatePipingsListComponent(modelCode, finishCode, fabricCode, function () {
+				var $pipingsList = $('#pipingsList');
+
+				if ($pipingsList.children().length) {
+					$pipingsList.parent('p').show();
+				} else {
+					$pipingsList.parent('p').hide();
+				}
+
+				$pipingsList.val(pipingCode);
+
+				getProductInfos(modelCode, finishCode, fabricCode, pipingCode, function (product) {
+					updateProductInfos(product);
+				});
+			});
+		});
+	});
+
+
+	$(document).on('change', '#pipingsList', function () {
+		var finishCode = $('#finishsList').val();
+		var fabricCode = $('#fabricsList').val();
+		var pipingCode = $('#pipingsList').val();
+
+		updateFabricsListComponent(modelCode, finishCode, pipingCode, function () {
+			var $fabricsList = $('#fabricsList');
+
+			if ($fabricsList.children().length) {
+				$fabricsList.parent('p').show();
+			} else {
+				$fabricsList.parent('p').hide();
+			}
+
+			$fabricsList.val(fabricCode);
+
+			updateFinishsListComponent(modelCode, fabricCode, pipingCode, function () {
+				var $finishsList = $('#finishsList');
+
+				if ($finishsList.children().length) {
+					$finishsList.parent('p').show();
+				} else {
+					$finishsList.parent('p').hide();
+				}
+
+				$finishsList.val(finishCode);
+
+				getProductInfos(modelCode, finishCode, fabricCode, pipingCode, function (product) {
+					updateProductInfos(product);
+				});
+			});
+		});
 	});
 
 
@@ -166,16 +271,21 @@
 	 *
 	 * @param modelCode
 	 */
-	function updateProductInfos(modelCode) {
+	function updateProduct(modelCode) {
 		getModelByCode(modelCode, function (model) {
 			updateModelDetails(model);
 		});
 
 		updateConfiguration(modelCode, function (modelCode, finishCode, fabricCode, pipingCode) {
 			getProductInfos(modelCode, finishCode, fabricCode, pipingCode, function (product) {
-				$('#productImage').attr('src', 'img/products/' + product['imageName']);
+				updateProductInfos(product);
 			});
 		});
+	}
+
+	function updateProductInfos(product) {
+		$('#productImage').attr('src', 'img/products/' + product['imageName']);
+		$('#productPrice').text(currencyFormat(product['price']));
 	}
 
 
@@ -489,7 +599,7 @@
 		var $modelName = $('#modelName');
 		var $modelDescription = $('#modelDescription');
 
-		$modelDetails.attr('data-code', model['code']);
+		modelCode = model['code'];
 		$modelName.html(model['name']);
 		$modelDescription.html(model['description']);
 	}
@@ -506,7 +616,7 @@
 			var $finishsList = $('#finishsList');
 
 			if ($finishsList.children().length) {
-				$finishsList.parent('P').show();
+				$finishsList.parent('p').show();
 			} else {
 				$finishsList.parent('p').hide();
 			}
@@ -514,7 +624,15 @@
 			var finishCode = $finishsList.find('option:selected').val();
 
 			updateFabricsListComponent(modelCode, finishCode, null, function () {
-				var fabricCode = $('#fabricsList').find('option:selected').val();
+				var $fabricsList = $('#fabricsList');
+
+				if ($fabricsList.children().length) {
+					$fabricsList.parent('p').show();
+				} else {
+					$fabricsList.parent('p').hide();
+				}
+
+				var fabricCode = $fabricsList.find('option:selected').val();
 
 				updatePipingsListComponent(modelCode, finishCode, fabricCode, function () {
 					var $pipingsList = $('#pipingsList');

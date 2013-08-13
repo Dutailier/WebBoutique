@@ -115,9 +115,9 @@ if (file_exists($file = ROOT . 'pages/' . $page . '.php')) {
 
 	<!-- Scripts internes. -->
 	<script src="js/languages/language.<?php echo strtolower($languageCode); ?>.js" charset="utf8"></script>
-
+	<script src="js/format.<?php echo strtolower($languageCode); ?>.js"></script>
 	<script src="js/global/url.js"></script>
 	<script src="js/menu.js"></script>
-	<script src="js/format.js"></script>
+
 </body>
 </html>

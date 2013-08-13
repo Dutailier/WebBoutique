@@ -87,15 +87,33 @@ div.model * {
 	clear  : both;
 }
 
-#configuration > p > label {
-	float       : left;
-	font-weight : bold;
+label.label-field {
+	float       : right;
 	line-height : 39px;
 }
 
+label.label-total,
+#productPrice {
+	float       : right;
+	font-weight : bold;
+	color       : #653679;
+	line-height : 39px;
+	font-size   : 1.2em;
+}
+
+#productPrice {
+	width : 100px;
+	text-align: right;
+}
+
+#configuration {
+	margin-bottom : 5px;
+}
+
 #configuration > p > select {
-	float : right;
-	width : 250px;
+	float       : right;
+	width       : 250px;
+	margin-left : 10px;
 }
 
 #productImage {

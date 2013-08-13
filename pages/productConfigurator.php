@@ -19,29 +19,41 @@ $title = CONFIGURATOR_TITLE;
 	</ul>
 </div>
 <div id="product">
-	<div id="productInfos">
-		<div id="modelDetails">
-			<label id="modelName"></label>
-			<label id="modelDescription"></label>
-		</div>
-		<div id="configuration">
-			<p>
-				<label id="finishName" for="finishsList"><?php echo CONFIGURATOR_LBL_FINISH_NAME; ?></label>
-				<select id="finishsList"></select>
-			</p>
+	<!-- Créer un tableau est le seul moyen de centrer verticalement
+	la photo du produit selon la sa description.-->
+	<table>
+		<tr>
+			<td>
+				<img id="productImage" />
+			</td>
+			<td>
+				<div id="productInfos">
+					<div id="modelDetails">
+						<label id="modelName"></label>
+						<label id="modelDescription"></label>
+					</div>
+					<div id="configuration">
+						<p>
+							<select id="finishsList"></select>
+							<label class="label-field" for="finishsList"><?php echo CONFIGURATOR_LBL_FINISH_NAME; ?></label>
+						</p>
 
-			<p>
-				<label id="fabricName" for="fabricsList"><?php echo CONFIGURATOR_LBL_FABRIC_NAME; ?></label>
-				<select id="fabricsList"></select>
-			</p>
+						<p>
+							<select id="fabricsList"></select>
+							<label class="label-field" for="fabricsList"><?php echo CONFIGURATOR_LBL_FABRIC_NAME; ?></label>
+						</p>
 
-			<p>
-				<label id="pipingName" for="pipingsList"><?php echo CONFIGURATOR_LBL_PIPING_NAME; ?></label>
-				<select id="pipingsList"></select>
-			</p>
-		</div>
-	</div>
-	<img id="productImage" />
+						<p>
+							<select id="pipingsList"></select>
+							<label class="label-field" for="pipingsList"><?php echo CONFIGURATOR_LBL_PIPING_NAME; ?></label>
+						</p>
+					</div>
+					<label id="productPrice"></label>
+					<label class="label-total" for="productPrice"><?php echo CONFIGURATOR_LBL_PRODUCT_PRICE; ?></label>
+				</div>
+			</td>
+		</tr>
+	</table>
 </div>
 
 <script src="js/bxslider/jquery.bxslider.min.js"></script>

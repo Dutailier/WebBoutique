@@ -44,3 +44,24 @@ function dateFormat(date) {
 function emailFormat(email) {
 	return '<a href="mailto:' + email + '">' + email + '</a>';
 }
+
+
+/**
+ * Transforme le prix selon la langue.
+ *
+ * @param price
+ */
+function currencyFormat(price) {
+	var dollarsCents = price.toString().split('.');
+	var dollars = dollarsCents[0];
+	var cents = (dollarsCents[1] || '');
+
+	var left = dollars.substring(0, 1);
+	var right = (cents + '00').substring(0, 2);
+
+	for (var i = 1; i < dollars.length; i++) {
+		left += (i % 3 == 0 ? ',' : '') + dollars.substring(i, i + 1);
+	}
+
+	return '$ ' + left + '.' + right;
+}

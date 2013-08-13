@@ -202,6 +202,11 @@ class Line
 	 */
 	public function getProduct()
 	{
-		return Products::Find($this->getProductSku());
+		$order = $this->getOrder();
+
+		return Products::Find(
+			$this->getProductSku(),
+			$order->getUserId()
+		);
 	}
 }

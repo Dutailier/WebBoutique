@@ -22,14 +22,15 @@ class Ottoman extends Product
 	 * Initiliase le tabouret oscillant.
 	 *
 	 * @param $imageName
+	 * @param $price
 	 * @param $modelCode
 	 * @param $finishCode
 	 * @param $fabricCode
 	 * @param $pipingCode
 	 */
-	function __construct($imageName, $modelCode, $finishCode, $fabricCode, $pipingCode = null)
+	function __construct($imageName, $price, $modelCode, $finishCode, $fabricCode, $pipingCode = null)
 	{
-		parent::__construct(TYPE_OTTOMAN, $imageName);
+		parent::__construct(TYPE_OTTOMAN, $imageName, $price);
 
 		$this->setModelCode($modelCode);
 		$this->setFinishCode($finishCode);
@@ -43,14 +44,14 @@ class Ottoman extends Product
 	 */
 	public function getInfoArray()
 	{
-		return array(
-			'sku'        => parent::getSku(),
-			'typeCode'   => parent::getTypeCode(),
-			'imageName'  => parent::getImageName(),
-			'modelCode'  => $this->getModelCode(),
-			'finishCode' => $this->getModelCode(),
-			'fabricCode' => $this->getFabricCode(),
-			'pipingCode' => $this->getPipingCode()
+		return array_merge(
+			parent::getInfoArray(),
+			array(
+				'modelCode'  => $this->getModelCode(),
+				'finishCode' => $this->getModelCode(),
+				'fabricCode' => $this->getFabricCode(),
+				'pipingCode' => $this->getPipingCode()
+			)
 		);
 	}
 
