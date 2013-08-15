@@ -1,5 +1,9 @@
 (function ($) {
 	$(document).ready(function () {
+		$('#btnShoppingCart').click(function () {
+			window.location = 'cart.php';
+		});
+
 		$('#btnAdminManager').click(function () {
 			window.location = 'adminManager.php';
 		});

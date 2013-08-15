@@ -1,6 +1,7 @@
 <?php
 
 // Menu principal
+define('MENU_LBL_CART', 'Panier d\'achats');
 define('MENU_LBL_MANAGER', 'Gestionnaire');
 define('MENU_LBL_LOGOUT', 'Se déconnecter');
 
@@ -25,7 +26,7 @@ define('CONFIGURATOR_LBL_PIPING_NAME', 'Passepoil :');
 define('CONFIGURATOR_LBL_PRODUCT_PRICE', 'Prix :');
 define('CONFIGURATOR_LBL_SHIPPING_FEE', 'Frais de livraison :');
 define('CONFIGURATOR_BTN_ADD_TO_CART', 'Ajouter au panier');
-define('CONFIGURATOR_LBL_WARNING', '* Taxes de ventes non incluses dans le prix.');
+define('LBL_WARNING', '* Taxes de ventes non incluses dans le prix.');
 
 // Page du panier d'achats
 define('CART_TITLE', 'Panier d\'achats');

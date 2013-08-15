@@ -559,6 +559,7 @@
 	 * @param callback
 	 */
 	function getProductInfos(modelCode, finishCode, fabricCode, pipingCode, callback) {
+
 		var parameters = {
 			'modelCode' : modelCode,
 			'finishCode': finishCode,

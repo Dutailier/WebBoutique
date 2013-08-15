@@ -60,7 +60,7 @@ $title = CONFIGURATOR_TITLE;
 				<input id="addToCart" type="button" value="<?php echo CONFIGURATOR_BTN_ADD_TO_CART; ?>" />
 			</div>
 			<div id="warnings">
-				<label><?php echo CONFIGURATOR_LBL_WARNING; ?></label>
+				<label><?php echo LBL_WARNING; ?></label>
 			</div>
 		</div>
 	</div>

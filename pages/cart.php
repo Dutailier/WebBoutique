@@ -46,6 +46,10 @@ $title = CART_TITLE;
 		<p>
 			<input class="btnProceedOrder" type="button" value="<?php echo CART_BTN_PROCEED_ORDER; ?>" />
 		</p>
+
+		<div id="warnings">
+			<label><?php echo LBL_WARNING; ?></label>
+		</div>
 	</div>
 
 	<script src="js/transaction.js"></script>

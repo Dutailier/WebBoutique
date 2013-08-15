@@ -86,9 +86,14 @@ if (file_exists($file = ROOT . 'pages/' . $page . '.php')) {
 	<div id="header-band">
 		<div id="header-wrapper">
 			<img id="logo-dutailier" src="img/logo-dutailier.png">
+
 			<ul id="menu">
 				<?php if (Security::isAuthenticated()) { ?>
-					<?php if (Security::getRole() == ROLE_ADMINISTRATOR) { ?>
+					<?php $role = Security::getRole(); ?>
+					<?php if ($role == ROLE_ADMINISTRATOR || ROLE_STORE || ROLE_CUSTOMER) { ?>
+						<li><a id="btnShoppingCart"><?php echo MENU_LBL_CART; ?></a></li>
+					<?php } ?>
+					<?php if ($role == ROLE_ADMINISTRATOR) { ?>
 						<li><a id="btnAdminManager"><?php echo MENU_LBL_MANAGER; ?></a></li>
 					<?php } ?>
 				<?php } ?>

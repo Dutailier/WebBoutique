@@ -4,7 +4,7 @@ h1 {
 
 div.buttons {
 	width  : 940px;
-	margin : 20px 10px 10px 10px;
+	margin : 30px 10px 10px 10px;
 }
 
 input.btnContinueShopping {
@@ -33,7 +33,6 @@ div.infos {
 	margin           : 15px 10px 0px 10px;
 	overflow         : hidden; /* Clearfix */
 	height           : 40px;
-	cursor           : pointer;
 	background-color : #FBFBFB;
 	clear            : both;
 }
@@ -179,4 +178,11 @@ div.empty {
 	font-size  : 1.5em;
 	text-align : center;
 	clear      : both;
+}
+
+#warnings {
+	font-size  : 0.7em;
+	font-style : italic;
+	text-align : center;
+	float      : right;
 }
