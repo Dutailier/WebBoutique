@@ -2,7 +2,7 @@
 
 define('TYPE_OTTOMAN', 5306);
 define('TYPE_GLIDER', 5305);
-define('TYPE_PILOW', 5804);
+define('TYPE_PILLOW', 5804);
 
 /**
  * Class Type

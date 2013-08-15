@@ -57,8 +57,8 @@ div.model * {
 }
 
 #productInfos {
-	float  : right;
-	width  : 460px;
+	float : right;
+	width : 460px;
 }
 
 #modelDetails {
@@ -86,6 +86,20 @@ div.model * {
 	clear  : both;
 }
 
+#product {
+	display : table;
+}
+
+#left {
+	display        : table-cell;
+	vertical-align : middle;
+}
+
+#right {
+	display        : table-cell;
+	vertical-align : middle;
+}
+
 #productImage {
 	width  : 500px;
 	height : 500px;
@@ -103,7 +117,7 @@ div.model * {
 
 #configuration > p > select {
 	float       : right;
-	width       : 220px;
+	width       : 215px;
 	margin-left : 10px;
 }
 
@@ -123,7 +137,7 @@ div.model * {
 
 #productPrice,
 #shippingFee {
-	width       : 220px;
+	width       : 215px;
 	margin-left : 10px;
 	float       : right;
 	text-align  : left !important;

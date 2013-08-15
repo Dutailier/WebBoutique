@@ -72,7 +72,7 @@ div.infos {
 	overflow         : hidden; /* Clearfix */
 	height           : 50px;
 	cursor           : pointer;
-	background-color : rgb(250, 250, 250);
+	background-color : #FBFBFB;
 	clear            : both;
 }
 

@@ -27,6 +27,16 @@ define('CONFIGURATOR_LBL_SHIPPING_FEE', 'Shipping Fee :');
 define('CONFIGURATOR_BTN_ADD_TO_CART', 'Add to Cart');
 define('CONFIGURATOR_LBL_WARNING', '* Sales taxes not included in the price.');
 
+// Page du panier d'achats
+define('CART_TITLE', 'Shopping Cart');
+define('CART_LBL_TOTAL_PRICE', 'Total Price :');
+define('CART_LBL_TOTAL_SHIPPING_FEE', 'Total Shipping Fee :');
+define('CART_LBL_SUB_PRICE', 'Subtotal :');
+define('CART_BTN_CONTINUE_SHOPPING', 'Continue shopping');
+define('CART_BTN_PROCEED_ORDER', 'Proceed');
+define('CART_BTN_CLEAR_CART', 'Clear');
+define('CART_LBL_NO_PRODUCT', 'No product ordered.');
+
 // Page du gestionnaire pour commerçant
 define('STORE_MANAGER_TITLE', 'Store Manager');
 
@@ -56,6 +66,7 @@ define('ERROR_REQUIRED_MODEL_NAME', 'The model name is required.');
 define('ERROR_REQUIRED_MODEL_DESCRIPTION', 'The model description is required.');
 define('ERROR_REQUIRED_MODEL_CODE', 'The model code is required.');
 define('ERROR_REQUIRED_STORE_REF', 'The store ref is required.');
+define('ERROR_REQUIRED_PRODUCT_SKU', 'The product sku is required.');
 
 // Erreurs de sécurité
 define('ERROR_ALREADY_LOGIN', 'You\'re already log In.');

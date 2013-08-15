@@ -4,6 +4,7 @@ include_once(ROOT . 'libs/item.php');
 include_once(ROOT . 'libs/security.php');
 include_once(ROOT . 'libs/sessionCart.php');
 include_once(ROOT . 'libs/repositories/orders.php');
+include_once(ROOT . 'libs/repositories/products.php');
 
 define('TRANSACTION_STATUS_OPEN', 0); // L'utilisateur peut configurer différents produits.
 define('TRANSACTION_STATUS_CHECKOUT', 1); // L'utilisateur à complété ses achats.
@@ -158,14 +159,14 @@ class SessionTransaction
 
 
 	/**
-	 * Ajoute un item au panier d'achats de la transaction et retourne sa quantité.
+	 * Ajoute un produit au panier d'achats de la transaction.
 	 *
-	 * @param Item $item
+	 * @param $sku
 	 *
 	 * @return mixed
 	 * @throws Exception
 	 */
-	public function AddItem(Item $item)
+	public function addProductToCart($sku)
 	{
 		if ($this->getStatus() >= TRANSACTION_STATUS_CHECKOUT) {
 			throw new Exception(ERROR_TRANSACTION_ALREADY_CHECKOUT);
@@ -175,22 +176,25 @@ class SessionTransaction
 			$this->cart = new SessionCart();
 		}
 
-		$quantity = $this->cart->Add($item);
+		$product = Products::Find($sku, $this->getUser()->getId());
+		$item    = new Item($product);
+
+		$item = $this->cart->Add($item);
 		$this->Save();
 
-		return $quantity;
+		return $item;
 	}
 
 
 	/**
-	 * Retire un item du panier d'achats de la transaction et retourne sa quantité.
+	 * Retire un produit du panier d'achats.
 	 *
-	 * @param Item $item
+	 * @param $sku
 	 *
 	 * @return int
 	 * @throws Exception
 	 */
-	public function RemoveItem(Item $item)
+	public function RemoveProductFromCart($sku)
 	{
 		if ($this->getStatus() >= TRANSACTION_STATUS_CHECKOUT) {
 			throw new Exception(ERROR_TRANSACTION_ALREADY_CHECKOUT);
@@ -200,10 +204,48 @@ class SessionTransaction
 			return 0;
 		}
 
-		$quantity = $this->cart->Remove($item);
+		$product = Products::Find($sku, $this->getUser()->getId());
+		$item    = new Item($product);
+
+		$item = $this->cart->Remove($item);
 		$this->Save();
 
-		return $quantity;
+		return $item;
+	}
+
+
+	/**
+	 * Définit la quantité d'un produit contenu dans le panier d'achats.
+	 *
+	 * @param $sku
+	 * @param $quantity
+	 *
+	 * @return mixed
+	 * @throws Exception
+	 */
+	public function setQuantityOfProduct($sku, $quantity)
+	{
+		if ($this->getStatus() >= TRANSACTION_STATUS_CHECKOUT) {
+			throw new Exception(ERROR_TRANSACTION_ALREADY_CHECKOUT);
+		}
+
+		if (!isSet($this->cart)) {
+			$this->cart = new SessionCart();
+		}
+
+		$product = Products::Find($sku, $this->getUser()->getId());
+		$item    = new Item($product);
+
+		if ($quantity == 0) {
+			$item = $this->cart->Remove($item);
+
+		} else {
+			$item = $this->cart->setQuantity($item, $quantity);
+		}
+
+		$this->Save();
+
+		return $item;
 	}
 
 
@@ -224,6 +266,21 @@ class SessionTransaction
 
 
 	/**
+	 * Retourne la liste des produits contenu dans le panier d'achats.
+	 *
+	 * @return array
+	 */
+	public function getProducts()
+	{
+		if (!isSet($this->cart)) {
+			$this->cart = new SessionCart();
+		}
+
+		return $this->cart->getItems();
+	}
+
+
+	/**
 	 * Définit le statut.
 	 * (Statuts définits ci-haut.)
 	 *
@@ -233,7 +290,7 @@ class SessionTransaction
 	 */
 	private function setStatus($status)
 	{
-		if ($this->getStatus() >= $status) {
+		if ($this->getStatus() > $status) {
 			throw new Exception(ERROR_TRANSACTION_STATUS_INVALID);
 		}
 
@@ -263,7 +320,7 @@ class SessionTransaction
 	 */
 	private function setUser($user)
 	{
-		if ($this->getStatus() >= TRANSACTION_STATUS_OPEN) {
+		if ($this->getStatus() > TRANSACTION_STATUS_OPEN) {
 			throw new Exception(ERROR_TRANSACTION_ALREADY_OPEN);
 		}
 

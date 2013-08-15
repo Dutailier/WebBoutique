@@ -2,6 +2,7 @@
 	var $modelsSlider;
 	var $typesSlider;
 	var modelCode;
+	var productSku;
 
 	// Évènements définis une fois le document HTML complètement généré.
 	$(document).ready(function () {
@@ -155,6 +156,11 @@
 	});
 
 
+	$(document).on('click', '#addToCart', function () {
+		addProductToCart(productSku);
+	});
+
+
 	/**
 	 * Met à jours la liste des types disponibles.
 	 *
@@ -283,7 +289,15 @@
 		});
 	}
 
+
+	/**
+	 * Met à jour les informations du produit configuré.
+	 *
+	 * @param product
+	 */
 	function updateProductInfos(product) {
+		productSku = product['sku'];
+
 		$('#productImage').attr('src', 'img/products/' + product['imageName']);
 		$('#productPrice').text(currencyFormat(product['price']));
 		$('#shippingFee').text(currencyFormat(product['shippingFee']));
@@ -588,7 +602,6 @@
 				});
 			})
 	}
-
 
 	/**
 	 * Met à jour les informations détaillées du modèle sélectionné.

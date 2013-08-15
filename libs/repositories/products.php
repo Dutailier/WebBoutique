@@ -59,7 +59,7 @@ class Products
 				);
 				break;
 
-			case TYPE_PILOW:
+			case TYPE_PILLOW:
 				$product = new Pilow (
 					$rows[0]['imageName'],
 					$rows[0]['price'],
@@ -129,7 +129,7 @@ class Products
 				);
 				break;
 
-			case TYPE_PILOW:
+			case TYPE_PILLOW:
 				$product = new Pilow (
 					$rows[0]['imageName'],
 					$rows[0]['price'],

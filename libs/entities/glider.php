@@ -49,7 +49,7 @@ class Glider extends Product
 			parent::getInfoArray(),
 			array(
 				'modelCode'  => $this->getModelCode(),
-				'finishCode' => $this->getModelCode(),
+				'finishCode' => $this->getFinishCode(),
 				'fabricCode' => $this->getFabricCode(),
 				'pipingCode' => $this->getPipingCode()
 			)

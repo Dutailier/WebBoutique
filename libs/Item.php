@@ -16,13 +16,31 @@ class Item implements IItem
 	 * Initialise l'item.
 	 *
 	 * @param Product $product
+	 * @param         $quantity
 	 */
-	function __construct(Product $product)
+	function __construct(Product $product, $quantity = 1)
 	{
 		$this->setProduct($product);
-		$this->setPrice($price);
-		$this->setShippingFee($shippingFee);
 		$this->setQuantity($quantity);
+	}
+
+
+	/**
+	 * Retourne un tableau contenant les propriétés de l'item.
+	 *
+	 * @return array
+	 */
+	public function getInfoArray()
+	{
+		return array_merge(
+			$this->getProduct()->getInfoArray(),
+			array(
+				'model'            => $this->getProduct()->getModel()->getInfoArray(),
+				'quantity'         => $this->getQuantity(),
+				'totalPrice'       => $this->getTotalPrice(),
+				'totalShippingFee' => $this->getTotalShippingFee()
+			)
+		);
 	}
 
 
@@ -48,7 +66,7 @@ class Item implements IItem
 	 */
 	public function getQuantity()
 	{
-		return $this->getQuantity();
+		return $this->quantity;
 	}
 
 
@@ -67,6 +85,28 @@ class Item implements IItem
 		}
 
 		$this->quantity = $quantity;
+	}
+
+
+	/**
+	 * Retourne le prix total des produits.
+	 *
+	 * @return mixed
+	 */
+	public function getTotalPrice()
+	{
+		return $this->getQuantity() * $this->getProduct()->getPrice();
+	}
+
+
+	/**
+	 * Retourne les frais totaux d'expédition.
+	 *
+	 * @return mixed
+	 */
+	public function getTotalShippingFee()
+	{
+		return $this->getQuantity() * $this->getProduct()->getShippingFee();
 	}
 
 

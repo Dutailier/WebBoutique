@@ -53,15 +53,38 @@ function emailFormat(email) {
  */
 function currencyFormat(price) {
 	var dollarsCents = price.toString().split('.');
-	var dollars = dollarsCents[0];
+	var dollars = dollarsCents[0].split('').reverse();
 	var cents = (dollarsCents[1] || '');
 
-	var left = dollars.substring(0, 1);
+	var left = dollars[0];
 	var right = (cents + '00').substring(0, 2);
 
 	for (var i = 1; i < dollars.length; i++) {
-		left += (i % 3 == 0 ? ',' : '') + dollars.substring(i, i + 1);
+		left += (i % 3 == 0 ? ',' : '') + dollars[i];
 	}
 
+	left = left.split('').reverse().join('');
+
 	return '$ ' + left + '.' + right;
+}
+
+
+/**
+ * Retourne le sku dans le bon format.
+ *
+ * @param sku
+ * @returns {string}
+ */
+function skuFormat(sku) {
+	switch (sku.length) {
+		case 12 :
+			return sku.substring(0, 6) + '-' +
+				   sku.substring(6, 8) + '-' +
+				   sku.substring(8, 12);
+		case 16:
+			return sku.substring(0, 6) + '-' +
+				   sku.substring(6, 8) + '-' +
+				   sku.substring(8, 12) + '-' +
+				   sku.substring(12, 16);
+	}
 }

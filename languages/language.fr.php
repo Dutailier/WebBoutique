@@ -18,7 +18,7 @@ define('ERROR_TITLE', 'Erreur');
 define('ERROR_404', '404 - La page demandée n\'existe pas.');
 
 // Page du configurateur de produit
-define('CONFIGURATOR_TITLE', 'Product configurator');
+define('CONFIGURATOR_TITLE', 'Configurateur de produit');
 define('CONFIGURATOR_LBL_FINISH_NAME', 'Fini :');
 define('CONFIGURATOR_LBL_FABRIC_NAME', 'Tissu :');
 define('CONFIGURATOR_LBL_PIPING_NAME', 'Passepoil :');
@@ -26,6 +26,16 @@ define('CONFIGURATOR_LBL_PRODUCT_PRICE', 'Prix :');
 define('CONFIGURATOR_LBL_SHIPPING_FEE', 'Frais de livraison :');
 define('CONFIGURATOR_BTN_ADD_TO_CART', 'Ajouter au panier');
 define('CONFIGURATOR_LBL_WARNING', '* Taxes de ventes non incluses dans le prix.');
+
+// Page du panier d'achats
+define('CART_TITLE', 'Panier d\'achats');
+define('CART_LBL_TOTAL_PRICE', 'Prix total :');
+define('CART_LBL_TOTAL_SHIPPING_FEE', 'Frais d\'expédition total :');
+define('CART_LBL_SUB_PRICE', 'Sous total :');
+define('CART_BTN_CONTINUE_SHOPPING', 'Continuer vos achats');
+define('CART_BTN_PROCEED_ORDER', 'Passer la commande');
+define('CART_BTN_CLEAR_CART', 'Vider');
+define('CART_LBL_NO_PRODUCT', 'Aucun produits.');
 
 // Page du gestionnaire pour commerçant
 define('STORE_MANAGER_TITLE', 'Gestionnaire pour commerçant.');
@@ -63,6 +73,7 @@ define('ERROR_REQUIRED_MODEL_NAME', 'Le nom du modèle est requis.');
 define('ERROR_REQUIRED_MODEL_DESCRIPTION', 'La description du modèle est requises.');
 define('ERROR_REQUIRED_MODEL_CODE', 'Le code du modèle est requis.');
 define('ERROR_REQUIRED_STORE_REF', 'La référence du commerçant est requise.');
+define('ERROR_REQUIRED_PRODUCT_SKU', 'La sku du produit est requis.');
 
 // Erreurs de transaction
 define('ERROR_TRANSACTION_ALREADY_CHECKOUT', 'Vous avez déjà finalisé vos achats.');

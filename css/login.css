@@ -1,6 +1,7 @@
 #background {
 	background : url(../img/background-login.png) no-repeat;
 	height     : 685px;
+	margin     : 10px;
 }
 
 #login {
@@ -44,6 +45,7 @@
 }
 
 #frmLogin > p > #btnLogIn {
-	width : 200px;
-	float : right;
+	width  : 200px;
+	float  : right;
+	margin : 0px 10px;
 }

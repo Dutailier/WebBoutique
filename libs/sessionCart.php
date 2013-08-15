@@ -25,6 +25,8 @@ final class SessionCart implements ICart
 			session_start();
 		}
 
+		$this->items = array();
+
 		if (isSet($_SESSION[self::CART_IDENTIFIER])) {
 			$this->Copy(unserialize($_SESSION[self::CART_IDENTIFIER]));
 		}
@@ -72,7 +74,7 @@ final class SessionCart implements ICart
 			$item->setQuantity($item->getQuantity() + 1);
 		}
 
-		return $item->getQuantity();
+		return $item;
 	}
 
 
@@ -96,14 +98,13 @@ final class SessionCart implements ICart
 		$item     = $this->items[$index];
 		$quantity = $item->getQuantity() - 1;
 
-		if ($quantity > 0) {
-			$item->setQuantity($quantity);
+		$item->setQuantity($quantity);
 
-		} else {
+		if ($quantity == 0) {
 			unset($this->items[$index]);
 		}
 
-		return $quantity;
+		return $item;
 	}
 
 
@@ -156,7 +157,7 @@ final class SessionCart implements ICart
 
 		$this->Save();
 
-		return $item->getQuantity();
+		return $item;
 	}
 
 

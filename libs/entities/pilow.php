@@ -25,7 +25,7 @@ class Pilow extends Product
 	 */
 	function __construct($imageName, $price, $shippingFee, $modelCode, $fabricCode)
 	{
-		parent::__construct(TYPE_PILOW, $imageName, $price, $shippingFee);
+		parent::__construct(TYPE_PILLOW, $imageName, $price, $shippingFee);
 
 		$this->setModelCode($modelCode);
 		$this->setFabricCode($fabricCode);
