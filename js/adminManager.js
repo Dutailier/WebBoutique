@@ -371,7 +371,7 @@
 					type  : 'error',
 					text  : errors['SERVER_FAILED']
 				});
-			})
+			});
 	}
 
 

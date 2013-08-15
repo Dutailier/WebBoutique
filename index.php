@@ -123,6 +123,7 @@ if (file_exists($file = ROOT . 'pages/' . $page . '.php')) {
 	<script src="js/format.<?php echo strtolower($languageCode); ?>.js"></script>
 	<script src="js/global/url.js"></script>
 	<script src="js/menu.js"></script>
+	<script src="js/watermark.js"></script>
 
 </body>
 </html>

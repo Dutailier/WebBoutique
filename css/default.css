@@ -1,4 +1,8 @@
-﻿div, p, ul, label, textarea, select, input {
+﻿body {
+	font-family : "Arial", sans-serif;
+}
+
+div, p, ul, label, textarea, select, input {
 	overflow : hidden; /* Clearfix */
 	margin   : 0px;
 }
@@ -9,6 +13,7 @@ select {
 	font-size   : 1.2em;
 	line-height : 20px;
 	padding     : 6px;
+	font-family : "Arial", sans-serif;
 }
 
 label.error,
@@ -34,4 +39,9 @@ input[type=submit] {
 
 span.highlight {
 	background-color : yellow;
+}
+
+input.watermark {
+	color      : gray;
+	font-style : italic;
 }

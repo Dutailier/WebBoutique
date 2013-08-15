@@ -26,7 +26,6 @@ define('CONFIGURATOR_LBL_PIPING_NAME', 'Passepoil :');
 define('CONFIGURATOR_LBL_PRODUCT_PRICE', 'Prix :');
 define('CONFIGURATOR_LBL_SHIPPING_FEE', 'Frais de livraison :');
 define('CONFIGURATOR_BTN_ADD_TO_CART', 'Ajouter au panier');
-define('LBL_WARNING', '* Taxes de ventes non incluses dans le prix.');
 
 // Page du panier d'achats
 define('CART_TITLE', 'Panier d\'achats');
@@ -37,6 +36,22 @@ define('CART_BTN_CONTINUE_SHOPPING', 'Continuer vos achats');
 define('CART_BTN_PROCEED_ORDER', 'Passer la commande');
 define('CART_BTN_CLEAR_CART', 'Vider');
 define('CART_LBL_NO_PRODUCT', 'Aucun produits.');
+
+// Page d'informations de facturation
+define('BILLING_FORM_TITLE', 'Informations de facturation');
+define('BILLING_FORM_LBL_BILLING_NAME', 'Nom de facturation');
+define('BILLING_FORM_LBL_FIRST_NAME', 'Prénom');
+define('BILLING_FORM_LBL_LAST_NAME', 'Nom');
+define('BILLING_FORM_LBL_BILLING_ADDRESS', 'Adresse de facturation');
+define('BILLING_FORM_LBL_STREET', 'Adresse');
+define('BILLING_FORM_LBL_CITY', 'Ville');
+define('BILLING_FORM_LBL_ZIP_CODE', 'Code postal');
+define('BILLING_FORM_LBL_STATE', 'État ou province');
+define('BILLING_FORM_LBL_COUNTRY', 'Pays');
+define('BILLING_FORM_LBL_EMAIL', 'Courriel');
+define('BILLING_FORM_LBL_PHONE', 'Téléphone');
+define('BILLING_FORM_LBL_CONFIRMATION', 'Confirmation');
+define('BILLING_FORM_LBL_CONTACT_INFORMATION', 'Autres informations');
 
 // Page du gestionnaire pour commerçant
 define('STORE_MANAGER_TITLE', 'Gestionnaire pour commerçant.');
@@ -54,6 +69,7 @@ define('ADMIN_MANAGER_LBL_LANGUAGE', 'Langue : ');
 // Autres
 define('PLEASE_WAIT', 'Veuillez patienter...');
 define('NO_RESULT', 'Aucun résult trouvé.');
+define('LBL_WARNING', '* Taxes de ventes non incluses dans le prix.');
 
 // Erreurs du panier d'achats
 define('ERROR_ITEM_DOESNT_EXIST', 'L\'item n\'est pas contenu dans le panier d\'achats.');

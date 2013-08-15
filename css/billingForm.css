@@ -1,0 +1,78 @@
+h1 {
+	margin : 20px 50px;
+}
+
+fieldset {
+	padding : 5px 10px 10px 10px;
+	margin  : 15px 50px 30px 50px;
+	border  : 1px solid #484848;
+}
+
+fieldset > legend {
+	font-size   : 1.4em;
+	font-weight : bold;
+	padding     : 0px 10px;
+}
+
+fieldset p {
+	margin : 5px 50px;
+}
+
+fieldset label {
+	display     : block;
+	font-weight : bold;
+	margin      : 5px 0px 5px 5px;
+	font-size   : 1.1em;
+}
+
+fieldset input,
+fieldset textarea,
+fieldset select {
+	margin    : 5px 0px 5px 5px;
+	font-size : 1em;
+}
+
+div.left,
+div.right {
+	float : left;
+	width : 50%;
+}
+
+div.left p {
+	float : left;
+	clear : left;
+}
+
+div.right p {
+	float : right;
+	clear : right;
+}
+
+#greetingsList {
+	width : 60px;
+}
+
+#txtFirstname {
+	width : 270px;
+}
+
+#txtLastname {
+	width : 384px;
+}
+
+#txtStreet {
+	height : 123px;
+	resize : none;
+}
+
+#txtStreet,
+#txtCity,
+#txtZipCode,
+#statesList,
+#countriesList,
+#txtEmail,
+#txtConfirmation,
+#txtPhone {
+	width : 330px;
+}
+
