@@ -2,6 +2,10 @@ h1 {
 	margin : 20px 50px;
 }
 
+#summary {
+	margin : 10px 50px;
+}
+
 fieldset {
 	padding : 5px 10px 10px 10px;
 	margin  : 15px 50px 30px 50px;
@@ -74,5 +78,29 @@ div.right p {
 #txtConfirmation,
 #txtPhone {
 	width : 330px;
+}
+
+#buttons {
+	margin : 0px 50px 30px 50px;
+}
+
+#btnCancel {
+	float : left;
+	width : 150px;
+}
+
+#btnSubmit {
+	float : right;
+	width : 150px;
+}
+
+#btnClear {
+	display         : inline-block;
+	float           : right;
+	float           : right;
+	font-size       : 1.2em;
+	text-decoration : underline;
+	line-height     : 39px;
+	margin          : 0px 20px;
 }
 

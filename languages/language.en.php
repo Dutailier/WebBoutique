@@ -40,8 +40,6 @@ define('CART_LBL_NO_PRODUCT', 'No product ordered.');
 // Page d'informations de facturation
 define('BILLING_FORM_TITLE', 'Billing Information');
 define('BILLING_FORM_LBL_BILLING_NAME', 'Billing Name');
-define('BILLING_FORM_LBL_FIRST_NAME', 'Firstname');
-define('BILLING_FORM_LBL_LAST_NAME', 'Lastname');
 define('BILLING_FORM_LBL_BILLING_ADDRESS', 'Billing Address');
 define('BILLING_FORM_LBL_STREET', 'Address');
 define('BILLING_FORM_LBL_CITY', 'City');
@@ -52,6 +50,9 @@ define('BILLING_FORM_LBL_EMAIL', 'Email');
 define('BILLING_FORM_LBL_PHONE', 'Phone');
 define('BILLING_FORM_LBL_CONFIRMATION', 'Email Confirmation');
 define('BILLING_FORM_LBL_CONTACT_INFORMATION', 'Contact Information');
+define('BILLING_FORM_BTN_CANCEL', 'Cancel');
+define('BILLING_FORM_BTN_SUBMIT', 'Next');
+define('BILLING_FORM_BTN_CLEAR', 'Clear');
 
 // Page du gestionnaire pour commerçant
 define('STORE_MANAGER_TITLE', 'Store Manager');
@@ -84,6 +85,16 @@ define('ERROR_REQUIRED_MODEL_DESCRIPTION', 'The model description is required.')
 define('ERROR_REQUIRED_MODEL_CODE', 'The model code is required.');
 define('ERROR_REQUIRED_STORE_REF', 'The store ref is required.');
 define('ERROR_REQUIRED_PRODUCT_SKU', 'The product sku is required.');
+define('ERROR_REQUIRED_GREETING', 'The greeting is required.');
+define('ERROR_REQUIRED_FIRSTNAME', 'The firstname is required.');
+define('ERROR_REQUIRED_LASTNAME', 'The lastname is required.');
+define('ERROR_REQUIRED_STREET', 'The street is required.');
+define('ERROR_REQUIRED_CITY', 'The city is required.');
+define('ERROR_REQUIRED_ZIP_CODE', 'The zip code is required.');
+define('ERROR_REQUIRED_STATE_CODE', 'The state code is required.');
+define('ERROR_REQUIRED_COUNTRY_CODE', 'The country code is required.');
+define('ERROR_REQUIRED_EMAIL', 'The email is required.');
+define('ERROR_REQUIRED_PHONE', 'The phone number is required.');
 
 // Erreurs de sécurité
 define('ERROR_ALREADY_LOGIN', 'You\'re already log In.');

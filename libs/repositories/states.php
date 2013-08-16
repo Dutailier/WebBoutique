@@ -57,7 +57,7 @@ class States
 
 		$states = array();
 		foreach ($rows as $row) {
-			$states = new State (
+			$states[] = new State (
 				$row['code'],
 				$row['countryCode'],
 				$row['name']

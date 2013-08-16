@@ -29,6 +29,21 @@ class State
 
 
 	/**
+	 * Retourne un tableau contenant les propriétés de l'état ou province.
+	 *
+	 * @return array
+	 */
+	public function getInfoArray()
+	{
+		return array(
+			'code'        => $this->getCode(),
+			'countryCode' => $this->getCountryCode(),
+			'name'        => $this->getName()
+		);
+	}
+
+
+	/**
 	 * Définit le code de l'état ou de la province.
 	 *
 	 * @param mixed $code

@@ -40,8 +40,3 @@ input[type=submit] {
 span.highlight {
 	background-color : yellow;
 }
-
-input.watermark {
-	color      : gray;
-	font-style : italic;
-}

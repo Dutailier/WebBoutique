@@ -40,8 +40,6 @@ define('CART_LBL_NO_PRODUCT', 'Aucun produits.');
 // Page d'informations de facturation
 define('BILLING_FORM_TITLE', 'Informations de facturation');
 define('BILLING_FORM_LBL_BILLING_NAME', 'Nom de facturation');
-define('BILLING_FORM_LBL_FIRST_NAME', 'Prénom');
-define('BILLING_FORM_LBL_LAST_NAME', 'Nom');
 define('BILLING_FORM_LBL_BILLING_ADDRESS', 'Adresse de facturation');
 define('BILLING_FORM_LBL_STREET', 'Adresse');
 define('BILLING_FORM_LBL_CITY', 'Ville');
@@ -52,6 +50,9 @@ define('BILLING_FORM_LBL_EMAIL', 'Courriel');
 define('BILLING_FORM_LBL_PHONE', 'Téléphone');
 define('BILLING_FORM_LBL_CONFIRMATION', 'Confirmation');
 define('BILLING_FORM_LBL_CONTACT_INFORMATION', 'Autres informations');
+define('BILLING_FORM_BTN_CANCEL', 'Annuler');
+define('BILLING_FORM_BTN_SUBMIT', 'Continuer');
+define('BILLING_FORM_BTN_CLEAR', 'Vider');
 
 // Page du gestionnaire pour commerçant
 define('STORE_MANAGER_TITLE', 'Gestionnaire pour commerçant.');
@@ -91,6 +92,16 @@ define('ERROR_REQUIRED_MODEL_DESCRIPTION', 'La description du modèle est requis
 define('ERROR_REQUIRED_MODEL_CODE', 'Le code du modèle est requis.');
 define('ERROR_REQUIRED_STORE_REF', 'La référence du commerçant est requise.');
 define('ERROR_REQUIRED_PRODUCT_SKU', 'La sku du produit est requis.');
+define('ERROR_REQUIRED_GREETING', 'La salutation est requis.');
+define('ERROR_REQUIRED_FIRSTNAME', 'Le prénom est requis.');
+define('ERROR_REQUIRED_LASTNAME', 'Le nom est requis.');
+define('ERROR_REQUIRED_STREET', 'L\'adresse est requis.');
+define('ERROR_REQUIRED_CITY', 'La ville est requis.');
+define('ERROR_REQUIRED_ZIP_CODE', 'Le code postal est requis.');
+define('ERROR_REQUIRED_STATE_CODE', 'L\'état est requis.');
+define('ERROR_REQUIRED_COUNTRY_CODE', 'Le pays est requis.');
+define('ERROR_REQUIRED_EMAIL', 'Le courriel est requis.');
+define('ERROR_REQUIRED_PHONE', 'Le numéro de téléphone est requis.');
 
 // Erreurs de transaction
 define('ERROR_TRANSACTION_ALREADY_CHECKOUT', 'Vous avez déjà finalisé vos achats.');

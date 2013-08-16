@@ -74,9 +74,12 @@ if (file_exists($file = ROOT . 'pages/' . $page . '.php')) {
 	<?php } ?>
 
 	<!-- Noty -->
-	<script type="text/javascript" src="js/noty/jquery.noty.js"></script>
-	<script type="text/javascript" src="js/noty/themes/default.js"></script>
-	<script type="text/javascript" src="js/noty/layouts/topRight.js"></script>
+	<script type="text/javascript" src="js/plugins/noty/jquery.noty.js"></script>
+	<script type="text/javascript" src="js/plugins/noty/themes/default.js"></script>
+	<script type="text/javascript" src="js/plugins/noty/layouts/topRight.js"></script>
+
+	<!-- Watermark -->
+	<script type="text/javascript" src="js/plugins/watermark/jquery.watermark.js"></script>
 
 	<?php echo $head; ?>
 
@@ -123,7 +126,6 @@ if (file_exists($file = ROOT . 'pages/' . $page . '.php')) {
 	<script src="js/format.<?php echo strtolower($languageCode); ?>.js"></script>
 	<script src="js/global/url.js"></script>
 	<script src="js/menu.js"></script>
-	<script src="js/watermark.js"></script>
 
 </body>
 </html>
