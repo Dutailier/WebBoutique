@@ -10,7 +10,7 @@
 
 			switch (countryCode) {
 				case 'CA':
-					return /^[1]?[-. ]?\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/g.test(value);
+					return /^[a-z][0-9][a-z](\s)?[0-9][a-z][0-9]$/i.test(value);
 					break;
 				case 'US' :
 					return /^[0-9]{5}$/g.test(value);
@@ -71,6 +71,24 @@
 		$('#countriesList').change(function () {
 			updateStatesList($('#countriesList').val(), function () {});
 			updateWatermark();
+		});
+
+		$('#txtZipCode').keyup(function (e) {
+			if ($('#countriesList').val() == 'CA') {
+				var val = $(this).val();
+
+				val = val.toUpperCase();
+				val = val.split(' ').join('');
+				val = val.length > 3 ?
+					val.substring(0, 3) + ' ' + val.substring(3) :
+					val;
+
+				$(this).val(val.substring(0, 7));
+			}
+		});
+
+		$('#txtEmail, #txtConfirmation').keyup(function () {
+			$(this).val($(this).val().trim());
 		});
 
 		$('#btnClear').click(function () {

@@ -33,7 +33,7 @@ define('CART_LBL_TOTAL_PRICE', 'Prix total :');
 define('CART_LBL_TOTAL_SHIPPING_FEE', 'Frais d\'expédition total :');
 define('CART_LBL_SUB_PRICE', 'Sous total :');
 define('CART_BTN_CONTINUE_SHOPPING', 'Continuer vos achats');
-define('CART_BTN_PROCEED_ORDER', 'Passer la commande');
+define('CART_BTN_PROCEED_ORDER', 'Finaliser');
 define('CART_BTN_CLEAR_CART', 'Vider');
 define('CART_LBL_NO_PRODUCT', 'Aucun produits.');
 
