@@ -38,21 +38,23 @@ define('CART_BTN_CLEAR_CART', 'Clear');
 define('CART_LBL_NO_PRODUCT', 'No product ordered.');
 
 // Page d'informations de facturation
-define('BILLING_FORM_TITLE', 'Billing Information');
-define('BILLING_FORM_LBL_BILLING_NAME', 'Billing Name');
-define('BILLING_FORM_LBL_BILLING_ADDRESS', 'Billing Address');
-define('BILLING_FORM_LBL_STREET', 'Address');
-define('BILLING_FORM_LBL_CITY', 'City');
-define('BILLING_FORM_LBL_ZIP_CODE', 'Zip Code');
-define('BILLING_FORM_LBL_STATE', 'State or province');
-define('BILLING_FORM_LBL_COUNTRY', 'Country');
-define('BILLING_FORM_LBL_EMAIL', 'Email');
-define('BILLING_FORM_LBL_PHONE', 'Phone');
-define('BILLING_FORM_LBL_CONFIRMATION', 'Email Confirmation');
-define('BILLING_FORM_LBL_CONTACT_INFORMATION', 'Contact Information');
-define('BILLING_FORM_BTN_CANCEL', 'Cancel');
-define('BILLING_FORM_BTN_SUBMIT', 'Next');
-define('BILLING_FORM_BTN_CLEAR', 'Clear');
+define('SHIPPING_FORM_TITLE', 'Shipping Information');
+define('SHIPPING_FORM_LBL_SHIPPING_NAME', 'Name');
+define('SHIPPING_FORM_LBL_SHIPPING_ADDRESS', 'Address');
+define('SHIPPING_FORM_LBL_STREET', 'Address');
+define('SHIPPING_FORM_LBL_CITY', 'City');
+define('SHIPPING_FORM_LBL_ZIP_CODE', 'Zip Code');
+define('SHIPPING_FORM_LBL_STATE', 'State or province');
+define('SHIPPING_FORM_LBL_COUNTRY', 'Country');
+define('SHIPPING_FORM_LBL_EMAIL', 'Email');
+define('SHIPPING_FORM_LBL_PHONE', 'Phone');
+define('SHIPPING_FORM_LBL_CONFIRMATION', 'Email Confirmation');
+define('SHIPPING_FORM_LBL_CONTACT_INFORMATION', 'Contact');
+define('SHIPPING_FORM_BTN_CANCEL', 'Cancel');
+define('SHIPPING_FORM_BTN_SUBMIT', 'Next');
+define('SHIPPING_FORM_BTN_CLEAR', 'Clear');
+define('SHIPPING_FORM_LBL_FIRST_NAME', 'Firstname');
+define('SHIPPING_FORM_LBL_LAST_NAME', 'Lastname');
 
 // Page du gestionnaire pour commerçant
 define('STORE_MANAGER_TITLE', 'Store Manager');
@@ -95,6 +97,7 @@ define('ERROR_REQUIRED_STATE_CODE', 'The state code is required.');
 define('ERROR_REQUIRED_COUNTRY_CODE', 'The country code is required.');
 define('ERROR_REQUIRED_EMAIL', 'The email is required.');
 define('ERROR_REQUIRED_PHONE', 'The phone number is required.');
+define('ERROR_REQUIRED_QUANTITY', 'A quantity is required.');
 
 // Erreurs de sécurité
 define('ERROR_ALREADY_LOGIN', 'You\'re already log In.');

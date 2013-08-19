@@ -2,6 +2,7 @@ ul.paging {
 	list-style-type : none;
 	height          : 40px;
 	text-align      : center;
+	margin          : 10px;
 }
 
 ul.paging > li {

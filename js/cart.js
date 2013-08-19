@@ -10,37 +10,96 @@
 		});
 
 		$('a.btnClearCart').click(function () {
-			clearCart(function () {
-				_products = [];
-				$('#productsList').find('div.product').remove();
-				updateSummaryInfos();
-			});
+			var $dialog = $(
+				'<div>' +
+				'<p>' + label['CART_DIALOG_EMPTY_TEXT'] + '</p>' +
+				'</div>'
+			).dialog({
+					title    : label['CART_DIALOG_EMPTY_TITLE'],
+					width    : 450,
+					height   : 230,
+					modal    : true,
+					resizable: false,
+					draggable: false,
+					buttons  : [
+						{
+							'id' : 'dialogYes',
+							text : label['CART_DIALOG_BTN_YES'],
+							click: function () {
+								$('#dialogYes, #dialogNo').button('disable');
+								clearCart(function () {
+									_products = [];
+									$('#productsList').find('div.product').remove();
+									updateSummaryInfos();
+									$dialog.dialog('close');
+								});
+							}},
+						{
+							'id' : 'dialogNo',
+							text : label['CART_DIALOG_BTN_NO'],
+							click: function () {
+								$dialog.dialog('close');
+								$dialog.remove();
+							}
+						}
+					]
+				});
+		});
+
+
+		$('input.btnProceedOrder').click(function () {
+			window.location = 'shippingForm.php';
 		});
 	});
 
+
 	$(document).on('change', 'input.quantity', function () {
+
+		if ($('.ui-dialog').length > 0) { return; }
+
 		var quantity = $(this).val() || 0;
 		var $product = $(this).closest('div.product');
 
-		setQuantityOfProduct($product, quantity, function (product) {
-
-			_products[product['sku']] = product;
-
-			if (quantity == 0) {
-				$product.slideUp(function () {
-					$(this).remove();
-
-					updateSummaryInfos();
-				});
-			} else {
-				$product.find('label.price').text(currencyFormat(product['price']));
-				$product.find('label.shippingFee').text(currencyFormat(product['shippingFee']));
-				$product.find('label.totalPrice').text(currencyFormat(product['totalPrice']));
-				$product.find('label.totalShippingFee').text(currencyFormat(product['totalShippingFee']));
-
+		if (quantity != 0) {
+			updateProductInfos($product, function () {
 				updateSummaryInfos();
-			}
-		});
+			});
+		} else {
+			var $dialog = $(
+				'<div>' +
+				'<p>' + label['CART_DIALOG_REMOVE_PRODUCT_TEXT'] + '</p>' +
+				'</div>'
+			).dialog({
+					title    : label['CART_DIALOG_REMOVE_PRODUCT_TITLE'],
+					width    : 450,
+					height   : 230,
+					modal    : true,
+					resizable: false,
+					draggable: false,
+					buttons  : [
+						{
+							'id' : 'dialogYes',
+							text : label['CART_DIALOG_BTN_YES'],
+							click: function () {
+								$('#dialogYes, #dialogNo').button('disable');
+								updateProductInfos($product, function () {
+									updateSummaryInfos();
+								});
+								$dialog.dialog('close');
+							}},
+						{
+							'id' : 'dialogNo',
+							text : label['CART_DIALOG_BTN_NO'],
+							click: function () {
+								var previousQuantity = _products[$product.data('sku')]['quantity'];
+								$product.find('input.quantity').val(previousQuantity);
+								$dialog.dialog('close');
+								$dialog.remove();
+							}
+						}
+					]
+				});
+		}
 	});
 
 
@@ -208,6 +267,79 @@
 
 
 	/**
+	 * Met à jour les informations d'un produit.
+	 *
+	 * @param $product
+	 * @param callback
+	 */
+	function updateProductInfos($product, callback) {
+		var quantity = $product.find('input.quantity').val();
+
+		setQuantityOfProduct($product, quantity, function (product) {
+
+			_products[product['sku']] = product;
+
+			if (quantity == 0) {
+				$product.slideUp(function () {
+					$(this).remove();
+					callback();
+				});
+			} else {
+				$product.find('label.price').text(currencyFormat(product['price']));
+				$product.find('label.shippingFee').text(currencyFormat(product['shippingFee']));
+				$product.find('label.totalPrice').text(currencyFormat(product['totalPrice']));
+				$product.find('label.totalShippingFee').text(currencyFormat(product['totalShippingFee']));
+				callback();
+			}
+		});
+	}
+
+
+	/**
+	 * Met à jour les totaux.
+	 */
+	function updateSummaryInfos() {
+		var subTotal = 0;
+		var totalShippingFee = 0;
+		var totalPrice = 0;
+
+		for (var i in _products) {
+			if (_products.hasOwnProperty(i)) {
+				var product = _products[i];
+
+				if (product.hasOwnProperty('totalPrice') &&
+					product.hasOwnProperty('totalShippingFee')) {
+					subTotal += product['totalPrice'];
+					totalShippingFee += product['totalShippingFee'];
+					totalPrice += (subTotal + totalShippingFee);
+				}
+			}
+		}
+
+		totalPrice = subTotal + totalShippingFee;
+
+		var $subTotal = $('#subTotal');
+		var $totalShippingFee = $('#totalShippingFee');
+		var $totalPrice = $('#totalPrice');
+
+		$subTotal.text(currencyFormat(subTotal));
+		$totalShippingFee.text(currencyFormat(totalShippingFee));
+		$totalPrice.text(currencyFormat(totalPrice));
+
+		if (totalPrice > 0) {
+			$('#productsEmpty').fadeOut(function () {
+				$('#summary').fadeIn();
+			});
+
+		} else {
+			$('#summary').fadeOut(function () {
+				$('#productsEmpty').fadeIn();
+			});
+		}
+	}
+
+
+	/**
 	 * Ajoute un produit à la liste de produits.
 	 *
 	 * @param product
@@ -236,7 +368,7 @@
 			'<div class="infos">' +
 			'<label class="modelName">' + product['model']['name'] + '</label>' +
 			'<label class="sku">' + skuFormat(product['sku']) + '</label>' +
-			'<input type="number" min="0" max="10" class="quantity"  value="' + product['quantity'] + '" />' +
+			'<input type="number" min="0" class="quantity"  value="' + product['quantity'] + '" />' +
 			'<label class="field">' + label['CART_ITEM_LBL_QUANTITY'] + '</label>' +
 			'</div>'
 		);
@@ -305,44 +437,5 @@
 		);
 
 		$details.appendTo($product);
-	}
-
-
-	/**
-	 * Met à jour les totaux.
-	 */
-	function updateSummaryInfos() {
-		var subTotal = 0;
-		var totalShippingFee = 0;
-		var totalPrice = 0;
-
-		for (var i in _products) {
-			var product = _products[i];
-
-			if (product.hasOwnProperty('totalPrice') &&
-				product.hasOwnProperty('totalShippingFee')) {
-				subTotal += product['totalPrice'];
-				totalShippingFee += product['totalShippingFee'];
-				totalPrice += (subTotal + totalShippingFee);
-			}
-		}
-
-		totalPrice = subTotal + totalShippingFee;
-
-		var $subTotal = $('#subTotal');
-		var $totalShippingFee = $('#totalShippingFee');
-		var $totalPrice = $('#totalPrice');
-
-		$subTotal.text(currencyFormat(subTotal));
-		$totalShippingFee.text(currencyFormat(totalShippingFee));
-		$totalPrice.text(currencyFormat(totalPrice));
-
-		$subTotal.parent().toggle(subTotal > 0);
-		$totalShippingFee.parent().toggle(totalShippingFee > 0);
-		$totalPrice.parent().toggle(totalPrice > 0);
-
-		$('#productsEmpty').toggle(totalPrice <= 0);
-		$('input.btnProceedOrder').prop('disabled', totalPrice <= 0);
-		$('#summary').toggle(totalPrice > 0);
 	}
 })(jQuery);

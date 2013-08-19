@@ -27,18 +27,18 @@ $title = CART_TITLE;
 		</div>
 	</div>
 
-	<div id="summary">
-		<p class="hidden">
+	<div id="summary" class="hidden">
+		<p>
 			<label id="subTotal"></label>
 			<label class="field"><?php echo CART_LBL_SUB_PRICE; ?></label>
 		</p>
 
-		<p class="hidden">
+		<p>
 			<label id="totalShippingFee"></label>
 			<label class="field"><?php echo CART_LBL_TOTAL_SHIPPING_FEE; ?></label>
 		</p>
 
-		<p class="hidden">
+		<p>
 			<label id="totalPrice"></label>
 			<label class="field"><?php echo CART_LBL_TOTAL_PRICE; ?></label>
 		</p>

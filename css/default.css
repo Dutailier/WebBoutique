@@ -2,9 +2,12 @@
 	font-family : "Arial", sans-serif;
 }
 
-div, p, ul, label, textarea, select, input {
+body * {
 	overflow : hidden; /* Clearfix */
-	margin   : 0px;
+}
+
+div, ul, label, textarea, select, input {
+	margin : 0px;
 }
 
 input,
@@ -39,4 +42,8 @@ input[type=submit] {
 
 span.highlight {
 	background-color : yellow;
+}
+
+ui-dialog p {
+	margin : 10px;
 }

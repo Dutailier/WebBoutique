@@ -38,21 +38,23 @@ define('CART_BTN_CLEAR_CART', 'Vider');
 define('CART_LBL_NO_PRODUCT', 'Aucun produits.');
 
 // Page d'informations de facturation
-define('BILLING_FORM_TITLE', 'Informations de facturation');
-define('BILLING_FORM_LBL_BILLING_NAME', 'Nom de facturation');
-define('BILLING_FORM_LBL_BILLING_ADDRESS', 'Adresse de facturation');
-define('BILLING_FORM_LBL_STREET', 'Adresse');
-define('BILLING_FORM_LBL_CITY', 'Ville');
-define('BILLING_FORM_LBL_ZIP_CODE', 'Code postal');
-define('BILLING_FORM_LBL_STATE', 'État ou province');
-define('BILLING_FORM_LBL_COUNTRY', 'Pays');
-define('BILLING_FORM_LBL_EMAIL', 'Courriel');
-define('BILLING_FORM_LBL_PHONE', 'Téléphone');
-define('BILLING_FORM_LBL_CONFIRMATION', 'Confirmation');
-define('BILLING_FORM_LBL_CONTACT_INFORMATION', 'Autres informations');
-define('BILLING_FORM_BTN_CANCEL', 'Annuler');
-define('BILLING_FORM_BTN_SUBMIT', 'Continuer');
-define('BILLING_FORM_BTN_CLEAR', 'Vider');
+define('SHIPPING_FORM_TITLE', 'Informations d\'expédition');
+define('SHIPPING_FORM_LBL_SHIPPING_NAME', 'Nom');
+define('SHIPPING_FORM_LBL_SHIPPING_ADDRESS', 'Adresse');
+define('SHIPPING_FORM_LBL_STREET', 'Adresse');
+define('SHIPPING_FORM_LBL_CITY', 'Ville');
+define('SHIPPING_FORM_LBL_ZIP_CODE', 'Code postal');
+define('SHIPPING_FORM_LBL_STATE', 'État ou province');
+define('SHIPPING_FORM_LBL_COUNTRY', 'Pays');
+define('SHIPPING_FORM_LBL_EMAIL', 'Courriel');
+define('SHIPPING_FORM_LBL_PHONE', 'Téléphone');
+define('SHIPPING_FORM_LBL_CONFIRMATION', 'Confirmation');
+define('SHIPPING_FORM_LBL_CONTACT_INFORMATION', 'Contact');
+define('SHIPPING_FORM_BTN_CANCEL', 'Annuler');
+define('SHIPPING_FORM_BTN_SUBMIT', 'Continuer');
+define('SHIPPING_FORM_BTN_CLEAR', 'Vider');
+define('SHIPPING_FORM_LBL_FIRST_NAME', 'Prénom');
+define('SHIPPING_FORM_LBL_LAST_NAME', 'Nom');
 
 // Page du gestionnaire pour commerçant
 define('STORE_MANAGER_TITLE', 'Gestionnaire pour commerçant.');
@@ -102,6 +104,7 @@ define('ERROR_REQUIRED_STATE_CODE', 'L\'état est requis.');
 define('ERROR_REQUIRED_COUNTRY_CODE', 'Le pays est requis.');
 define('ERROR_REQUIRED_EMAIL', 'Le courriel est requis.');
 define('ERROR_REQUIRED_PHONE', 'Le numéro de téléphone est requis.');
+define('ERROR_REQUIRED_QUANTITY', 'Une quantité est requise.');
 
 // Erreurs de transaction
 define('ERROR_TRANSACTION_ALREADY_CHECKOUT', 'Vous avez déjà finalisé vos achats.');

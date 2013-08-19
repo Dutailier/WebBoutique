@@ -76,14 +76,9 @@ class Item implements IItem
 	 * @param $quantity
 	 *
 	 * @return mixed|void
-	 * @throws Exception
 	 */
 	public function setQuantity($quantity)
 	{
-		if (($quantity = intval($quantity)) < 0) {
-			throw new Exception(ERROR_POSITIVE_QUANTITY_REQUIRED);
-		}
-
 		$this->quantity = $quantity;
 	}
 

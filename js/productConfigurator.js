@@ -157,7 +157,37 @@
 
 
 	$(document).on('click', '#addToCart', function () {
-		addProductToCart(productSku);
+		addProductToCart(productSku, function () {
+			$(
+				'<div>' +
+				'<p>' + label['CART_DIALOG_LBL_ADD_SUCCESFULLY'] + '</p>' +
+				'<p>' + label['CART_DIALOG_LBL_WANT_CONTINUE_SHOPPING'] + '</p>' +
+				'</div>'
+			).dialog({
+					title    : label['CONFIGURATOR_DIALOG_CONTINUE_SHOPPING_TITLE'],
+					width    : 450,
+					height   : 265,
+					modal    : true,
+					resizable: false,
+					draggable: false,
+					buttons  : [
+						{
+							'id' : 'dialogYes',
+							text : label['CART_DIALOG_BTN_YES'],
+							click: function () {
+								$(this).dialog('close');
+							}},
+						{
+							'id' : 'dialogNo',
+							text : label['CART_DIALOG_BTN_NO'],
+							click: function () {
+								$('#dialogYes, #dialogNo').button('disable');
+								window.location = 'cart.php';
+							}
+						}
+					]
+				});
+		});
 	});
 
 

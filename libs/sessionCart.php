@@ -71,7 +71,7 @@ final class SessionCart implements ICart
 
 		} else {
 			$item = $this->items[$index];
-			$item->setQuantity($item->getQuantity() + 1);
+			$item = $item->setQuantity($item->getQuantity() + 1);
 		}
 
 		return $item;
@@ -89,19 +89,19 @@ final class SessionCart implements ICart
 	 */
 	public function Remove(IItem $item)
 	{
-		$index = $this->getIndexOfItem($item);
+		$quantity = $item->setQuantity($item->getQuantity() - 1);
+		$index    = $this->getIndexOfItem($item);
 
 		if ($index == NOT_FOUND) {
 			throw new Exception(ERROR_ITEM_DOESNT_EXIST);
-		}
 
-		$item     = $this->items[$index];
-		$quantity = $item->getQuantity() - 1;
+		} else {
+			if ($quantity != 0) {
+				$this->items[$index] = $item;
 
-		$item->setQuantity($quantity);
-
-		if ($quantity == 0) {
-			unset($this->items[$index]);
+			} else {
+				unset($this->items[$index]);
+			}
 		}
 
 		return $item;
@@ -136,23 +136,27 @@ final class SessionCart implements ICart
 	 * @param       $quantity
 	 *
 	 * @return mixed
-	 * @throws Exception
 	 */
 	public function setQuantity(IItem $item, $quantity)
 	{
-		if (($quantity = (int)$quantity) < 1) {
-			throw new Exception(ERROR_POSITIVE_QUANTITY_REQUIRED);
-		}
+		$item->setQuantity($quantity);
 
 		$index = $this->getIndexOfItem($item);
 
-		if ($index == NOT_FOUND) {
-			$item->setQuantity($quantity);
+		// Si l'item n'est pas trouvé et qui quantité positive est inscrite,
+		// on ajoute l'item au panier.
+		if ($index == NOT_FOUND && $quantity != 0) {
 			$this->items[] = $item;
 
-		} else {
-			$item = $this->items[$index];
-			$item->setQuantity($quantity);
+			// Si l'item est trouvé, modifie sa quantité ou le supprime si
+			// celle-ci est nulle.
+		} else if ($index != NOT_FOUND) {
+			if ($quantity != 0) {
+				$this->items[$index] = $item;
+
+			} else {
+				unset($this->items[$index]);
+			}
 		}
 
 		$this->Save();

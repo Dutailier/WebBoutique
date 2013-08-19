@@ -6,7 +6,7 @@ $title = CONFIGURATOR_TITLE;
 
 <link type="text/css" rel="stylesheet" href="css/loading.css" />
 <link type="text/css" rel="stylesheet" href="css/productConfigurator.css" />
-<link type="text/css" rel="stylesheet" href="js/bxslider/jquery.bxslider.css" />
+<link type="text/css" rel="stylesheet" href="js/plugins/bxslider/jquery.bxslider.css" />
 
 <?php $head = ob_get_contents(); ?>
 <?php ob_clean(); ?>
@@ -66,7 +66,7 @@ $title = CONFIGURATOR_TITLE;
 	</div>
 </div>
 
-<script src="js/bxslider/jquery.bxslider.min.js"></script>
+<script src="js/plugins/bxslider/jquery.bxslider.min.js"></script>
 <script src="js/transaction.js"></script>
 <script src="js/productConfigurator.js"></script>
 
