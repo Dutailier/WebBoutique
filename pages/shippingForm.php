@@ -19,8 +19,8 @@ $title = SHIPPING_FORM_TITLE;
 		<legend><?php echo SHIPPING_FORM_LBL_SHIPPING_NAME; ?></legend>
 		<p>
 			<select id="greetingsList" name="greetingsList"></select>
-			<input id="txtFirstName" name="txtFirstName" watermark="<?php echo SHIPPING_FORM_LBL_FIRST_NAME; ?>" />
-			<input id="txtLastName" name="txtLastName" watermark="<?php echo SHIPPING_FORM_LBL_LAST_NAME; ?>" />
+			<input id="txtFirstName" name="txtFirstName" />
+			<input id="txtLastName" name="txtLastName" />
 		</p>
 	</fieldset>
 

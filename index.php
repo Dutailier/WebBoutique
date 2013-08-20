@@ -3,6 +3,7 @@
 include_once('config.php');
 include_once(ROOT . 'libs/security.php');
 include_once(ROOT . 'libs/localisation.php');
+include_once(ROOT . 'libs/sessionTransaction.php');
 
 include_once(Localisation::getLanguageFile());
 
@@ -26,6 +27,20 @@ if (!Security::isAuthenticated()) {
 					break;
 				case ROLE_ADMINISTRATOR:
 					$page = 'adminManager';
+					break;
+			}
+			break;
+
+		case 'shippingForm' :
+		case 'productConfigurator':
+		$transaction = new SessionTransaction();
+
+			switch ($transaction->getStatus()) {
+				case TRANSACTION_STATUS_OPEN:
+					$page = 'productConfigurator';
+					break;
+				case TRANSACTION_STATUS_CHECKOUT:
+					$page = 'shippingForm';
 					break;
 			}
 			break;
@@ -57,7 +72,7 @@ if (file_exists($file = ROOT . 'pages/' . $page . '.php')) {
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 
 	<link type="text/css" rel="stylesheet" href="css/default.css" />
-	<link type="text/css" rel="stylesheet" href="css/master.css" />
+	<link type="text/css" rel="stylesheet" href="css/layout.css" />
 
 	<!-- JQuery -->
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>

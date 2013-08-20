@@ -51,7 +51,7 @@
 					email   : messages['EMAIL_INVALID']
 				},
 				txtConfirmation: {
-					required: messages['REQUIRED_EMAIL'],
+					required: messages['REQUIRED_CONFIRMATION'],
 					email   : messages['EMAIL_INVALID'],
 					equalTo : messages['EMAIL_DIFFERENT']
 				}
@@ -64,7 +64,9 @@
 			},
 
 			submitHandler: function () {
-				submitBillingInfos(function () {});
+				readyToPay(function () {
+					window.location = 'validation.php';
+				});
 			}
 		});
 
@@ -73,22 +75,16 @@
 			updateWatermark();
 		});
 
-		$('#txtZipCode').keyup(function (e) {
+		$('#txtZipCode').keyup(function () {
 			if ($('#countriesList').val() == 'CA') {
 				var val = $(this).val();
 
 				val = val.toUpperCase();
 				val = val.split(' ').join('');
-				val = val.length > 3 ?
-					val.substring(0, 3) + ' ' + val.substring(3) :
-					val;
+				val = val.length > 3 ? val.substring(0, 3) + ' ' + val.substring(3) : val;
 
 				$(this).val(val.substring(0, 7));
 			}
-		});
-
-		$('#txtEmail, #txtConfirmation').keyup(function () {
-			$(this).val($(this).val().trim());
 		});
 
 		$('#btnClear').click(function () {
@@ -96,7 +92,9 @@
 		});
 
 		$('#btnCancel').click(function () {
-			cancelTransaction();
+			cancelTransaction(function () {
+				window.location = 'productConfigurator.php';
+			});
 		});
 
 		// Initialisation de la page
@@ -122,12 +120,13 @@
 		$('#txtEmail, #txtConfirmation').watermark(label['BILLING_FORM_WATERMARK_EMAIL']);
 		$('#txtPhone').watermark(label['BILLING_FORM_WATERMARK_PHONE']);
 
+		var $txtZipCode = $('#txtZipCode');
 		switch (countryCode) {
 			case 'CA':
-				$('#txtZipCode').watermark(label['BILLING_FORM_WATERMARK_ZIP_CODE_CA']);
+				$txtZipCode.watermark(label['BILLING_FORM_WATERMARK_ZIP_CODE_CA']);
 				break;
 			case 'US' :
-				$('#txtZipCode').watermark(label['BILLING_FORM_WATERMARK_ZIP_CODE_US']);
+				$txtZipCode.watermark(label['BILLING_FORM_WATERMARK_ZIP_CODE_US']);
 				break;
 		}
 	}
@@ -301,26 +300,63 @@
 	 *
 	 * @param callback
 	 */
-	function submitBillingInfos(callback) {
+	function readyToPay(callback) {
 		var informations = {
 			// Nom de facturation
-			'greeting'   : $('#greetingsList').text(),
-			'firstname'  : $('#txtFirstName').val(),
-			'lastname'   : $('#txtLastName').val(),
+			'greeting' : $('#greetingsList').val(),
+			'firstname': $('#txtFirstName').val(),
+			'lastname' : $('#txtLastName').val(),
 
 			// Adresse de facturation
-			'street'     : $('#txtStreet').val(),
-			'zipCode'    : $('#txtZipCode').val(),
-			'city'       : $('#txtCity').val(),
-			'stateCode'  : $('#statesList').val(),
-			'countryCode': $('#countriesList').val(),
+			'street'   : $('#txtStreet').val(),
+			'zipCode'  : $('#txtZipCode').val(),
+			'city'     : $('#txtCity').val(),
+			'stateCode': $('#statesList').val(),
 
 			// Autres informations
-			'email'      : $('#txtEmail').val(),
-			'phone'      : $('#txtPhone').val()
+			'email'    : $('#txtEmail').val(),
+			'phone'    : $('#txtPhone').val()
 		};
 
-		$.post('ajax/submitBillingInfos.php', informations)
+		$.post('ajax/readyToPay.php', informations)
+			.done(function (data) {
+
+				if (data.hasOwnProperty('success') && data['success']) {
+
+					callback();
+
+				} else if (data.hasOwnProperty('message')) {
+					noty({
+						layout: 'topRight',
+						type  : 'error',
+						text  : data['message']
+					});
+
+				} else {
+					noty({
+						layout: 'topRight',
+						type  : 'error',
+						text  : errors['SERVER_UNREADABLE']
+					});
+				}
+			})
+			.fail(function () {
+				noty({
+					layout: 'topRight',
+					type  : 'error',
+					text  : errors['SERVER_FAILED']
+				});
+			});
+	}
+
+
+	/**
+	 * Annule la transaction courante.
+	 *
+	 * @param callback
+	 */
+	function cancelTransaction(callback) {
+		$.post('ajax/cancelTransaction.php')
 			.done(function (data) {
 
 				if (data.hasOwnProperty('success') && data['success']) {

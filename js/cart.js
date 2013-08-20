@@ -54,7 +54,9 @@
 
 
 		$('input.btnProceedOrder').click(function () {
-			window.location = 'shippingForm.php';
+			checkout(function () {
+				window.location = 'shippingForm.php';
+			});
 		});
 	});
 
@@ -66,7 +68,7 @@
 		var quantity = $(this).val() || 0;
 		var $product = $(this).closest('div.product');
 
-		if (quantity != 0) {
+		if (quantity > 0) {
 			updateProductInfos($product, function () {
 				updateSummaryInfos();
 			});
@@ -267,6 +269,44 @@
 
 
 	/**
+	 * Procède à la transaction.
+	 *
+	 * @param callback
+	 */
+	function checkout(callback) {
+		$.post('ajax/checkout.php')
+			.done(function (data) {
+
+				if (data.hasOwnProperty('success') && data['success']) {
+
+					callback();
+
+				} else if (data.hasOwnProperty('message')) {
+					noty({
+						layout: 'topRight',
+						type  : 'error',
+						text  : data['message']
+					});
+
+				} else {
+					noty({
+						layout: 'topRight',
+						type  : 'error',
+						text  : errors['SERVER_UNREADABLE']
+					});
+				}
+			})
+			.fail(function () {
+				noty({
+					layout: 'topRight',
+					type  : 'error',
+					text  : errors['SERVER_FAILED']
+				});
+			});
+	}
+
+
+	/**
 	 * Met à jour les informations d'un produit.
 	 *
 	 * @param $product
@@ -279,7 +319,7 @@
 
 			_products[product['sku']] = product;
 
-			if (quantity == 0) {
+			if (quantity <= 0) {
 				$product.slideUp(1000, function () {
 					$(this).remove();
 					callback();
@@ -322,9 +362,9 @@
 		var $totalShippingFee = $('#totalShippingFee');
 		var $totalPrice = $('#totalPrice');
 
-		$subTotal.text(currencyFormat(subTotal));
-		$totalShippingFee.text(currencyFormat(totalShippingFee));
-		$totalPrice.text(currencyFormat(totalPrice));
+		$subTotal.text(currencyFormat(subTotal > 0 ? subTotal : 0));
+		$totalShippingFee.text(currencyFormat(totalShippingFee > 0 ? totalShippingFee : 0));
+		$totalPrice.text(currencyFormat(totalPrice > 0 ? totalPrice : 0));
 
 		if (totalPrice > 0) {
 			$('#productsEmpty').fadeOut(function () {

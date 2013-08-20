@@ -35,16 +35,7 @@ class RecipientInfos
 			throw new Exception(ERROR_RECIPIENT_WASNT_ADDED);
 		}
 
-		return new RecipientInfo(
-			$rows[0]['orderId'],
-			$rows[0]['languageCode'],
-			$rows[0]['greeting'],
-			$rows[0]['name'],
-			$rows[0]['firstname'],
-			$rows[0]['lastname'],
-			$rows[0]['phone'],
-			$rows[0]['email']
-		);
+		return $recipient;
 	}
 
 

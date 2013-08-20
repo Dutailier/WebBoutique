@@ -3,6 +3,7 @@
 include_once(ROOT . 'libs/item.php');
 include_once(ROOT . 'libs/security.php');
 include_once(ROOT . 'libs/sessionCart.php');
+include_once(ROOT . 'libs/repositories/lines.php');
 include_once(ROOT . 'libs/repositories/orders.php');
 include_once(ROOT . 'libs/repositories/products.php');
 
@@ -40,10 +41,11 @@ class SessionTransaction
 
 		if (isSet($_SESSION[self::TRANSACTION_IDENTIFIER])) {
 			$this->Copy(unserialize($_SESSION[self::TRANSACTION_IDENTIFIER]));
-		}
 
-		$this->setUser(Security::getUserConnected());
-		$this->setStatus(TRANSACTION_STATUS_OPEN);
+		} else {
+			$this->setUser(Security::getUserConnected());
+			$this->setStatus(TRANSACTION_STATUS_OPEN);
+		}
 	}
 
 
@@ -97,8 +99,27 @@ class SessionTransaction
 
 
 	/**
+	 * Annule la transaction.
+	 */
+	public function Cancel()
+	{
+		unset($_SESSION[self::TRANSACTION_IDENTIFIER]);
+	}
+
+
+	/**
+	 * Ferme la transaction afin de pouvoir en créer une nouvelle.
+	 */
+	public function Close()
+	{
+		$this->ClearCart();
+		$this->Cancel();
+	}
+
+
+	/**
 	 * Change le status de la transaction.
-	 * (L'utilisateur ne pourra pas poursuivre ses achats.)
+	 * ( Les achats seront fixés et ne pourront plus être changés.)
 	 */
 	public function Checkout()
 	{
@@ -106,12 +127,32 @@ class SessionTransaction
 			throw new Exception(ERROR_TRANSACTION_ALREADY_CHECKOUT);
 		}
 
-		foreach ($this->cart->getItems as $item) {
+		$items = $this->getItems();
+
+		if (empty($items)) {
+			throw new Exception(ERROR_TRANSACITON_NO_PRODUCT);
+		}
+
+		$subTotal      = 0;
+		$totalShipping = 0;
+
+		foreach ($items as $item) {
+			$subTotal += $item->getTotalPrice();
+			$totalShipping += $item->getTotalShippingFee();
+		}
+
+		if (($subTotal + $totalShipping) > TOTAL_PRICE_MAX) {
+			throw new Exception(ERROR_TRANSACTION_TOTAL_PRICE_MAX);
+		}
+
+		foreach ($items as $item) {
+			$product = $item->getProduct();
+
 			$this->lines[] = new Line(
-				$item->getProductSku(),
-				$item->getQuantity(),
-				$item->getUnitPrice(),
-				$item->getGrossPrice()
+				$product->getSku(),
+				$product->getPrice(),
+				$product->getShippingFee(),
+				$item->getQuantity()
 			);
 		}
 
@@ -187,34 +228,6 @@ class SessionTransaction
 
 
 	/**
-	 * Retire un produit du panier d'achats.
-	 *
-	 * @param $sku
-	 *
-	 * @return int
-	 * @throws Exception
-	 */
-	public function RemoveProductFromCart($sku)
-	{
-		if ($this->getStatus() >= TRANSACTION_STATUS_CHECKOUT) {
-			throw new Exception(ERROR_TRANSACTION_ALREADY_CHECKOUT);
-		}
-
-		if (!isSet($this->cart)) {
-			return 0;
-		}
-
-		$product = Products::Find($sku, $this->getUser()->getId());
-		$item    = new Item($product);
-
-		$item = $this->cart->Remove($item);
-		$this->Save();
-
-		return $item;
-	}
-
-
-	/**
 	 * Définit la quantité d'un produit contenu dans le panier d'achats.
 	 *
 	 * @param $sku
@@ -236,12 +249,7 @@ class SessionTransaction
 		$product = Products::Find($sku, $this->getUser()->getId());
 		$item    = new Item($product);
 
-		if ($quantity == 0) {
-			$item = $this->cart->Remove($item);
-
-		} else {
-			$item = $this->cart->setQuantity($item, $quantity);
-		}
+		$item = $this->cart->setQuantity($item, $quantity);
 
 		$this->Save();
 
@@ -270,7 +278,7 @@ class SessionTransaction
 	 *
 	 * @return array
 	 */
-	public function getProducts()
+	public function getItems()
 	{
 		if (!isSet($this->cart)) {
 			$this->cart = new SessionCart();

@@ -28,17 +28,11 @@ class ShippingInfos
 
 		$rows = Database::ODBCExecute($query);
 
-		if (empty($row)) {
+		if (empty($rows)) {
 			throw new Exception(ERROR_SHIPPING_INFO_WASNT_ADDED);
 		}
 
-		return new ShippingInfo(
-			$rows[0]['orderId'],
-			$rows[0]['street'],
-			$rows[0]['city'],
-			$rows[0]['zipCode'],
-			$rows[0]['stateCode']
-		);
+		return $shippingInfo;
 	}
 
 

@@ -35,18 +35,19 @@ var label = {
 	'CART_DIALOG_BTN_NO'                         : 'Non',
 	'CART_DIALOG_EMPTY_TITLE'                    : 'Vider?',
 	'CART_DIALOG_EMPTY_TEXT'                     : 'Souhaitez-vous réellement vider votre panier d\'achats?',
-	'CART_DIALOG_REMOVE_PRODUCT_TEXT'               : 'Souhaitez-vous réellement retirer ce produit de votre panier d\'achats?',
-	'CART_DIALOG_REMOVE_PRODUCT_TITLE'              : 'Retirer ce produit?'
+	'CART_DIALOG_REMOVE_PRODUCT_TEXT'            : 'Souhaitez-vous réellement retirer ce produit de votre panier d\'achats?',
+	'CART_DIALOG_REMOVE_PRODUCT_TITLE'           : 'Retirer ce produit?'
 };
 
 var messages = {
-	'REQUIRED_FIRST_NAME': 'Le prénom est requis.',
-	'REQUIRED_LAST_NAME' : 'Le nom est requis.',
-	'REQUIRED_STREET'    : 'L\'adresse est requise.',
-	'REQUIRED_ZIP_CODE'  : 'Le code postal est requis.',
-	'REQUIRED_CITY'      : 'La ville est requise.',
-	'REQUIRED_PHONE'     : 'Le numéro de téléphone est requis.',
-	'REQUIRED_EMAIL'     : 'L\'adresse courriel est requis.',
-	'EMAIL_INVALID'      : 'L\'adresse courriel doit être valide.',
-	'EMAIL_DIFFERENT'    : 'Les adresses courriels doit être les mêmes.'
+	'REQUIRED_FIRST_NAME'  : 'Le prénom est requis.',
+	'REQUIRED_LAST_NAME'   : 'Le nom est requis.',
+	'REQUIRED_STREET'      : 'L\'adresse est requise.',
+	'REQUIRED_ZIP_CODE'    : 'Le code postal est requis.',
+	'REQUIRED_CITY'        : 'La ville est requise.',
+	'REQUIRED_PHONE'       : 'Le numéro de téléphone est requis.',
+	'REQUIRED_EMAIL'       : 'L\'adresse courriel est requise.',
+	'REQUIRED_CONFIRMATION': 'L\'adresse courriel de confirmation est requise.',
+	'EMAIL_INVALID'        : 'L\'adresse courriel doit être valide.',
+	'EMAIL_DIFFERENT'      : 'Les adresses courriels doit être les mêmes.'
 };

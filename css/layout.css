@@ -12,10 +12,10 @@ body {
 
 #wrapper {
 	position         : relative;
-	min-width        : 960px;
 	min-height       : 100%;
 	overflow         : auto;
 	background-color : #FBFBFB;
+	min-width        : 1060px;
 }
 
 #header-band,

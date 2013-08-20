@@ -12,3 +12,5 @@ define('DB_NAME', 'WebBoutique');
 define('DB_DSN', 'Driver={SQL SERVER}; Server=' . DB_HOST . '; Database=' . DB_NAME . ';');
 define('DB_USERNAME', 'hlapointe');
 define('DB_PASSWORD', 'hlapointe');
+
+define('TOTAL_PRICE_MAX', 5000);

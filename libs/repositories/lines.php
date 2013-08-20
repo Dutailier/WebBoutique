@@ -21,9 +21,9 @@ class Lines
 		$query = 'EXEC [addLine]';
 		$query .= '@orderId = \'' . $line->getOrderId() . '\', ';
 		$query .= '@productSku = \'' . $line->getProductSku() . '\', ';
-		$query .= '@quantity = \'' . $line->getQuantity() . '\', ';
 		$query .= '@unitPrice = \'' . $line->getUnitPrice() . '\', ';
-		$query .= '@grossPrice = \'' . $line->getGrossPrice() . '\'';
+		$query .= '@unitShippingFee = \'' . $line->getUnitShippingFee() . '\', ';
+		$query .= '@quantity = \'' . $line->getQuantity() . '\'';
 
 		$rows = Database::ODBCExecute($query);
 
@@ -58,9 +58,9 @@ class Lines
 
 		$line = new Line(
 			$rows[0]['productSku'],
-			$rows[0]['quantity'],
 			$rows[0]['unitPrice'],
-			$rows[0]['grossPrice']
+			$rows[0]['unitShippingFee'],
+			$rows[0]['quantity']
 		);
 
 		$line->setId($rows[0]['id']);
@@ -88,9 +88,9 @@ class Lines
 		foreach ($rows as $row) {
 			$line = new Line(
 				$row['productSku'],
-				$row['quantity'],
 				$row['unitPrice'],
-				$row['grossPrice']
+				$row['unitShippingFee'],
+				$row['quantity']
 			);
 
 			$line->setId($row['id']);

@@ -1,6 +1,6 @@
 <?php
 
-include_once(ROOT . 'libs/repositories/order.php');
+include_once(ROOT . 'libs/repositories/orders.php');
 include_once(ROOT . 'libs/repositories/products.php');
 
 /**
@@ -14,23 +14,23 @@ class Line
 	private $productSku;
 	private $quantity;
 	private $unitPrice;
-	private $grossPrice;
+	private $unitShippingFee;
 
 
 	/**
 	 * Initialise la ligne de commande.
 	 *
 	 * @param $productSku
-	 * @param $quantity
 	 * @param $unitPrice
-	 * @param $grossPrice
+	 * @param $unitShippingFee
+	 * @param $quantity
 	 */
-	public function __construct($productSku, $quantity, $unitPrice, $grossPrice)
+	public function __construct($productSku, $unitPrice, $unitShippingFee, $quantity)
 	{
 		$this->setProductSku($productSku);
-		$this->setQuantity($quantity);
 		$this->setUnitPrice($unitPrice);
-		$this->setGrossPrice($grossPrice);
+		$this->setUnitShippingFee($unitShippingFee);
+		$this->setQuantity($quantity);
 	}
 
 
@@ -42,12 +42,12 @@ class Line
 	public function getInfoArray()
 	{
 		return array(
-			'id'         => $this->getId(),
-			'orderId'    => $this->getOrderId(),
-			'productSku' => $this->getProductSku(),
-			'quantity'   => $this->getQuantity(),
-			'unitPrice'  => $this->getUnitPrice(),
-			'grossPrice' => $this->getGrossPrice()
+			'id'              => $this->getId(),
+			'orderId'         => $this->getOrderId(),
+			'productSku'      => $this->getProductSku(),
+			'quantity'        => $this->getQuantity(),
+			'unitPrice'       => $this->getUnitPrice(),
+			'unitShippingFee' => $this->getUnitShippingFee()
 		);
 	}
 
@@ -163,24 +163,24 @@ class Line
 
 
 	/**
-	 * Définit le prix d'ensemble du produit de la ligne de commande.
+	 * Définit la valeur de la propriété nommée unitShippingFee.
 	 *
-	 * @param mixed $grossPrice
+	 * @param mixed $unitShippingFee
 	 */
-	private function setGrossPrice($grossPrice)
+	public function setUnitShippingFee($unitShippingFee)
 	{
-		$this->grossPrice = $grossPrice;
+		$this->unitShippingFee = $unitShippingFee;
 	}
 
 
 	/**
-	 * Retourne le prix d'ensemble du produit de la ligne de commande.
+	 * Retourne la valeur de la propriété nommée unitShippingFee.
 	 *
 	 * @return mixed
 	 */
-	public function getGrossPrice()
+	public function getUnitShippingFee()
 	{
-		return $this->grossPrice;
+		return $this->unitShippingFee;
 	}
 
 

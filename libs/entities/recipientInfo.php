@@ -6,6 +6,9 @@
  */
 class RecipientInfo
 {
+	const REGEX_EMAIL = '/[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}/i';
+	const REGEX_PHONE = '/^1?[-.\s]?\(?([0-9]{3})\)?[-.\s]?([0-9]{3})[-.\s]?([0-9]{4})$/';
+
 	private $orderId;
 	private $languageCode;
 	private $greeting;
@@ -29,7 +32,7 @@ class RecipientInfo
 	 */
 	function __construct($languageCode, $greeting, $name, $firstname, $lastname, $phone, $email)
 	{
-		$this->setLanguageCode($lastname);
+		$this->setLanguageCode($languageCode);
 		$this->setGreeting($greeting);
 		$this->setName($name);
 		$this->setFirstname($firstname);
@@ -194,12 +197,21 @@ class RecipientInfo
 
 
 	/**
-	 * Définit le numéro de téléphone du destinateur.
+	 * Définit le numéro de téléphone du destinataire.
 	 *
-	 * @param mixed $phone
+	 * @param $phone
+	 *
+	 * @throws Exception
 	 */
 	public function setPhone($phone)
 	{
+		if (!preg_match(self::REGEX_PHONE, $phone)) {
+			throw new Exception(ERROR_RECIPIENT_PHONE_INVALID);
+		}
+
+		$phone = preg_replace('/\D/', '', $phone);
+		$phone = strlen($phone) == 10 ? 1 + $phone : $phone;
+
 		$this->phone = $phone;
 	}
 
@@ -216,12 +228,18 @@ class RecipientInfo
 
 
 	/**
-	 * Définit l'adresse courriel du destinateur.
+	 * Définit l'adresse courriel du destinataire.
 	 *
-	 * @param mixed $email
+	 * @param $email
+	 *
+	 * @throws Exception
 	 */
 	public function setEmail($email)
 	{
+		if (!preg_match(self::REGEX_EMAIL, $email)) {
+			throw new Exception(ERROR_RECIPIENT_EMAIL_INVALID);
+		}
+
 		$this->email = $email;
 	}
 

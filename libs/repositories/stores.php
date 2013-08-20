@@ -43,6 +43,9 @@ class Stores
 			$rows[0]['emailAgent']
 		);
 		$store->setId($rows[0]['id']);
+		$store->setMaxAmountByOrder($rows[0]['maxAmountByOrder']);
+		$store->setMaxAmountByDay($rows[0]['maxAmountByDay']);
+		$store->setMaxAmountByMonth($rows[0]['maxAmountByMonth']);
 
 		return $store;
 	}
@@ -71,6 +74,9 @@ class Stores
 				$row['emailAgent']
 			);
 			$store->setId($row['id']);
+			$store->setMaxAmountByOrder($row['maxAmountByOrder']);
+			$store->setMaxAmountByDay($row['maxAmountByDay']);
+			$store->setMaxAmountByMonth($row['maxAmountByMonth']);
 
 			$stores[] = $store;
 		}

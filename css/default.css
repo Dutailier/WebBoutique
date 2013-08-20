@@ -2,7 +2,7 @@
 	font-family : "Arial", sans-serif;
 }
 
-body * {
+div, select, textarea, input, p {
 	overflow : hidden; /* Clearfix */
 }
 

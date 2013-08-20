@@ -40,13 +40,14 @@ var label = {
 };
 
 var messages = {
-	'REQUIRED_FIRST_NAME': 'The firstname is required.',
-	'REQUIRED_LAST_NAME' : 'The lastname is required.',
-	'REQUIRED_STREET'    : 'The address is required.',
-	'REQUIRED_ZIP_CODE'  : 'The zip code is required.',
-	'REQUIRED_CITY'      : 'The city is required.',
-	'REQUIRED_PHONE'     : 'The phone number is required.',
-	'REQUIRED_EMAIL'     : 'The email is required.',
-	'EMAIL_INVALID'      : 'The email must be valid.',
-	'EMAIL_DIFFERENT'    : 'The emails msut be the same.'
+	'REQUIRED_FIRST_NAME'  : 'The firstname is required.',
+	'REQUIRED_LAST_NAME'   : 'The lastname is required.',
+	'REQUIRED_STREET'      : 'The address is required.',
+	'REQUIRED_ZIP_CODE'    : 'The zip code is required.',
+	'REQUIRED_CITY'        : 'The city is required.',
+	'REQUIRED_PHONE'       : 'The phone number is required.',
+	'REQUIRED_EMAIL'       : 'The email is required.',
+	'REQUIRED_CONFIRMATION': 'The email confirmation is required.',
+	'EMAIL_INVALID'        : 'The email must be valid.',
+	'EMAIL_DIFFERENT'      : 'The emails msut be the same.'
 };

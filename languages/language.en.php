@@ -111,6 +111,9 @@ define('ERROR_TRANSACTION_ALREADY_CHECKOUT', 'You have already checkout.');
 define('ERROR_TRANSACTION_ALREADY_COMPLETE', 'You have already complete the recipient and shipping information.');
 define('ERROR_TRANSACTION_STATUS_INVALID', 'The status is invalid.');
 define('ERROR_TRANSACTION_ALREADY_OPEN', 'The transaction is already open.');
+define('ERROR_TRANSACTION_TOTAL_PRICE_MAX', 'The total price of the transaction is higher to ' . TOTAL_PRICE_MAX . '.');
+define('ERROR_TRANSACITON_NO_PRODUCT', 'The order must be at least one product.');
+
 
 // Erreurs d'entités
 define('ERROR_USER_DOESNT_EXIST', 'The user doesn\'t exist.');
@@ -148,6 +151,8 @@ define('ERROR_STORE_EMAIL_AGENT_INVALID', 'The email\'s agent must be standard. 
 define('ERROR_ROLE_INVALID', 'The role isn\'t valid.');
 define('ERROR_LINE_WASNT_ADDED', 'The line wasn\'t added.');
 define('ERROR_LINE_DOESNT_EXIST', 'The line doesn\'t exist.');
+define('ERROR_RECIPIENT_PHONE_INVALID', 'The phone number must be stardard. (i.e. 1-234-567-9012)');
+define('ERROR_RECIPIENT_EMAIL_INVALID', 'The email must be valid. (i.e. info@dutalier.com)');
 
 // Erreurs de base de donnéées
 define('ERROR_DB_EXECUTION_FAILED', 'The execution of the query failed.');

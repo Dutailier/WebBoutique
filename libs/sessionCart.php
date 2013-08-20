@@ -69,7 +69,8 @@ final class SessionCart implements ICart
 		$index = $this->getIndexOfItem($item);
 
 		if ($index == NOT_FOUND) {
-			$this->items[] = $item->setQuantity($quantity);
+			$item->setQuantity($quantity);
+			$this->items[] = $item;
 
 		} else {
 			$item = $this->items[$index];
@@ -99,12 +100,14 @@ final class SessionCart implements ICart
 			throw new Exception(ERROR_ITEM_DOESNT_EXIST);
 
 		} else {
-			$item = $this->items[$index];
+			$item     = $this->items[$index];
 
-			if (($quantity = $item->getQuantity() - $quantity) > 0) {
-				$item = $item->setQuantity($quantity);
+			$quantity = $item->getQuantity() - $quantity > 0 ?
+				$item->getQuantity() - $quantity : 0;
 
-			} else {
+			$item->setQuantity($quantity);
+
+			if ($quantity == 0) {
 				unset($this->items[$index]);
 			}
 		}

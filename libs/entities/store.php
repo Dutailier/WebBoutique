@@ -7,7 +7,7 @@
 class Store extends User
 {
 	const REGEX_EMAIL = '/[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}/i';
-	const REGEX_PHONE = '/^[1]?[.-]?[0-9]{3}[.-]?[0-9]{3}[.-]?[0-9]{4}$/';
+	const REGEX_PHONE = '/^1?[-.\s]?\(?([0-9]{3})\)?[-.\s]?([0-9]{3})[-.\s]?([0-9]{4})$/';
 
 	private $ref;
 	private $name;
@@ -15,6 +15,9 @@ class Store extends User
 	private $email;
 	private $emailRep;
 	private $emailAgent;
+	private $maxAmountByOrder;
+	private $maxAmountByDay;
+	private $maxAmoutByMonth;
 
 
 	/**
@@ -225,4 +228,68 @@ class Store extends User
 	}
 
 
+	/**
+	 * Définit la valeur de la propriété nommée maxAmountByOrder.
+	 *
+	 * @param mixed $maxAmountByOrder
+	 */
+	public function setMaxAmountByOrder($maxAmountByOrder)
+	{
+		$this->maxAmountByOrder = $maxAmountByOrder;
+	}
+
+
+	/**
+	 * Retourne la valeur de la propriété nommée maxAmountByOrder.
+	 *
+	 * @return mixed
+	 */
+	public function getMaxAmountByOrder()
+	{
+		return $this->maxAmountByOrder;
+	}
+
+
+	/**
+	 * Définit la valeur de la propriété nommée maxAmountByDay.
+	 *
+	 * @param mixed $maxAmountByDay
+	 */
+	public function setMaxAmountByDay($maxAmountByDay)
+	{
+		$this->maxAmountByDay = $maxAmountByDay;
+	}
+
+
+	/**
+	 * Retourne la valeur de la propriété nommée maxAmountByDay.
+	 *
+	 * @return mixed
+	 */
+	public function getMaxAmountByDay()
+	{
+		return $this->maxAmountByDay;
+	}
+
+
+	/**
+	 * Définit la valeur de la propriété nommée maxAmoutByMonth.
+	 *
+	 * @param mixed $maxAmoutByMonth
+	 */
+	public function setMaxAmountByMonth($maxAmoutByMonth)
+	{
+		$this->maxAmoutByMonth = $maxAmoutByMonth;
+	}
+
+
+	/**
+	 * Retourne la valeur de la propriété nommée maxAmoutByMonth.
+	 *
+	 * @return mixed
+	 */
+	public function getMaxAmoutByMonth()
+	{
+		return $this->maxAmoutByMonth;
+	}
 }

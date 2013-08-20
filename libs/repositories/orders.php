@@ -20,11 +20,11 @@ class Orders
 	public static function Attach(Order $order)
 	{
 		$query = 'EXEC [addOrder]';
-		$query .= '@userId = \'' . $order->getUserId() . '\', ';
+		$query .= '@userId = \'' . $order->getUserId() . '\'';
 
 		$rows = Database::ODBCExecute($query);
 
-		if (empty($row)) {
+		if (empty($rows)) {
 			throw new Exception(ERROR_ORDER_WASNT_ADDED);
 		}
 

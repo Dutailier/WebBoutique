@@ -15,12 +15,7 @@ if (!Security::isAuthenticated()) {
 	try {
 		$transaction = new SessionTransaction();
 
-		$products = $transaction->getItems();
-
-		$data['products'] = array();
-		foreach ($products as $product) {
-			$data['products'][] = $product->getInfoArray();
-		}
+		$transaction->Cancel();
 
 		$data['success'] = true;
 

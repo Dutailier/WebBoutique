@@ -61,6 +61,7 @@ interface ICart
 
 	/**
 	 * Retourne vrai si le panier d'achats est vide.
+	 *
 	 * @return mixed
 	 */
 	public function isEmpty();
@@ -68,6 +69,7 @@ interface ICart
 
 	/**
 	 * Retourne les items contenus dans le panier d'achats.
+	 *
 	 * @return mixed
 	 */
 	public function getItems();
@@ -75,6 +77,7 @@ interface ICart
 
 	/**
 	 * Vide le panier d'achats.
+	 *
 	 * @return mixed
 	 */
 	public function Clear();

@@ -12,43 +12,66 @@ if (!Security::isAuthenticated()) {
 	$data['message'] = ERROR_AUTHENTIFICATION_REQUIRED;
 
 } else {
-	// Nom de facturation
+	// Nom d'expédition
 	if (empty($_POST['greeting'])) {
 		$data['success'] = false;
 		$data['message'] = ERROR_REQUIRED_GREETING;
+
 	} else if (empty($_POST['firstname'])) {
 		$data['success'] = false;
 		$data['message'] = ERROR_REQUIRED_FIRSTNAME;
+
 	} else if (empty($_POST['lastname'])) {
 		$data['success'] = false;
 		$data['message'] = ERROR_REQUIRED_LASTNAME;
 
-		// Adresse de facturation
+		// Adresse d'expédition
 	} else if (empty($_POST['street'])) {
 		$data['success'] = false;
 		$data['message'] = ERROR_REQUIRED_STREET;
+
 	} else if (empty($_POST['zipCode'])) {
 		$data['success'] = false;
 		$data['message'] = ERROR_REQUIRED_ZIP_CODE;
+
 	} else if (empty($_POST['city'])) {
 		$data['success'] = false;
 		$data['message'] = ERROR_REQUIRED_CITY;
+
 	} else if (empty($_POST['stateCode'])) {
 		$data['success'] = false;
 		$data['message'] = ERROR_REQUIRED_STATE_CODE;
-	} else if (empty($_POST['countryCode'])) {
-		$data['success'] = false;
-		$data['message'] = ERROR_REQUIRED_COUNTRY_CODE;
 
-		// Autres informations
+		// Autres informations d'expéidition
 	} else if (empty($_POST['email'])) {
 		$data['success'] = false;
 		$data['message'] = ERROR_REQUIRED_EMAIL;
+
 	} else if (empty($_POST['phone'])) {
 		$data['success'] = false;
 		$data['message'] = ERROR_REQUIRED_PHONE;
+
 	} else {
 		try {
+			$transaction = new SessionTransaction();
+
+			$transaction->setCustomerInfo(
+				Localisation::getCurrentLanguage(),
+				$_POST['greeting'],
+				$_POST['firstname'],
+				$_POST['lastname'],
+				$_POST['phone'],
+				$_POST['email']
+			);
+
+			$transaction->setShippingInfo(
+				$_POST['street'],
+				$_POST['city'],
+				$_POST['zipCode'],
+				$_POST['stateCode']
+			);
+
+			$transaction->ReadyToPay();
 
 			$data['success'] = true;
 
