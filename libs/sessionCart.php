@@ -25,10 +25,11 @@ final class SessionCart implements ICart
 			session_start();
 		}
 
-		$this->items = array();
-
 		if (isSet($_SESSION[self::CART_IDENTIFIER])) {
 			$this->Copy(unserialize($_SESSION[self::CART_IDENTIFIER]));
+
+		} else {
+			$this->items = array();
 		}
 	}
 
@@ -36,9 +37,9 @@ final class SessionCart implements ICart
 	/**
 	 * Copie le contenu d'un autre panier d'achats.
 	 *
-	 * @param ICart $cart
+	 * @param ICart $cart Le panier d'achats à copier.
 	 *
-	 * @return mixed|void
+	 * @return void
 	 */
 	public function Copy(ICart $cart)
 	{
@@ -58,21 +59,24 @@ final class SessionCart implements ICart
 	/**
 	 * Ajoute un item au panier d'achats.
 	 *
-	 * @param IItem $item
+	 * @param IItem $item     L'item à ajouté au panier d'achats.
+	 * @param int   $quantity Quantité à ajoutée (défaut = 1).
 	 *
-	 * @return mixed
+	 * @return IItem L'item ayant été ajouté.
 	 */
-	public function Add(IItem $item)
+	public function Add(IItem $item, $quantity = 1)
 	{
 		$index = $this->getIndexOfItem($item);
 
 		if ($index == NOT_FOUND) {
-			$this->items[] = $item;
+			$this->items[] = $item->setQuantity($quantity);
 
 		} else {
 			$item = $this->items[$index];
-			$item = $item->setQuantity($item->getQuantity() + 1);
+			$item = $item->setQuantity($item->getQuantity() + $quantity);
 		}
+
+		$this->Save();
 
 		return $item;
 	}
@@ -80,29 +84,32 @@ final class SessionCart implements ICart
 
 	/**
 	 * Retire un item du panier d'achats.
-	 * Retourne la quantité de l'item contenue dans le panier d'achats.
 	 *
-	 * @param IItem $item
+	 * @param IItem $item     L'item à retirer du panier d'achats.
+	 * @param int   $quantity Quantité à retirée.
 	 *
-	 * @return mixed
-	 * @throws Exception
+	 * @throws Exception Une exception sera levé si l'item n'est pas contenu dans le panier d'achats.
+	 * @return IItem L'item ayant été ajouté au panier d'achats.
 	 */
-	public function Remove(IItem $item)
+	public function Remove(IItem $item, $quantity = 1)
 	{
-		$quantity = $item->setQuantity($item->getQuantity() - 1);
-		$index    = $this->getIndexOfItem($item);
+		$index = $this->getIndexOfItem($item);
 
 		if ($index == NOT_FOUND) {
 			throw new Exception(ERROR_ITEM_DOESNT_EXIST);
 
 		} else {
-			if ($quantity != 0) {
-				$this->items[$index] = $item;
+			$item = $this->items[$index];
+
+			if (($quantity = $item->getQuantity() - $quantity) > 0) {
+				$item = $item->setQuantity($quantity);
 
 			} else {
 				unset($this->items[$index]);
 			}
 		}
+
+		$this->Save();
 
 		return $item;
 	}
@@ -111,31 +118,34 @@ final class SessionCart implements ICart
 	/**
 	 * Retourne la quantité de l'item contenue dans le panier d'achats.
 	 *
-	 * @param IItem $item
+	 * @param IItem $item L'item.
 	 *
-	 * @return int
+	 * @return int La quantité de l'item.
 	 */
 	public function getQuantity(IItem $item)
 	{
 		$index = $this->getIndexOfItem($item);
 
 		if ($index == NOT_FOUND) {
-			return 0;
+			return 0; // N'est pas contenu dans le panier d'achats.
 
 		} else {
-			return $this->items[$index]->getQuantity();
+			$item = $this->items[$index];
+
+			return $item->getQuantity();
 		}
 	}
 
 
 	/**
 	 * Définit la quantité contenue dans le panier d'achats de l'item.
-	 * Peut être appelé pour ajouter un item d'une quantité supérieure à un.
 	 *
-	 * @param IItem $item
-	 * @param       $quantity
+	 * @remark Peut être appelée pour ajouter un item d'une quantité supérieure à un.
 	 *
-	 * @return mixed
+	 * @param IItem $item     L'item à modifié.
+	 * @param int   $quantity Quantité à inscrire.
+	 *
+	 * @return IItem L'item ayant été modifié.
 	 */
 	public function setQuantity(IItem $item, $quantity)
 	{
@@ -143,15 +153,15 @@ final class SessionCart implements ICart
 
 		$index = $this->getIndexOfItem($item);
 
-		// Si l'item n'est pas trouvé et qui quantité positive est inscrite,
-		// on ajoute l'item au panier.
-		if ($index == NOT_FOUND && $quantity != 0) {
-			$this->items[] = $item;
+		if ($index == NOT_FOUND) {
 
-			// Si l'item est trouvé, modifie sa quantité ou le supprime si
-			// celle-ci est nulle.
-		} else if ($index != NOT_FOUND) {
-			if ($quantity != 0) {
+			if ($quantity > 0) {
+				$this->items[] = $item;
+			}
+
+		} else {
+
+			if ($quantity > 0) {
 				$this->items[$index] = $item;
 
 			} else {
@@ -177,8 +187,7 @@ final class SessionCart implements ICart
 
 
 	/**
-	 * Retourne un tableau fixe de tous les items.
-	 * dans le panier d'achats.
+	 * Retourne un tableau fixe de tous les items contenus dans le panier d'achats.
 	 *
 	 * @return array
 	 */
@@ -201,14 +210,14 @@ final class SessionCart implements ICart
 	/**
 	 * Retourne l'index de l'item trouvé sinon retourne NOT_FOUND.
 	 *
-	 * @param IItem $item
+	 * @param IItem $item1
 	 *
 	 * @return int
 	 */
-	private function getIndexOfItem(IItem $item)
+	private function getIndexOfItem(IItem $item1)
 	{
-		foreach ($this->items as $index => $value) {
-			if ($item->Equals($value)) {
+		foreach ($this->items as $index => $item2) {
+			if ($item1->Equals($item2)) {
 				return (int)$index;
 			}
 		}
