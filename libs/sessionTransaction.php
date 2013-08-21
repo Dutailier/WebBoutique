@@ -65,7 +65,7 @@ class SessionTransaction
 		);
 
 		foreach ($this->getLines() as $line) {
-			$info['lines'][] = $line->getInfoArray();
+			$infos['lines'][] = $line->getInfoArray();
 		}
 
 		return $infos;
@@ -174,11 +174,11 @@ class SessionTransaction
 			throw new Exception(ERROR_TRANSACTION_ALREADY_COMPLETE);
 		}
 
-		// Définit la commande
-		$this->setOrder($this->user->getId());
-
-		// Ajoute la commande à la base de données.
-		$this->order = Orders::Attach($this->order);
+		// Crée et ajoute la commande à la base de données.
+		$this->order = Orders::Attach(new Order(
+				$this->user->getId()
+			)
+		);
 
 		// Ajoute les informations du destinateur à la base de données.
 		$this->recipientInfo->setOrderId($this->order->getId());
@@ -345,27 +345,6 @@ class SessionTransaction
 	public function getUser()
 	{
 		return $this->user;
-	}
-
-
-	/**
-	 * Définit la commande.
-	 *
-	 * @param $userId
-	 *
-	 * @throws Exception
-	 */
-	private function setOrder($userId)
-	{
-		if ($this->getStatus() >= TRANSACTION_STATUS_READY_TO_PAY) {
-			throw new Exception(ERROR_TRANSACTION_ALREADY_COMPLETE);
-		}
-
-		$this->order = new Order (
-			$userId
-		);
-
-		$this->Save();
 	}
 
 

@@ -53,7 +53,7 @@ class Order
 			'id'       => $this->getId(),
 			'ref'      => $this->getRef(),
 			'number'   => $this->getNumber(),
-			'userId'   => $this->getNumber(),
+			'userId'   => $this->getUserId(),
 			'status'   => $this->getStatus(),
 			'datetime' => $this->getDatetime()
 		);

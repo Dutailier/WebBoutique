@@ -1,4 +1,17 @@
 /**
+ * Retourne le nom dans le bon format.
+ *
+ * @param greeting
+ * @param firstname
+ * @param lastname
+ * @returns {string}
+ */
+function nameFormat(greeting, firstname, lastname) {
+	return greeting + ' ' + firstname + ' ' + lastname;
+}
+
+
+/**
  * Concatonne les détails de l'adresse en une seule chaîne de caractères.
  * @param address
  * @returns {string}
@@ -19,6 +32,9 @@ function addressFormat(address) {
  * @returns {string}
  */
 function phoneFormat(phone) {
+	phone = phone.toString();
+	phone = (phone.length == 10 ? '1' : '') + phone;
+
 	return phone.substring(0, 1) + '-' +
 		   phone.substring(1, 4) + '-' +
 		   phone.substring(4, 7) + '-' +
