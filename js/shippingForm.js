@@ -351,44 +351,6 @@
 
 
 	/**
-	 * Annule la transaction courante.
-	 *
-	 * @param callback
-	 */
-	function cancelTransaction(callback) {
-		$.post('ajax/cancelTransaction.php')
-			.done(function (data) {
-
-				if (data.hasOwnProperty('success') && data['success']) {
-
-					callback();
-
-				} else if (data.hasOwnProperty('message')) {
-					noty({
-						layout: 'topRight',
-						type  : 'error',
-						text  : data['message']
-					});
-
-				} else {
-					noty({
-						layout: 'topRight',
-						type  : 'error',
-						text  : errors['SERVER_UNREADABLE']
-					});
-				}
-			})
-			.fail(function () {
-				noty({
-					layout: 'topRight',
-					type  : 'error',
-					text  : errors['SERVER_FAILED']
-				});
-			});
-	}
-
-
-	/**
 	 * Efface les champs du formulaire.
 	 */
 	function clearFields() {

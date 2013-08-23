@@ -70,6 +70,8 @@ define('VALIDATION_LBL_SHIP_TO_NAME', 'Name :');
 define('VALIDATION_LBL_SHIP_TO_ADDRESS', 'Address :');
 define('VALIDATION_LBL_SHIP_TO_PHONE', 'Phone :');
 define('VALIDATION_LBL_SHIP_TO_EMAIL', 'Email :');
+define('VALIDATION_BTN_CANCEL', 'Annuler');
+define('VALIDATION_BTN_CONFIRM', 'Confirmer');
 
 // Page du gestionnaire pour commerçant
 define('STORE_MANAGER_TITLE', 'Store Manager');

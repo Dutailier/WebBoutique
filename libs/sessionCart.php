@@ -1,5 +1,8 @@
 <?php
 
+include_once(DIR . 'libs/interfaces/icart.php');
+include_once(DIR . 'libs/interfaces/iitem.php');
+
 define('NOT_FOUND', -1);
 
 /**
@@ -18,8 +21,6 @@ final class SessionCart implements ICart
 	 */
 	function __autoload()
 	{
-		include_once(DIR . 'libs/interfaces/icart.php');
-		include_once(DIR . 'libs/interfaces/iitem.php');
 	}
 
 

@@ -60,9 +60,33 @@ $title = VALIDATION_TITLE;
 	<div id="linesList">
 	</div>
 
-	<div id="buttons">
+	<div id="summary">
+		<p>
+			<label id="subTotal"></label>
+			<label class="field"><?php echo CART_LBL_SUB_PRICE; ?></label>
+		</p>
+
+		<p>
+			<label id="totalShippingFee"></label>
+			<label class="field"><?php echo CART_LBL_TOTAL_SHIPPING_FEE; ?></label>
+		</p>
+
+		<p>
+			<label id="totalPrice"></label>
+			<label class="field"><?php echo CART_LBL_TOTAL_PRICE; ?></label>
+		</p>
+
+		<p>
+			<input id="btnConfirm" type="button" value="<?php echo VALIDATION_BTN_CONFIRM; ?>" />
+			<a id="btnCancel" class="button"><?php echo VALIDATION_BTN_CANCEL; ?></a>
+		</p>
+
+		<div id="warnings">
+			<label><?php echo LBL_WARNING; ?></label>
+		</div>
 	</div>
 
+	<script src="js/transaction.js"></script>
 	<script src="js/validation.js"></script>
 
 <?php $content = ob_get_contents(); ?>

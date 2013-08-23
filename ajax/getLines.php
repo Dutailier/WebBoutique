@@ -3,7 +3,7 @@
 include_once('../config.php');
 include_once(DIR . 'libs/security.php');
 include_once(DIR . 'libs/localisation.php');
-include_once(DIR . 'libs/repositories/stores.php');
+include_once(DIR . 'libs/sessionTransaction.php');
 
 include_once(Localisation::getLanguageFile());
 
@@ -13,11 +13,26 @@ if (!Security::isAuthenticated()) {
 
 } else {
 	try {
-		$user    = Security::getUserConnected();
-		$address = $user->getAddress();
+		$transaction = new SessionTransaction();
 
-		$data['user']    = $user->getInfoArray();
-		$data['address'] = $address->getInfoArray();
+		$lines = $transaction->getLines();
+
+		$data['lines'] = array();
+		foreach ($lines as $line) {
+			$product = $line->getProduct();
+			$model   = $product->getModel();
+
+			$data['lines'][] = array_merge(
+				$line->getInfoArray(),
+				array(
+					'product' => array_merge(
+						$product->getInfoArray(),
+						array(
+							'model' => $model->getInfoArray()
+						))
+				));
+		}
+
 		$data['success'] = true;
 
 	} catch (Exception $e) {

@@ -158,6 +158,9 @@ class Address
 	 */
 	public function setZipCode($zipCode)
 	{
+		include_once(DIR . 'libs/entities/country.php');
+		include_once(DIR . 'libs/repositories/states.php');
+
 		switch (States::find($this->getStateCode())->getCountryCode()) {
 			case CANADA_CODE :
 				if (!preg_match(self::REGEX_ZIP_CODE_CA, $zipCode)) {

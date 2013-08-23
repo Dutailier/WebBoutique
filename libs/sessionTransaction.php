@@ -1,5 +1,14 @@
 <?php
 
+include_once(DIR . 'libs/item.php');
+include_once(DIR . 'libs/security.php');
+include_once(DIR . 'libs/sessionCart.php');
+include_once(DIR . 'libs/repositories/lines.php');
+include_once(DIR . 'libs/repositories/orders.php');
+include_once(DIR . 'libs/repositories/products.php');
+include_once(DIR . 'libs/repositories/recipientInfos.php');
+include_once(DIR . 'libs/repositories/shippingInfos.php');
+
 define('TRANSACTION_STATUS_OPEN', 0); // L'utilisateur peut configurer différents produits.
 define('TRANSACTION_STATUS_CHECKOUT', 1); // L'utilisateur à complété ses achats.
 define('TRANSACTION_STATUS_READY_TO_PAY', 2); // L'utilisateur a terminé de magasiner et est prêt à payer.
@@ -21,6 +30,8 @@ class SessionTransaction
 	private $lines;
 	private $recipientInfo;
 	private $shippingInfo;
+	private $subTotal;
+	private $totalShippingFee;
 
 
 	/**
@@ -28,12 +39,6 @@ class SessionTransaction
 	 */
 	function __autoload()
 	{
-		include_once(DIR . 'libs/item.php');
-		include_once(DIR . 'libs/security.php');
-		include_once(DIR . 'libs/sessionCart.php');
-		include_once(DIR . 'libs/repositories/lines.php');
-		include_once(DIR . 'libs/repositories/orders.php');
-		include_once(DIR . 'libs/repositories/products.php');
 	}
 
 
@@ -53,6 +58,8 @@ class SessionTransaction
 			$this->setUser(Security::getUserConnected());
 			$this->setStatus(TRANSACTION_STATUS_OPEN);
 		}
+
+		$this->cart = new SessionCart();
 	}
 
 
@@ -66,13 +73,29 @@ class SessionTransaction
 		$infos = array(
 			'status'        => $this->getStatus(),
 			'user'          => $this->getUser()->getInfoArray(),
+			'address'       => $this->getUser()->getAddress()->getInfoArray(),
 			'order'         => $this->getOrder()->getInfoArray(),
 			'recipientInfo' => $this->getRecipientInfo()->getInfoArray(),
-			'shippingInfo'  => $this->getShippingInfo()->getInfoArray()
+			'shippingInfo'  => $this->getShippingInfo()->getInfoArray(),
+			'summary'       => array(
+				'subTotal'         => $this->getSubTotal(),
+				'totalShippingFee' => $this->getTotalShippingFee()
+			)
 		);
 
 		foreach ($this->getLines() as $line) {
-			$infos['lines'][] = $line->getInfoArray();
+			$product = $line->getProduct();
+			$model   = $product->getModel();
+
+			$infos['lines'][] = array_merge(
+				$line->getInfoArray(),
+				array(
+					'product' => array_merge(
+						$product->getInfoArray(),
+						array(
+							'model' => $model->getInfoArray()
+						))
+				));
 		}
 
 		return $infos;
@@ -86,13 +109,15 @@ class SessionTransaction
 	 */
 	public function Copy(SessionTransaction $transaction)
 	{
-		$this->status        = $transaction->status;
-		$this->user          = $transaction->user;
-		$this->cart          = $transaction->cart;
-		$this->order         = $transaction->order;
-		$this->lines         = $transaction->lines;
-		$this->recipientInfo = $transaction->recipientInfo;
-		$this->shippingInfo  = $transaction->shippingInfo;
+		$this->status           = $transaction->status;
+		$this->user             = $transaction->user;
+		$this->cart             = $transaction->cart;
+		$this->order            = $transaction->order;
+		$this->lines            = $transaction->lines;
+		$this->recipientInfo    = $transaction->recipientInfo;
+		$this->shippingInfo     = $transaction->shippingInfo;
+		$this->subTotal         = $transaction->getSubTotal();
+		$this->totalShippingFee = $transaction->getTotalShippingFee();
 	}
 
 
@@ -140,15 +165,15 @@ class SessionTransaction
 			throw new Exception(ERROR_TRANSACITON_NO_PRODUCT);
 		}
 
-		$subTotal      = 0;
-		$totalShipping = 0;
+		$this->subTotal         = 0;
+		$this->totalShippingFee = 0;
 
 		foreach ($items as $item) {
-			$subTotal += $item->getTotalPrice();
-			$totalShipping += $item->getTotalShippingFee();
+			$this->subTotal += $item->getTotalPrice();
+			$this->totalShippingFee += $item->getTotalShippingFee();
 		}
 
-		if (($subTotal + $totalShipping) > TOTAL_PRICE_MAX) {
+		if (($this->subTotal + $this->totalShippingFee) > TOTAL_PRICE_MAX) {
 			throw new Exception(ERROR_TRANSACTION_TOTAL_PRICE_MAX);
 		}
 
@@ -220,10 +245,6 @@ class SessionTransaction
 			throw new Exception(ERROR_TRANSACTION_ALREADY_CHECKOUT);
 		}
 
-		if (!isSet($this->cart)) {
-			$this->cart = new SessionCart();
-		}
-
 		$product = Products::Find($sku, $this->getUser()->getId());
 		$item    = new Item($product);
 
@@ -247,10 +268,6 @@ class SessionTransaction
 	{
 		if ($this->getStatus() >= TRANSACTION_STATUS_CHECKOUT) {
 			throw new Exception(ERROR_TRANSACTION_ALREADY_CHECKOUT);
-		}
-
-		if (!isSet($this->cart)) {
-			$this->cart = new SessionCart();
 		}
 
 		$product = Products::Find($sku, $this->getUser()->getId());
@@ -284,11 +301,12 @@ class SessionTransaction
 	 * Retourne la liste des produits contenu dans le panier d'achats.
 	 *
 	 * @return array
+	 * @throws Exception
 	 */
 	public function getItems()
 	{
-		if (!isSet($this->cart)) {
-			$this->cart = new SessionCart();
+		if ($this->getStatus() >= TRANSACTION_STATUS_CHECKOUT) {
+			throw new Exception(ERROR_TRANSACTION_ALREADY_CHECKOUT);
 		}
 
 		return $this->cart->getItems();
@@ -485,5 +503,27 @@ class SessionTransaction
 	public function getShippingInfo()
 	{
 		return $this->shippingInfo;
+	}
+
+
+	/**
+	 * Retourne la valeur de la propriété nommée subTotal.
+	 *
+	 * @return mixed
+	 */
+	public function getSubTotal()
+	{
+		return $this->subTotal;
+	}
+
+
+	/**
+	 * Retourne la valeur de la propriété nommée totalShippingFee.
+	 *
+	 * @return mixed
+	 */
+	public function getTotalShippingFee()
+	{
+		return $this->totalShippingFee;
 	}
 }

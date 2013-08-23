@@ -47,12 +47,14 @@ class Line
 	public function getInfoArray()
 	{
 		return array(
-			'id'              => $this->getId(),
-			'orderId'         => $this->getOrderId(),
-			'productSku'      => $this->getProductSku(),
-			'quantity'        => $this->getQuantity(),
-			'unitPrice'       => $this->getUnitPrice(),
-			'unitShippingFee' => $this->getUnitShippingFee()
+			'id'               => $this->getId(),
+			'orderId'          => $this->getOrderId(),
+			'productSku'       => $this->getProductSku(),
+			'quantity'         => $this->getQuantity(),
+			'unitPrice'        => $this->getUnitPrice(),
+			'unitShippingFee'  => $this->getUnitShippingFee(),
+			'totalPrice'       => $this->getTotalPrice(),
+			'totalShippingFee' => $this->getTotalShippingFee()
 		);
 	}
 
@@ -186,6 +188,28 @@ class Line
 	public function getUnitShippingFee()
 	{
 		return $this->unitShippingFee;
+	}
+
+
+	/**
+	 * Retourne le prix total des produits.
+	 *
+	 * @return mixed
+	 */
+	public function getTotalPrice()
+	{
+		return $this->getQuantity() * $this->getProduct()->getPrice();
+	}
+
+
+	/**
+	 * Retourne les frais totaux d'expédition.
+	 *
+	 * @return mixed
+	 */
+	public function getTotalShippingFee()
+	{
+		return $this->getQuantity() * $this->getProduct()->getShippingFee();
 	}
 
 

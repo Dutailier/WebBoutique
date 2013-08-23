@@ -1,5 +1,7 @@
 <?php
 
+include_once(DIR . 'libs/interfaces/iitem.php');
+
 /**
  * Class Item
  * Représente un item du panier d'achats de la Web Boutique.
@@ -15,7 +17,6 @@ class Item implements IItem
 	 */
 	function __autoload()
 	{
-		include_once(DIR . 'libs/interfaces/iitem.php');
 	}
 
 

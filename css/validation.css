@@ -1,7 +1,23 @@
+#btnCancel {
+	display         : inline-block;
+	float           : right;
+	float           : right;
+	font-size       : 1.2em;
+	text-decoration : underline;
+	line-height     : 39px;
+	margin          : 0px 20px;
+}
+
+
+#btnConfirm {
+	float : right;
+	width : 200px;
+}
+
 fieldset {
 	float   : left;
-	padding : 5px 10px 10px 10px;
-	margin  : 15px 20px 30px 20px;
+	padding : 5px 15px 10px 15px;
+	margin  : 15px 10px 30px 10px;
 	border  : 1px solid #484848;
 	height  : 180px;
 }
@@ -17,27 +33,185 @@ fieldset p {
 }
 
 fieldset p label {
-	display   : block;
-	float     : left;
-	margin    : 5px 0px;
-	font-size : 1.1em;
+	display : block;
+	float   : left;
+	margin  : 5px 0px;
 }
 
 fieldset p label.propertie {
 	font-weight : bold;
-	width       : 150px;
+	width       : 100px;
 }
 
 fieldset p label.value {
 	margin-left : 5px;
+	width       : 272px;
 }
 
 #userInfo,
 #shipToInfo {
-	width : 418px;
+	width : 428px;
 }
 
 hr {
 	clear  : both;
-	margin : 5px 20px;
+	margin : 5px 20px 15px 20px;
+}
+
+div.infos {
+	border           : 1px solid #484848;
+	padding          : 5px 20px;
+	margin           : 15px 10px 0px 10px;
+	overflow         : hidden; /* Clearfix */
+	height           : 40px;
+	background-color : #FBFBFB;
+	clear            : both;
+}
+
+div.details {
+	position : relative;
+	top      : -1px; /* Pour n'avoir qu'une seule ligne. */
+	border   : 1px solid #484848;
+	padding  : 10px 20px 10px 15px;
+	overflow : hidden; /* Clearfix */
+	margin   : 0px 10px 15px 10px;
+}
+
+#linesList {
+	clear : both;
+}
+
+#linesList > div.line > div.infos > label.field {
+	float       : right;
+	line-height : 40px;
+}
+
+#linesList > div.line > div.infos > label.quantity {
+	float       : right;
+	font-size   : 1.3em;
+	font-weight : bold;
+	line-height : 40px;
+	margin-left : 10px;
+}
+
+#linesList > div.line > div.infos > label.modelName {
+	font-size   : 1.3em;
+	font-weight : bold;
+	float       : left;
+	line-height : 40px;
+	margin-left : 10px;
+	color       : #653679;
+}
+
+#linesList > div.line > div.infos > label.sku {
+	float       : left;
+	font-style  : italic;
+	margin-left : 10px;
+	line-height : 40px;
+}
+
+#linesList > div.line > div.details > div.imageWrapper {
+	float         : left;
+	padding-right : 15px;
+	border-right  : 1px solid #484848;
+}
+
+#linesList > div.line > div.details > div.imageWrapper > img {
+	float  : left;
+	width  : 100px;
+	height : 100px;
+}
+
+#linesList > div.line > div.details > div.totalWrapper {
+	position : absolute;
+	right    : 0;
+	bottom   : 0;
+	margin   : 10px 20px;
+}
+
+#linesList > div.line > div.details > div.detailsWrapper > p,
+#linesList > div.line > div.details > div.totalWrapper > p {
+	margin : 5px 0px;
+}
+
+#linesList > div.line > div.details > div.detailsWrapper > p > label.field {
+	display      : inline-block;
+	margin-right : 5px;
+}
+
+#linesList > div.line > div.details > div.totalWrapper > p > label.field {
+	float       : right;
+	font-weight : bold;
+	text-align  : right;
+}
+
+#linesList > div.line > div.details > div.detailsWrapper {
+	float       : left;
+	margin-left : 10px;
+}
+
+#linesList > div.line > div.details > div.detailsWrapper > p > label.modelCode,
+#linesList > div.line > div.details > div.detailsWrapper > p > label.finishCode,
+#linesList > div.line > div.details > div.detailsWrapper > p > label.fabricCode,
+#linesList > div.line > div.details > div.detailsWrapper > p > label.pipingCode {
+	font-style : italic;
+}
+
+#linesList > div.line > div.details > div.totalWrapper > p > label.price,
+#linesList > div.line > div.details > div.totalWrapper > p > label.totalPrice,
+#linesList > div.line > div.details > div.totalWrapper > p > label.shippingFee,
+#linesList > div.line > div.details > div.totalWrapper > p > label.totalShippingFee {
+	float       : right;
+	display     : inline-block;
+	text-align  : right;
+	width       : 80px;
+	margin-left : 10px;
+}
+
+#summary {
+	float  : right;
+	margin : 5px 15px;
+}
+
+#summary > p {
+	clear  : both;
+	margin : 10px 0px;
+}
+
+#summary > p > label.field {
+	float       : right;
+	color       : #653679;
+	font-weight : bold;
+	text-align  : right;
+	font-size   : 1.2em;
+}
+
+#subTotal,
+#totalPrice,
+#totalShippingFee {
+	display     : inline-block;
+	float       : right;
+	width       : 95px;
+	font-size   : 1.2em;
+	text-align  : right;
+	margin-left : 10px;
+}
+
+#summary > p:nth-child(3) {
+	padding    : 10px 0px;
+	border-top : 1px dotted #484848;
+}
+
+div.empty {
+	margin     : 30px 0px;
+	font-size  : 1.5em;
+	text-align : center;
+	clear      : both;
+}
+
+#warnings {
+	font-size  : 0.7em;
+	font-style : italic;
+	text-align : center;
+	float      : right;
 }
