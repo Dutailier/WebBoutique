@@ -11,6 +11,14 @@ class Finish
 
 
 	/**
+	 * Charge les définitions de classes nécessairent à l'initialisation de cet objet.
+	 */
+	function __autoload()
+	{
+	}
+
+
+	/**
 	 * Initialise le fini.
 	 *
 	 * @param $code
@@ -28,7 +36,8 @@ class Finish
 	 *
 	 * @return mixed|void
 	 */
-	public function getInfoArray()
+	public
+	function getInfoArray()
 	{
 		return array(
 			'code' => $this->getCode(),
@@ -42,7 +51,8 @@ class Finish
 	 *
 	 * @param mixed $code
 	 */
-	private function setCode($code)
+	private
+	function setCode($code)
 	{
 		$this->code = $code;
 	}
@@ -53,7 +63,8 @@ class Finish
 	 *
 	 * @return mixed
 	 */
-	public function getCode()
+	public
+	function getCode()
 	{
 		return $this->code;
 	}
@@ -64,7 +75,8 @@ class Finish
 	 *
 	 * @param mixed $name
 	 */
-	private function setName($name)
+	private
+	function setName($name)
 	{
 		$this->name = $name;
 	}
@@ -75,7 +87,8 @@ class Finish
 	 *
 	 * @return mixed
 	 */
-	public function getName()
+	public
+	function getName()
 	{
 		return $this->name;
 	}

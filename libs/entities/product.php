@@ -1,7 +1,5 @@
 <?php
 
-include_once(ROOT . 'libs/repositories/types.php');
-
 /**
  * Représente un produit.
  */
@@ -12,6 +10,14 @@ abstract class Product
 	private $imageName;
 	private $price;
 	private $shippingFee;
+
+
+	/**
+	 * Charge les définitions de classes nécessairent à l'initialisation de cet objet.
+	 */
+	function __autoload()
+	{
+	}
 
 
 	/**
@@ -113,17 +119,6 @@ abstract class Product
 
 
 	/**
-	 * Retourne le type de ce produit.
-	 *
-	 * @return Type
-	 */
-	public function getType()
-	{
-		return Types::Find($this->getTypeCode());
-	}
-
-
-	/**
 	 * Définit le prix du produit.
 	 *
 	 * @param mixed $price
@@ -164,5 +159,18 @@ abstract class Product
 	public function getShippingFee()
 	{
 		return $this->shippingFee;
+	}
+
+
+	/**
+	 * Retourne le type de ce produit.
+	 *
+	 * @return Type
+	 */
+	public function getType()
+	{
+		include_once(DIR . 'libs/repositories/types.php');
+
+		return Types::Find($this->getTypeCode());
 	}
 }

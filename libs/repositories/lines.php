@@ -1,6 +1,7 @@
 <?php
 
-include_once(ROOT . 'libs/entities/line.php');
+include_once(DIR . 'libs/database.php');
+include_once(DIR . 'libs/entities/line.php');
 
 /**
  * Class Lines

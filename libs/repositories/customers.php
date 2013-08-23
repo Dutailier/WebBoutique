@@ -1,8 +1,8 @@
 <?php
 
-include_once(ROOT . 'libs/database.php');
-include_once(ROOT . 'libs/entities/customer.php');
-include_once(ROOT . 'libs/repositories/users.php');
+include_once(DIR . 'libs/database.php');
+include_once(DIR . 'libs/entities/customer.php');
+include_once(DIR . 'libs/repositories/users.php');
 
 /**
  * class Customers

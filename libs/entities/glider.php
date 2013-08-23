@@ -1,11 +1,5 @@
 <?php
 
-include_once(ROOT . 'libs/entities/product.php');
-include_once(ROOT . 'libs/repositories/models.php');
-include_once(ROOT . 'libs/repositories/finishs.php');
-include_once(ROOT . 'libs/repositories/fabrics.php');
-include_once(ROOT . 'libs/repositories/pipings.php');
-
 /**
  * Class Glider
  * Représente une chaise oscillante.
@@ -16,6 +10,16 @@ class Glider extends Product
 	private $finishCode;
 	private $fabricCode;
 	private $pipingCode;
+	private $modelCodeMatchingOttoman;
+
+
+	/**
+	 * Charge les définitions de classes nécessairent à l'initialisation de cet objet.
+	 */
+	function __autoload()
+	{
+		include_once(DIR . 'libs/entities/product.php');
+	}
 
 
 	/**
@@ -28,8 +32,9 @@ class Glider extends Product
 	 * @param $finishCode
 	 * @param $fabricCode
 	 * @param $pipingCode
+	 * @param $modelCodeMatchingOttoman
 	 */
-	function __construct($imageName, $price, $shippingFee, $modelCode, $finishCode, $fabricCode, $pipingCode = null)
+	function __construct($imageName, $price, $shippingFee, $modelCode, $finishCode, $fabricCode, $pipingCode, $modelCodeMatchingOttoman)
 	{
 		parent::__construct(TYPE_GLIDER, $imageName, $price, $shippingFee);
 
@@ -37,6 +42,7 @@ class Glider extends Product
 		$this->setFinishCode($finishCode);
 		$this->setFabricCode($fabricCode);
 		$this->setPipingCode($pipingCode);
+		$this->setModelCodeMatchingOttoman($modelCodeMatchingOttoman);
 	}
 
 
@@ -48,10 +54,11 @@ class Glider extends Product
 		return array_merge(
 			parent::getInfoArray(),
 			array(
-				'modelCode'  => $this->getModelCode(),
-				'finishCode' => $this->getFinishCode(),
-				'fabricCode' => $this->getFabricCode(),
-				'pipingCode' => $this->getPipingCode()
+				'modelCode'                => $this->getModelCode(),
+				'finishCode'               => $this->getFinishCode(),
+				'fabricCode'               => $this->getFabricCode(),
+				'pipingCode'               => $this->getPipingCode(),
+				'modelCodeMatchingOttoman' => $this->getModelCodeMatchingOttoman()
 			)
 		);
 	}
@@ -146,12 +153,36 @@ class Glider extends Product
 
 
 	/**
+	 * Définit la valeur de la propriété nommée modelCodeMatchingOttoman.
+	 *
+	 * @param mixed $modelCodeMatchingOttoman
+	 */
+	public function setModelCodeMatchingOttoman($modelCodeMatchingOttoman)
+	{
+		$this->modelCodeMatchingOttoman = $modelCodeMatchingOttoman;
+	}
+
+
+	/**
+	 * Retourne la valeur de la propriété nommée modelCodeMatchingOttoman.
+	 *
+	 * @return mixed
+	 */
+	public function getModelCodeMatchingOttoman()
+	{
+		return $this->modelCodeMatchingOttoman;
+	}
+
+
+	/**
 	 * Retourne le modèle de la chaise oscillante.
 	 *
 	 * @return Model
 	 */
 	public function getModel()
 	{
+		include_once(DIR . 'libs/repositories/models.php');
+
 		return Models::Find($this->getModelCode());
 	}
 
@@ -163,6 +194,8 @@ class Glider extends Product
 	 */
 	public function getFinish()
 	{
+		include_once(DIR . 'libs/repositories/finishs.php');
+
 		return Finishs::Find($this->getFinishCode());
 	}
 
@@ -174,6 +207,8 @@ class Glider extends Product
 	 */
 	public function getFabric()
 	{
+		include_once(DIR . 'libs/repositories/fabrics.php');
+
 		return Fabrics::Find($this->getFabricCode());
 	}
 
@@ -185,6 +220,26 @@ class Glider extends Product
 	 */
 	public function getPiping()
 	{
+		include_once(DIR . 'libs/repositories/pipings.php');
+
 		return Pipings::Find($this->getPipingCode());
+	}
+
+
+	/**
+	 * Retourne le tabouret correspondant.
+	 *
+	 * @return Glider|Ottoman|Pilow
+	 */
+	public function getMatchingOttoman()
+	{
+		include_once(DIR . 'libs/repositories/products.php');
+
+		return Products::FindByComponent(
+			$this->getModelCodeMatchingOttoman(),
+			$this->getFinishCode(),
+			$this->getFabricCode(),
+			$this->getPipingCode()
+		);
 	}
 }

@@ -1,8 +1,8 @@
 <?php
 
 include_once('../config.php');
-include_once(ROOT . 'libs/security.php');
-include_once(ROOT . 'libs/sessionTransaction.php');
+include_once(DIR . 'libs/security.php');
+include_once(DIR . 'libs/sessionTransaction.php');
 
 if (!Security::isAuthenticated()) {
 	$data['success'] = false;

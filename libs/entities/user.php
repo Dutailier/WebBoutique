@@ -1,7 +1,5 @@
 <?php
 
-include_once(ROOT . 'libs/repositories/addresses.php');
-
 define('ROLE_ADMINISTRATOR', 0);
 define('ROLE_CUSTOMER', 1);
 define('ROLE_STORE', 2);
@@ -17,6 +15,14 @@ class User
 	private $languageCode;
 	private $username;
 	private $password;
+
+
+	/**
+	 * Charge les définitions de classes nécessairent à l'initialisation de cet objet.
+	 */
+	function __autoload()
+	{
+	}
 
 
 	/**
@@ -171,6 +177,8 @@ class User
 	 */
 	public function getAddress()
 	{
+		include_once(DIR . 'libs/repositories/addresses.php');
+
 		return Addresses::FindByUserId($this->getId());
 	}
 }

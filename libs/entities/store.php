@@ -21,6 +21,15 @@ class Store extends User
 
 
 	/**
+	 * Charge les définitions de classes nécessairent à l'initialisation de cet objet.
+	 */
+	function __autoload()
+	{
+		include_once(DIR . 'libs/entities/user.php');
+	}
+
+
+	/**
 	 * Initialise un commerçant.
 	 *
 	 * @param $languageCode

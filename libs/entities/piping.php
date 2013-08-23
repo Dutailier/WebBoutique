@@ -11,6 +11,15 @@ class Piping
 
 
 	/**
+	 * Charge les définitions de classes nécessairent à l'initialisation de cet objet.
+	 */
+	function __autoload()
+	{
+
+	}
+
+
+	/**
 	 * Initialise le passepoil.
 	 *
 	 * @param $code

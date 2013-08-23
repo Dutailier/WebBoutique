@@ -1,6 +1,5 @@
 <?php
 
-include_once(ROOT . 'libs/repositories/comments.php');
 
 /**
  * Class Comment
@@ -14,6 +13,14 @@ class Comment
 	private $datetime;
 	private $text;
 	private $commentId;
+
+
+	/**
+	 * Charge les définitions de classes nécessairent à l'initialisation de cet objet.
+	 */
+	function __autoload()
+	{
+	}
 
 
 	/**
@@ -189,7 +196,9 @@ class Comment
 	 */
 	public function getQuestion()
 	{
-		return States::find($this->getCommentId());
+		include_once(DIR . 'libs/repositories/comments.php');
+
+		return Comments::find($this->getCommentId());
 	}
 
 
@@ -200,6 +209,8 @@ class Comment
 	 */
 	public function getAnswers()
 	{
+		include_once(DIR . 'libs/repositories/comments.php');
+
 		return Comments::FilterByCommentId($this->getId());
 	}
 }

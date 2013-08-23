@@ -1,12 +1,5 @@
 <?php
 
-include_once(ROOT . 'libs/item.php');
-include_once(ROOT . 'libs/security.php');
-include_once(ROOT . 'libs/sessionCart.php');
-include_once(ROOT . 'libs/repositories/lines.php');
-include_once(ROOT . 'libs/repositories/orders.php');
-include_once(ROOT . 'libs/repositories/products.php');
-
 define('TRANSACTION_STATUS_OPEN', 0); // L'utilisateur peut configurer différents produits.
 define('TRANSACTION_STATUS_CHECKOUT', 1); // L'utilisateur à complété ses achats.
 define('TRANSACTION_STATUS_READY_TO_PAY', 2); // L'utilisateur a terminé de magasiner et est prêt à payer.
@@ -28,6 +21,20 @@ class SessionTransaction
 	private $lines;
 	private $recipientInfo;
 	private $shippingInfo;
+
+
+	/**
+	 * Charge les définitions de classes nécessairent à l'initialisation de cet objet.
+	 */
+	function __autoload()
+	{
+		include_once(DIR . 'libs/item.php');
+		include_once(DIR . 'libs/security.php');
+		include_once(DIR . 'libs/sessionCart.php');
+		include_once(DIR . 'libs/repositories/lines.php');
+		include_once(DIR . 'libs/repositories/orders.php');
+		include_once(DIR . 'libs/repositories/products.php');
+	}
 
 
 	/**

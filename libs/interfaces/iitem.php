@@ -1,6 +1,6 @@
 <?php
 
-include_once(ROOT . 'libs/interfaces/icomparable.php');
+include_once(DIR . 'libs/interfaces/icomparable.php');
 
 /**
  * Class IItem

@@ -1,7 +1,7 @@
 <?php
 
-include_once(ROOT . 'libs/database.php');
-include_once(ROOT . 'libs/entities/shippingInfo.php');
+include_once(DIR . 'libs/database.php');
+include_once(DIR . 'libs/entities/shippingInfo.php');
 
 /**
  * Class ShippingInfos

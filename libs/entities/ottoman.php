@@ -1,11 +1,5 @@
 <?php
 
-include_once(ROOT . 'libs/entities/product.php');
-include_once(ROOT . 'libs/repositories/models.php');
-include_once(ROOT . 'libs/repositories/finishs.php');
-include_once(ROOT . 'libs/repositories/fabrics.php');
-include_once(ROOT . 'libs/repositories/pipings.php');
-
 /**
  * Class Ottoman
  * Représente un tabouret oscillant.
@@ -16,6 +10,15 @@ class Ottoman extends Product
 	private $finishCode;
 	private $fabricCode;
 	private $pipingCode;
+
+
+	/**
+	 * Charge les définitions de classes nécessairent à l'initialisation de cet objet.
+	 */
+	function __autoload()
+	{
+		include_once(DIR . 'libs/entities/product.php');
+	}
 
 
 	/**
@@ -152,6 +155,8 @@ class Ottoman extends Product
 	 */
 	public function getModel()
 	{
+		include_once(DIR . 'libs/repositories/models.php');
+
 		return Models::Find($this->getModelCode());
 	}
 
@@ -163,6 +168,8 @@ class Ottoman extends Product
 	 */
 	public function getFinish()
 	{
+		include_once(DIR . 'libs/repositories/finishs.php');
+
 		return Finishs::Find($this->getFinishCode());
 	}
 
@@ -174,6 +181,8 @@ class Ottoman extends Product
 	 */
 	public function getFabric()
 	{
+		include_once(DIR . 'libs/repositories/fabrics.php');
+
 		return Fabrics::Find($this->getFabricCode());
 	}
 
@@ -185,6 +194,8 @@ class Ottoman extends Product
 	 */
 	public function getPiping()
 	{
+		include_once(DIR . 'libs/repositories/pipings.php');
+
 		return Pipings::Find($this->getPipingCode());
 	}
 }

@@ -1,8 +1,8 @@
 <?php
 
 include_once('../config.php');
-include_once(ROOT . 'libs/security.php');
-include_once(ROOT . 'libs/localisation.php');
+include_once(DIR . 'libs/security.php');
+include_once(DIR . 'libs/localisation.php');
 
 include_once(Localisation::getLanguageFile());
 

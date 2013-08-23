@@ -1,7 +1,5 @@
 <?php
 
-include_once(ROOT . 'libs/repositories/states.php');
-
 define('CANADA_CODE', 'CA');
 define('UNITED_STATES_CODE', 'US');
 
@@ -13,6 +11,14 @@ class Country
 {
 	private $code;
 	private $name;
+
+
+	/**
+	 * Charge les définitions de classes nécessairent à l'initialisation de cet objet.
+	 */
+	function __autoload()
+	{
+	}
 
 
 	/**
@@ -93,6 +99,8 @@ class Country
 	 */
 	public function getStates()
 	{
+		include_once(DIR . 'libs/repositories/states.php');
+
 		return States::filterByCountryCode($this->getCode());
 	}
 }

@@ -1,7 +1,5 @@
 <?php
 
-include_once(ROOT . 'libs/repositories/countries.php');
-
 /**
  * Class State
  * Représente un état ou une province d'un pays.
@@ -11,6 +9,14 @@ class State
 	private $code;
 	private $name;
 	private $countryCode;
+
+
+	/**
+	 * Charge les définitions de classes nécessairent à l'initialisation de cet objet.
+	 */
+	function __autoload()
+	{
+	}
 
 
 	/**
@@ -116,6 +122,8 @@ class State
 	 */
 	public function getCountry()
 	{
+		include_once(DIR . 'libs/repositories/countries.php');
+
 		return Countries::Find($this->getCountryCode());
 	}
 

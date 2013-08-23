@@ -12,6 +12,14 @@ class Event
 
 
 	/**
+	 * Charge les définitions de classes nécessairent à l'initialisation de cet objet.
+	 */
+	function __autoload()
+	{
+	}
+
+
+	/**
 	 * Initialise l'évènement.
 	 *
 	 * @param $id

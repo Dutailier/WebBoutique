@@ -8,32 +8,32 @@
 	$(document).ready(function () {
 		updateTypes(function () {
 			$typesSlider = $('#typesSlider').bxSlider({
-				minSlides       : 1,
-				maxSlides       : 1,
-				slideWidth      : 210,
-				slideMargin     : 0,
-				hideControlOnEnd: true,
-				infiniteLoop    : false,
-				easing          : 'ease-in-out',
-				onSliderLoad    : function () {
+				minSlides          : 1,
+				maxSlides          : 1,
+				slideWidth         : 210,
+				slideMargin        : 0,
+				fadeOutControlOnEnd: true,
+				infiniteLoop       : false,
+				easing             : 'ease-in-out',
+				onSliderLoad       : function () {
 					var $type = $('div.type')
 						.eq($typesSlider.getCurrentSlide());
 
 					updateModelsByTypeCode($type.data('code'), function () {
 						$modelsSlider = $('#modelsSlider').bxSlider({
-							controls        : false,
-							maxSlides       : 4,
-							slideWidth      : 170,
-							slideMargin     : 0,
-							hideControlOnEnd: true,
-							infiniteLoop    : false,
-							easing          : 'ease-in-out'
+							controls           : false,
+							maxSlides          : 4,
+							slideWidth         : 170,
+							slideMargin        : 0,
+							fadeOutControlOnEnd: true,
+							infiniteLoop       : false,
+							easing             : 'ease-in-out'
 						});
 
 						updateProduct($('div.model').first().data('code'));
 					})
 				},
-				onSlideBefore   : function () {
+				onSlideBefore      : function () {
 					var $type = $('div.type')
 						.eq($typesSlider.getCurrentSlide());
 
@@ -60,7 +60,7 @@
 			var $fabricsList = $('#fabricsList');
 
 			if ($fabricsList.children().length) {
-				$fabricsList.parent('p').show();
+				$fabricsList.parent('p').fadeIn(1000);
 			} else {
 				$fabricsList.parent('p').hide();
 			}
@@ -71,7 +71,7 @@
 				var $pipingsList = $('#pipingsList');
 
 				if ($pipingsList.children().length) {
-					$pipingsList.parent('p').show();
+					$pipingsList.parent('p').fadeIn(1000);
 				} else {
 					$pipingsList.parent('p').hide();
 				}
@@ -95,7 +95,7 @@
 			var $finishsList = $('#finishsList');
 
 			if ($finishsList.children().length) {
-				$finishsList.parent('p').show();
+				$finishsList.parent('p').fadeIn(1000);
 			} else {
 				$finishsList.parent('p').hide();
 			}
@@ -106,7 +106,7 @@
 				var $pipingsList = $('#pipingsList');
 
 				if ($pipingsList.children().length) {
-					$pipingsList.parent('p').show();
+					$pipingsList.parent('p').fadeIn(1000);
 				} else {
 					$pipingsList.parent('p').hide();
 				}
@@ -130,7 +130,7 @@
 			var $fabricsList = $('#fabricsList');
 
 			if ($fabricsList.children().length) {
-				$fabricsList.parent('p').show();
+				$fabricsList.parent('p').fadeIn(1000);
 			} else {
 				$fabricsList.parent('p').hide();
 			}
@@ -141,7 +141,7 @@
 				var $finishsList = $('#finishsList');
 
 				if ($finishsList.children().length) {
-					$finishsList.parent('p').show();
+					$finishsList.parent('p').fadeIn(1000);
 				} else {
 					$finishsList.parent('p').hide();
 				}
@@ -660,7 +660,7 @@
 			var $finishsList = $('#finishsList');
 
 			if ($finishsList.children().length) {
-				$finishsList.parent('p').show();
+				$finishsList.parent('p').fadeIn(1000);
 			} else {
 				$finishsList.parent('p').hide();
 			}
@@ -671,7 +671,7 @@
 				var $fabricsList = $('#fabricsList');
 
 				if ($fabricsList.children().length) {
-					$fabricsList.parent('p').show();
+					$fabricsList.parent('p').fadeIn(1000);
 				} else {
 					$fabricsList.parent('p').hide();
 				}
@@ -682,7 +682,7 @@
 					var $pipingsList = $('#pipingsList');
 
 					if ($pipingsList.children().length) {
-						$pipingsList.parent('P').show();
+						$pipingsList.parent('P').fadeIn(1000);
 					} else {
 						$pipingsList.parent('p').hide();
 					}

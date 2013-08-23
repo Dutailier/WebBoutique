@@ -1,9 +1,5 @@
 <?php
 
-include_once(ROOT . 'libs/entities/product.php');
-include_once(ROOT . 'libs/repositories/models.php');
-include_once(ROOT . 'libs/repositories/fabrics.php');
-
 /**
  * Class Pilow
  * Représente un coussin lombaire.
@@ -12,6 +8,15 @@ class Pilow extends Product
 {
 	private $modelCode;
 	private $fabricCode;
+
+
+	/**
+	 * Charge les définitions de classes nécessairent à l'initialisation de cet objet.
+	 */
+	function __autoload()
+	{
+		include_once(DIR . 'libs/entities/product.php');
+	}
 
 
 	/**
@@ -100,6 +105,8 @@ class Pilow extends Product
 	 */
 	public function getModel()
 	{
+		include_once(DIR . 'libs/repositories/models.php');
+
 		return Models::Find($this->getModelCode());
 	}
 
@@ -111,6 +118,8 @@ class Pilow extends Product
 	 */
 	public function getFabric()
 	{
+		include_once(DIR . 'libs/repositories/fabrics.php');
+
 		return Fabrics::Find($this->getFabricCode());
 	}
 }

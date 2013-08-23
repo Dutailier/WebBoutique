@@ -1,9 +1,9 @@
 <?php
 
 include_once('config.php');
-include_once(ROOT . 'libs/security.php');
-include_once(ROOT . 'libs/localisation.php');
-include_once(ROOT . 'libs/sessionTransaction.php');
+include_once(DIR . 'libs/security.php');
+include_once(DIR . 'libs/localisation.php');
+include_once(DIR . 'libs/sessionTransaction.php');
 
 include_once(Localisation::getLanguageFile());
 
@@ -23,7 +23,7 @@ if (!Security::isAuthenticated()) {
 					$page = 'productConfigurator';
 					break;
 				case ROLE_STORE:
-					$page = 'storeManager';
+					$page = 'productConfigurator';
 					break;
 				case ROLE_ADMINISTRATOR:
 					$page = 'adminManager';
@@ -33,7 +33,7 @@ if (!Security::isAuthenticated()) {
 
 		case 'shippingForm' :
 		case 'productConfigurator':
-		$transaction = new SessionTransaction();
+			$transaction = new SessionTransaction();
 
 			switch ($transaction->getStatus()) {
 				case TRANSACTION_STATUS_OPEN:
@@ -48,7 +48,7 @@ if (!Security::isAuthenticated()) {
 }
 
 // Inclue la page demandée seulement s'elle existe et est correctement construite.
-if (file_exists($file = ROOT . 'pages/' . $page . '.php')) {
+if (file_exists($file = DIR . 'pages/' . $page . '.php')) {
 	include_once($file);
 
 	if (!isSet($title) || !isSet($head) || !isSet($content)) {

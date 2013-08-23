@@ -1,8 +1,5 @@
 <?php
 
-include_once(ROOT . 'libs/interfaces/icart.php');
-include_once(ROOT . 'libs/interfaces/iitem.php');
-
 define('NOT_FOUND', -1);
 
 /**
@@ -14,6 +11,16 @@ final class SessionCart implements ICart
 	const CART_IDENTIFIER = '__CART__';
 
 	private $items;
+
+
+	/**
+	 * Charge les définitions de classes nécessairent à l'initialisation de cet objet.
+	 */
+	function __autoload()
+	{
+		include_once(DIR . 'libs/interfaces/icart.php');
+		include_once(DIR . 'libs/interfaces/iitem.php');
+	}
 
 
 	/**
@@ -100,7 +107,7 @@ final class SessionCart implements ICart
 			throw new Exception(ERROR_ITEM_DOESNT_EXIST);
 
 		} else {
-			$item     = $this->items[$index];
+			$item = $this->items[$index];
 
 			$quantity = $item->getQuantity() - $quantity > 0 ?
 				$item->getQuantity() - $quantity : 0;

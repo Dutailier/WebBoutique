@@ -1,6 +1,9 @@
 <?php
 
-include_once(ROOT . 'libs/repositories/users.php');
+include_once(DIR . 'libs/entities/user.php');
+include_once(DIR . 'libs/entities/store.php');
+include_once(DIR . 'libs/entities/customer.php');
+include_once(DIR . 'libs/repositories/users.php');
 
 /**
  * Class Security
@@ -70,9 +73,14 @@ class Security
 	 * Retourne le rôle de l'utilisateur connecté.
 	 *
 	 * @return mixed
+	 * @throws Exception
 	 */
 	public static function getRole()
 	{
+		if (!self::isAuthenticated()) {
+			throw new Exception(ERROR_AUTHENTIFICATION_REQUIRED);
+		}
+
 		return self::getUserConnected()->getRole();
 	}
 

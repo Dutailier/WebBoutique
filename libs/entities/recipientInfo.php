@@ -20,6 +20,15 @@ class RecipientInfo
 
 
 	/**
+	 * Charge les définitions de classes nécessairent à l'initialisation de cet objet.
+	 */
+	function __autoload()
+	{
+
+	}
+
+
+	/**
 	 * Initialise le destinateur de la commande.
 	 *
 	 * @param $languageCode

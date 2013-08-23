@@ -37,7 +37,7 @@ define('CART_BTN_PROCEED_ORDER', 'Proceed');
 define('CART_BTN_CLEAR_CART', 'Clear');
 define('CART_LBL_NO_PRODUCT', 'No product ordered.');
 
-// Page d'informations de facturation
+// Page d'informations d'expédition
 define('SHIPPING_FORM_TITLE', 'Shipping Information');
 define('SHIPPING_FORM_LBL_SHIPPING_NAME', 'Name');
 define('SHIPPING_FORM_LBL_SHIPPING_ADDRESS', 'Address');
@@ -55,6 +55,21 @@ define('SHIPPING_FORM_BTN_SUBMIT', 'Next');
 define('SHIPPING_FORM_BTN_CLEAR', 'Clear');
 define('SHIPPING_FORM_LBL_FIRST_NAME', 'Firstname');
 define('SHIPPING_FORM_LBL_LAST_NAME', 'Lastname');
+
+// Page de validation
+define('VALIDATION_TITLE', 'Validation');
+define('VALIDATION_LBL_USER_INFO', 'User Information');
+define('VALIDATION_LBL_USER_NAME', 'Name :');
+define('VALIDATION_LBL_USER_ADDRESS', 'Address :');
+define('VALIDATION_LBL_USER_PHONE', 'Phone :');
+define('VALIDATION_LBL_USER_EMAIL', 'Email :');
+define('VALIDATION_LBL_USER_EMAIL_REP', 'Representant\'s email :');
+define('VALIDATION_LBL_USER_EMAIL_AGENT', 'Agent\'s email :');
+define('VALIDATION_LBL_SHIP_TO_INFO', 'Shipping Information');
+define('VALIDATION_LBL_SHIP_TO_NAME', 'Name :');
+define('VALIDATION_LBL_SHIP_TO_ADDRESS', 'Address :');
+define('VALIDATION_LBL_SHIP_TO_PHONE', 'Phone :');
+define('VALIDATION_LBL_SHIP_TO_EMAIL', 'Email :');
 
 // Page du gestionnaire pour commerçant
 define('STORE_MANAGER_TITLE', 'Store Manager');

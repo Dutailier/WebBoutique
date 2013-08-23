@@ -1,8 +1,5 @@
 <?php
 
-include_once(ROOT . 'libs/repositories/orders.php');
-include_once(ROOT . 'libs/repositories/products.php');
-
 /**
  * Class Line
  * Représente une ligne de commande.
@@ -15,6 +12,14 @@ class Line
 	private $quantity;
 	private $unitPrice;
 	private $unitShippingFee;
+
+
+	/**
+	 * Charge les définitions de classes nécessairent à l'initialisation de cet objet.
+	 */
+	function __autoload()
+	{
+	}
 
 
 	/**
@@ -191,6 +196,8 @@ class Line
 	 */
 	public function getOrder()
 	{
+		include_once(DIR . 'libs/repositories/orders.php');
+
 		return Orders::Find($this->getOrderId());
 	}
 
@@ -202,6 +209,8 @@ class Line
 	 */
 	public function getProduct()
 	{
+		include_once(DIR . 'libs/repositories/products.php');
+
 		$order = $this->getOrder();
 
 		return Products::Find(

@@ -1,11 +1,5 @@
 <?php
 
-include_once(ROOT . 'libs/repositories/logs.php');
-include_once(ROOT . 'libs/repositories/users.php');
-include_once(ROOT . 'libs/repositories/comments.php');
-include_once(ROOT . 'libs/repositories/recipientInfos.php');
-include_once(ROOT . 'libs/repositories/shippingInfos.php');
-
 define('ORDER_STATUS_CANCELED', -1);
 define('ORDER_STATUS_NOT_SEND', 0);
 define('ORDER_STATUS_PENDING', 1);
@@ -25,6 +19,14 @@ class Order
 	private $userId;
 	private $status;
 	private $datetime;
+
+
+	/**
+	 * Charge les définitions de classes nécessairent à l'initialisation de cet objet.
+	 */
+	function __autoload()
+	{
+	}
 
 
 	/**
@@ -201,6 +203,8 @@ class Order
 	 */
 	public function getComments()
 	{
+		include_once(DIR . 'libs/repositories/comments.php');
+
 		return Comments::FilterByOrderId($this->getId());
 	}
 
@@ -212,6 +216,8 @@ class Order
 	 */
 	public function getLogs()
 	{
+		include_once(DIR . 'libs/repositories/logs.php');
+
 		return Logs::FilterByOrderId($this->getId());
 	}
 
@@ -223,6 +229,8 @@ class Order
 	 */
 	public function getUser()
 	{
+		include_once(DIR . 'libs/repositories/users.php');
+
 		return Users::Find($this->getUserId());
 	}
 
@@ -232,8 +240,10 @@ class Order
 	 *
 	 * @return RecipientInfo
 	 */
-	public function getRecipient()
+	public function getRecipientInfo()
 	{
+		include_once(DIR . 'libs/repositories/recipientInfos.php');
+
 		return RecipientInfos::Find($this->getUserId());
 	}
 
@@ -245,6 +255,8 @@ class Order
 	 */
 	public function getShippingInfo()
 	{
+		include_once(DIR . 'libs/repositories/shippingInfos.php');
+
 		return ShippingInfos::Find($this->getUserId());
 	}
 }

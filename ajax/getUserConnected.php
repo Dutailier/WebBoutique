@@ -3,23 +3,21 @@
 include_once('../config.php');
 include_once(DIR . 'libs/security.php');
 include_once(DIR . 'libs/localisation.php');
-include_once(DIR . 'libs/repositories/types.php');
+include_once(DIR . 'libs/repositories/stores.php');
 
 include_once(Localisation::getLanguageFile());
 
 if (!Security::isAuthenticated()) {
 	$data['success'] = false;
-	$data['message'] = ERROR_AUTHENTIFICATION_REQUIRED;
+	$data['message'] = 'You must be authenticated.';
 
 } else {
 	try {
-		$models = Types::All();
+		$user    = Security::getUserConnected();
+		$address = $user->getAddress();
 
-		$data['types'] = array();
-		foreach ($models as $type) {
-			$data['types'][] = $type->getInfoArray();
-		}
-
+		$data['user']    = $user->getInfoArray();
+		$data['address'] = $address->getInfoArray();
 		$data['success'] = true;
 
 	} catch (Exception $e) {

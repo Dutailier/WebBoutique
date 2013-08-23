@@ -1,10 +1,11 @@
 <?php
 
-include_once(ROOT . 'libs/database.php');
-include_once(ROOT . 'libs/entities/product.php');
-include_once(ROOT . 'libs/entities/glider.php');
-include_once(ROOT . 'libs/entities/ottoman.php');
-include_once(ROOT . 'libs/entities/pilow.php');
+include_once(DIR . 'libs/database.php');
+include_once(DIR . 'libs/entities/type.php');
+include_once(DIR . 'libs/entities/product.php');
+include_once(DIR . 'libs/entities/pilow.php');
+include_once(DIR . 'libs/entities/glider.php');
+include_once(DIR . 'libs/entities/ottoman.php');
 
 /**
  * class Products
@@ -43,7 +44,8 @@ class Products
 					$rows[0]['modelCode'],
 					$rows[0]['finishCode'],
 					$rows[0]['fabricCode'],
-					$rows[0]['pipingCode']
+					$rows[0]['pipingCode'],
+					$rows[0]['modelCodeMatchingOttoman']
 				);
 				break;
 
@@ -79,8 +81,10 @@ class Products
 	}
 
 
-	public static function FindByComponent($modelCode, $finishCode, $fabricCode, $pipingCode, $userId)
+	public static function FindByComponent($modelCode, $finishCode, $fabricCode, $pipingCode, $userId = null)
 	{
+		$userId = is_null($userId) ? Security::getUserConnected()->getId() : $userId;
+
 		$query = 'EXEC [getProductByComponent]';
 		$query .= '@modelCode = \'' . $modelCode . '\', ';
 
@@ -113,7 +117,8 @@ class Products
 					$rows[0]['modelCode'],
 					$rows[0]['finishCode'],
 					$rows[0]['fabricCode'],
-					$rows[0]['pipingCode']
+					$rows[0]['pipingCode'],
+					$rows[0]['modelCodeMatchingOttoman']
 				);
 				break;
 

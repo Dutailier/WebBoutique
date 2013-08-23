@@ -408,7 +408,7 @@
 			'<div class="infos">' +
 			'<label class="modelName">' + product['model']['name'] + '</label>' +
 			'<label class="sku">' + skuFormat(product['sku']) + '</label>' +
-			'<input type="number" min="0" class="quantity"  value="' + product['quantity'] + '" />' +
+			'<input type="number" min="0" max="10" class="quantity"  value="' + product['quantity'] + '" />' +
 			'<label class="field">' + label['CART_ITEM_LBL_QUANTITY'] + '</label>' +
 			'</div>'
 		);

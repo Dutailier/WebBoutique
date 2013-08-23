@@ -1,6 +1,6 @@
 <?php
 
-include_once(ROOT . 'libs/interfaces/iitem.php');
+include_once(DIR . 'libs/interfaces/iitem.php');
 
 /**
  * Class ICart

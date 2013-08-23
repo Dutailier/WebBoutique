@@ -1,6 +1,5 @@
 <?php
 
-include_once(ROOT . 'libs/repositories/states.php');
 
 /**
  * Class Address
@@ -16,6 +15,14 @@ class Address
 	private $street;
 	private $city;
 	private $zipCode;
+
+
+	/**
+	 * Charge les définitions de classes nécessairent à l'initialisation de cet objet.
+	 */
+	function __autoload()
+	{
+	}
 
 
 	/**
@@ -189,6 +196,8 @@ class Address
 	 */
 	public function getState()
 	{
+		include_once(DIR . 'libs/repositories/states.php');
+
 		return States::find($this->getStateCode());
 	}
 }

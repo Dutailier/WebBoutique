@@ -1,7 +1,7 @@
 <?php
 
-include_once(ROOT . 'libs/security.php');
-include_once(ROOT . 'libs/entities/language.php');
+include_once(DIR . 'libs/security.php');
+include_once(DIR . 'libs/entities/language.php');
 
 /**
  * Class Localisation
@@ -81,6 +81,6 @@ class Localisation
 	 */
 	public static function getLanguageFile()
 	{
-		return ROOT . 'languages/language.' . strtolower(self::getCurrentLanguage()) . '.php';
+		return DIR . 'languages/language.' . strtolower(self::getCurrentLanguage()) . '.php';
 	}
 }

@@ -1,7 +1,5 @@
 <?php
 
-include_once(ROOT . 'libs/interfaces/iitem.php');
-
 /**
  * Class Item
  * Représente un item du panier d'achats de la Web Boutique.
@@ -10,6 +8,15 @@ class Item implements IItem
 {
 	private $product;
 	private $quantity;
+
+
+	/**
+	 * Charge les définitions de classes nécessairent à l'initialisation de cet objet.
+	 */
+	function __autoload()
+	{
+		include_once(DIR . 'libs/interfaces/iitem.php');
+	}
 
 
 	/**

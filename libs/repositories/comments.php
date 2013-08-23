@@ -1,7 +1,7 @@
 <?php
 
-include_once(ROOT . 'libs/database.php');
-include_once(ROOT . 'libs/entities/comment.php');
+include_once(DIR . 'libs/database.php');
+include_once(DIR . 'libs/entities/comment.php');
 
 /**
  * Class Comments

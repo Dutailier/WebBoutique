@@ -1,7 +1,7 @@
 <?php
 
-include_once(ROOT . 'libs/localisation.php');
-include_once(ROOT . 'libs/database.php');
+include_once(DIR . 'libs/database.php');
+include_once(DIR . 'libs/localisation.php');
 
 include_once(Localisation::getLanguageFile());
 
