@@ -37,7 +37,10 @@ var label = {
 	'CART_DIALOG_EMPTY_TEXT'                     : 'Souhaitez-vous réellement vider votre panier d\'achats?',
 	'CART_DIALOG_REMOVE_PRODUCT_TEXT'            : 'Souhaitez-vous réellement retirer ce produit de votre panier d\'achats?',
 	'CART_DIALOG_REMOVE_PRODUCT_TITLE'           : 'Retirer ce produit?',
-	'CONFIRMATION_REDIRECT'                     : 'Vous serez déconnectez dans [time] secondes...'
+	'CONFIRMATION_REDIRECT'                      : 'Vous serez déconnectez dans [time] secondes...',
+	'CONFIGURATOR_LBL_TYPES_DIALOG_TITLE'        : 'Quel type de produit cherchez-vous?',
+	'CART_DIALOG_CHECKOUT_TEXT'                  : 'Une fois votre commande finalisée, vous ne pourrez plus modifier vos achats.',
+	'CART_DIALOG_CHECKOUT_TITLE'                 : 'Voulez-vous finaliser vos achats?'
 };
 
 var messages = {

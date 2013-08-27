@@ -14,7 +14,7 @@ if (!Security::isAuthenticated()) {
 } else if (Security::getRole() != ROLE_STORE) {
 	$data['success'] = false;
 	$data['message'] = ERROR_REQUIRED_ROLE_STORE;
-	
+
 } else {
 	if (empty($_POST['sku'])) {
 		$data['success'] = false;

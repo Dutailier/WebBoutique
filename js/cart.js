@@ -54,9 +54,40 @@
 
 
 		$('input.btnProceedOrder').click(function () {
-			checkoutTransaction(function () {
-				window.location = 'shippingForm.php';
-			});
+			var $dialog = $(
+				'<div>' +
+				'<p>' + label['CART_DIALOG_CHECKOUT_TEXT'] + '</p>' +
+				'</div>'
+			).dialog({
+					title    : label['CART_DIALOG_CHECKOUT_TITLE'],
+					width    : 500,
+					height   : 230,
+					modal    : true,
+					resizable: false,
+					draggable: false,
+					buttons  : [
+						{
+							'id' : 'dialogYes',
+							text : label['CART_DIALOG_BTN_YES'],
+							click: function () {
+								$('#dialogYes, #dialogNo').button('disable');
+								checkoutTransaction(function () {
+									window.location = 'shippingForm.php';
+								});
+
+								$dialog.dialog('close');
+								$dialog.remove();
+							}},
+						{
+							'id' : 'dialogNo',
+							text : label['CART_DIALOG_BTN_NO'],
+							click: function () {
+								$dialog.dialog('close');
+								$dialog.remove();
+							}
+						}
+					]
+				});
 		});
 	});
 
@@ -333,10 +364,14 @@
 				$('#summary').fadeIn(1000);
 			});
 
+			$('input.btnProceedOrder').prop('disabled', false);
+
 		} else {
 			$('#summary').fadeOut(1000, function () {
 				$('#productsEmpty').fadeIn(1000);
 			});
+
+			$('input.btnProceedOrder').prop('disabled', true);
 		}
 	}
 

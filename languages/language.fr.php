@@ -1,6 +1,7 @@
 <?php
 
 // Menu principal
+define('MENU_LBL_PRODUCTS', 'Produits');
 define('MENU_LBL_CART', 'Panier d\'achats');
 define('MENU_LBL_MANAGER', 'Gestionnaire');
 define('MENU_LBL_LOGOUT', 'Se déconnecter');
@@ -26,6 +27,11 @@ define('CONFIGURATOR_LBL_PIPING_NAME', 'Passepoil :');
 define('CONFIGURATOR_LBL_PRODUCT_PRICE', 'Prix :');
 define('CONFIGURATOR_LBL_SHIPPING_FEE', 'Frais de livraison :');
 define('CONFIGURATOR_BTN_ADD_TO_CART', 'Ajouter au panier');
+define('CONFIGURATOR_LBL_TYPES_DIALOG_TEXT', 'Cliquez sur le type de produit que vous cherchez.');
+define('CONFIGURATOR_LBL_OTTOMAN_INCLUDED', 'Tabouret rembourré :');
+define('CONFIGURATION_LBL_WITH_OTTOMAN', 'Inclu');
+define('CONFIGURATION_LBL_WITHOUT_OTTOMAN', 'Non inclu');
+define('CONFIGURATOR_LBL_PILOW_MATCHED', 'Coussin lombaire :');
 
 // Page du panier d'achats
 define('CART_TITLE', 'Panier d\'achats');
@@ -109,7 +115,7 @@ define('ERROR_REQUIRED_ROLE_STORE', 'Vous devez être authentifié en tant que c
 
 // Erreurs de transaction
 define('ERROR_TRANSACTION_REQUIRED_STATUS_OPEN', 'La transaction doit être préalablement initiée.');
-define('ERROR_TRANSACITON_NO_PRODUCT', 'La transaction doit avoir un minimum un produit.');
+define('ERROR_TRANSACITON_NO_PRODUCT', 'La transaction doit avoir au minimum un produit.');
 define('ERROR_TRANSACTION_TOTAL_PRICE_MAX', 'La transaction ne doit pas dépassé le maximum alloué.');
 define('ERROR_TRANSACTION_REQUIRED_STATUS_CHECKOUT', 'Vous devez au préalable finaliser vos achats.');
 define('ERROR_TRANSACTION_REQUIRED_RECIPIENT_INFO', 'Les informations d\'expédition doivent être complétées.');

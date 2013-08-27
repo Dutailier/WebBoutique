@@ -1,5 +1,9 @@
 (function ($) {
 	$(document).ready(function () {
+		$('#btnProducts').click(function () {
+			window.location = 'productConfigurator.php';
+		});
+
 		$('#btnShoppingCart').click(function () {
 			window.location = 'cart.php';
 		});

@@ -5,6 +5,19 @@ h2 {
 	margin          : 20px 0px 5px 0px;
 }
 
+#typesDialog {
+	text-align : center;
+}
+
+#typesList > div.type {
+	float  : left;
+	margin : 10px 25px;
+}
+
+#typesList > div.type * {
+	cursor : pointer;
+}
+
 ul.bxslider {
 	clear  : none;
 	margin : 0px;
@@ -115,7 +128,8 @@ div.model * {
 	clear  : both;
 }
 
-#configuration > p > select {
+#configuration > p > select,
+#configuration > p > input {
 	float       : right;
 	width       : 215px;
 	margin-left : 10px;

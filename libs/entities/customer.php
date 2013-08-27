@@ -160,7 +160,7 @@ class Customer extends User
 		}
 
 		$phone = preg_replace('/\D/', '', $phone);
-		$phone = strlen($phone) == 10 ? 1 + $phone : $phone;
+		$phone = strlen($phone) == 10 ? 1 . $phone : $phone;
 
 		$this->phone = $phone;
 	}

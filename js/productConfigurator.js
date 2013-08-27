@@ -1,12 +1,25 @@
 (function ($) {
 	var $modelsSlider;
 	var $typesSlider;
-	var modelCode;
-	var productSku;
+
+	var _modelCode;
+	var _product;
+	var _ottoman;
 
 	// Évènements définis une fois le document HTML complètement généré.
 	$(document).ready(function () {
-		updateTypes(function () {
+		updateTypesToTypesList(function () {
+			$('#typesDialog').dialog({
+				title    : label['CONFIGURATOR_LBL_TYPES_DIALOG_TITLE'],
+				width    : 600,
+				height   : 300,
+				modal    : true,
+				resizable: false,
+				draggable: false
+			});
+		});
+
+		updateTypesInSlider(function () {
 			$typesSlider = $('#typesSlider').bxSlider({
 				minSlides          : 1,
 				maxSlides          : 1,
@@ -30,7 +43,7 @@
 							easing             : 'ease-in-out'
 						});
 
-						updateProduct($('div.model').first().data('code'));
+						updateModel($('div.model').first().data('code'));
 					})
 				},
 				onSlideBefore      : function () {
@@ -39,6 +52,7 @@
 
 					updateModelsByTypeCode($type.data('code'), function () {
 						$modelsSlider.reloadSlider();
+						updateModel($('div.model').first().data('code'));
 					});
 				}
 			});
@@ -47,8 +61,23 @@
 
 	// Gère les évènements des éléments générés dynamiquement.
 
+	$(document).on('click', '#typesList > div.type', function () {
+		var $type = $(this);
+
+		$('#typesDialog').dialog('close');
+
+		var slideIndex = $('#typesList').children().index($type);
+		$typesSlider.goToSlide(slideIndex, null);
+	});
+
 	$(document).on('click', 'div.model', function () {
-		updateProduct($(this).data('code'));
+		updateModel($(this).data('code'));
+	});
+
+	$(document).on('change', '#ottomanIncluded', function () {
+		updateOttoman(function () {
+			updateSummary();
+		});
 	});
 
 	$(document).on('change', '#finishsList', function () {
@@ -56,7 +85,7 @@
 		var fabricCode = $('#fabricsList').val();
 		var pipingCode = $('#pipingsList').val();
 
-		updateFabricsListComponent(modelCode, finishCode, pipingCode, function () {
+		updateFabricsListComponent(_modelCode, finishCode, pipingCode, function () {
 			var $fabricsList = $('#fabricsList');
 
 			if ($fabricsList.children().length) {
@@ -67,7 +96,7 @@
 
 			$fabricsList.val(fabricCode);
 
-			updatePipingsListComponent(modelCode, finishCode, fabricCode, function () {
+			updatePipingsListComponent(_modelCode, finishCode, fabricCode, function () {
 				var $pipingsList = $('#pipingsList');
 
 				if ($pipingsList.children().length) {
@@ -78,8 +107,9 @@
 
 				$pipingsList.val(pipingCode);
 
-				getProductInfos(modelCode, finishCode, fabricCode, pipingCode, function (product) {
-					updateProductInfos(product);
+				getProductInfo(_modelCode, finishCode, fabricCode, pipingCode, function (product) {
+					_product = product;
+					updateProductInfo(product);
 				});
 			});
 		});
@@ -91,7 +121,7 @@
 		var fabricCode = $('#fabricsList').val();
 		var pipingCode = $('#pipingsList').val();
 
-		updateFinishsListComponent(modelCode, fabricCode, pipingCode, function () {
+		updateFinishsListComponent(_modelCode, fabricCode, pipingCode, function () {
 			var $finishsList = $('#finishsList');
 
 			if ($finishsList.children().length) {
@@ -102,7 +132,7 @@
 
 			$finishsList.val(finishCode);
 
-			updatePipingsListComponent(modelCode, finishCode, fabricCode, function () {
+			updatePipingsListComponent(_modelCode, finishCode, fabricCode, function () {
 				var $pipingsList = $('#pipingsList');
 
 				if ($pipingsList.children().length) {
@@ -113,8 +143,9 @@
 
 				$pipingsList.val(pipingCode);
 
-				getProductInfos(modelCode, finishCode, fabricCode, pipingCode, function (product) {
-					updateProductInfos(product);
+				getProductInfo(_modelCode, finishCode, fabricCode, pipingCode, function (product) {
+					_product = product;
+					updateProductInfo(product);
 				});
 			});
 		});
@@ -126,7 +157,7 @@
 		var fabricCode = $('#fabricsList').val();
 		var pipingCode = $('#pipingsList').val();
 
-		updateFabricsListComponent(modelCode, finishCode, pipingCode, function () {
+		updateFabricsListComponent(_modelCode, finishCode, pipingCode, function () {
 			var $fabricsList = $('#fabricsList');
 
 			if ($fabricsList.children().length) {
@@ -137,7 +168,7 @@
 
 			$fabricsList.val(fabricCode);
 
-			updateFinishsListComponent(modelCode, fabricCode, pipingCode, function () {
+			updateFinishsListComponent(_modelCode, fabricCode, pipingCode, function () {
 				var $finishsList = $('#finishsList');
 
 				if ($finishsList.children().length) {
@@ -148,8 +179,9 @@
 
 				$finishsList.val(finishCode);
 
-				getProductInfos(modelCode, finishCode, fabricCode, pipingCode, function (product) {
-					updateProductInfos(product);
+				getProductInfo(_modelCode, finishCode, fabricCode, pipingCode, function (product) {
+					_product = product;
+					updateProductInfo(product);
 				});
 			});
 		});
@@ -157,36 +189,17 @@
 
 
 	$(document).on('click', '#addToCart', function () {
-		addProductToCart(productSku, function () {
-			$(
-				'<div>' +
-				'<p>' + label['CART_DIALOG_LBL_ADD_SUCCESFULLY'] + '</p>' +
-				'<p>' + label['CART_DIALOG_LBL_WANT_CONTINUE_SHOPPING'] + '</p>' +
-				'</div>'
-			).dialog({
-					title    : label['CONFIGURATOR_DIALOG_CONTINUE_SHOPPING_TITLE'],
-					width    : 450,
-					height   : 265,
-					modal    : true,
-					resizable: false,
-					draggable: false,
-					buttons  : [
-						{
-							'id' : 'dialogYes',
-							text : label['CART_DIALOG_BTN_YES'],
-							click: function () {
-								$(this).dialog('close');
-							}},
-						{
-							'id' : 'dialogNo',
-							text : label['CART_DIALOG_BTN_NO'],
-							click: function () {
-								$('#dialogYes, #dialogNo').button('disable');
-								window.location = 'cart.php';
-							}
-						}
-					]
+		addProductToCart(_product['sku'], function () {
+
+			// Ajout du tabouret rembourré si inclu.
+			if (_ottoman != undefined) {
+				addProductToCart(_ottoman['sku'], function () {
+					showContinueDialog();
 				});
+			}
+			else {
+				showContinueDialog();
+			}
 		});
 	});
 
@@ -196,7 +209,7 @@
 	 *
 	 * @param callback
 	 */
-	function updateTypes(callback) {
+	function updateTypesInSlider(callback) {
 		$.post('ajax/getTypes.php')
 			.done(function (data) {
 
@@ -241,6 +254,59 @@
 				});
 			})
 	}
+
+
+	/**
+	 * Met à jours la liste des types disponibles.
+	 *
+	 * @param callback
+	 */
+	function updateTypesToTypesList(callback) {
+		$.post('ajax/getTypes.php')
+			.done(function (data) {
+
+				if (data.hasOwnProperty('success') && data['success'] &&
+					data.hasOwnProperty('types')) {
+
+					var types = data['types'];
+
+					for (var i in types) {
+						if (types.hasOwnProperty(i)) {
+							var type = types[i];
+
+							if (type.hasOwnProperty('code') &&
+								type.hasOwnProperty('name')) {
+								addTypeToTypesList(type);
+							}
+						}
+					}
+
+					callback();
+
+				} else if (data.hasOwnProperty('message')) {
+					noty({
+						layout: 'topRight',
+						type  : 'error',
+						text  : data['message']
+					});
+
+				} else {
+					noty({
+						layout: 'topRight',
+						type  : 'error',
+						text  : errors['SERVER_UNREADABLE']
+					});
+				}
+			})
+			.fail(function () {
+				noty({
+					layout: 'topRight',
+					type  : 'error',
+					text  : errors['SERVER_FAILED']
+				});
+			})
+	}
+
 
 	/**
 	 * Met à jour la liste de modèles disponibles pour ce type de produit.
@@ -307,14 +373,15 @@
 	 *
 	 * @param modelCode
 	 */
-	function updateProduct(modelCode) {
+	function updateModel(modelCode) {
 		getModelByCode(modelCode, function (model) {
-			updateModelDetails(model);
+			updateModelInfo(model);
 		});
 
 		updateConfiguration(modelCode, function (modelCode, finishCode, fabricCode, pipingCode) {
-			getProductInfos(modelCode, finishCode, fabricCode, pipingCode, function (product) {
-				updateProductInfos(product);
+			getProductInfo(modelCode, finishCode, fabricCode, pipingCode, function (product) {
+				_product = product;
+				updateProductInfo(product);
 			});
 		});
 	}
@@ -325,12 +392,19 @@
 	 *
 	 * @param product
 	 */
-	function updateProductInfos(product) {
-		productSku = product['sku'];
-
+	function updateProductInfo(product) {
 		$('#productImage').attr('src', 'img/products/' + product['imageName']);
-		$('#productPrice').text(currencyFormat(product['price']));
-		$('#shippingFee').text(currencyFormat(product['shippingFee']));
+
+		if (product.hasOwnProperty('modelCodeMatchingOttoman')) {
+			$('#ottomanIncluded').parent('p').fadeIn(1000);
+
+		} else {
+			$('#ottomanIncluded').parent('p').hide();
+		}
+
+		updateOttoman(function () {
+			updateSummary();
+		});
 	}
 
 
@@ -588,7 +662,7 @@
 	 * @param pipingCode
 	 * @param callback
 	 */
-	function getProductInfos(modelCode, finishCode, fabricCode, pipingCode, callback) {
+	function getProductInfo(modelCode, finishCode, fabricCode, pipingCode, callback) {
 
 		var parameters = {
 			'modelCode' : modelCode,
@@ -639,11 +713,11 @@
 	 *
 	 * @param model
 	 */
-	function updateModelDetails(model) {
+	function updateModelInfo(model) {
 		var $modelName = $('#modelName');
 		var $modelDescription = $('#modelDescription');
 
-		modelCode = model['code'];
+		_modelCode = model['code'];
 		$modelName.html(model['name']);
 		$modelDescription.html(model['description']);
 	}
@@ -697,6 +771,79 @@
 
 
 	/**
+	 * Affiche la fenêtre demandant à l'utilisateur s'il veut poursuivre ses achats.
+	 */
+	function showContinueDialog() {
+		$(
+			'<div>' +
+			'<p>' + label['CART_DIALOG_LBL_ADD_SUCCESFULLY'] + '</p>' +
+			'<p>' + label['CART_DIALOG_LBL_WANT_CONTINUE_SHOPPING'] + '</p>' +
+			'</div>'
+		).dialog({
+				title    : label['CONFIGURATOR_DIALOG_CONTINUE_SHOPPING_TITLE'],
+				width    : 450,
+				height   : 265,
+				modal    : true,
+				resizable: false,
+				draggable: false,
+				buttons  : [
+					{
+						'id' : 'dialogYes',
+						text : label['CART_DIALOG_BTN_YES'],
+						click: function () {
+							$(this).dialog('close');
+						}},
+					{
+						'id' : 'dialogNo',
+						text : label['CART_DIALOG_BTN_NO'],
+						click: function () {
+							$('#dialogYes, #dialogNo').button('disable');
+							window.location = 'cart.php';
+						}
+					}
+				]
+			});
+	}
+
+
+	/**
+	 * Met à jour le tabouret correspondant à la chaise.
+	 */
+	function updateOttoman(callback) {
+		if ($('#ottomanIncluded').val() == 'true') {
+			getProductInfo(
+				_product['modelCodeMatchingOttoman'],
+				_product['finishCode'],
+				_product['fabricCode'],
+				_product['pipingCode'],
+				function (ottoman) {
+					_ottoman = ottoman;
+					callback();
+				});
+		} else {
+			_ottoman = undefined;
+			callback();
+		}
+	}
+
+
+	/**
+	 * Met à jour le sommaire du produit.
+	 */
+	function updateSummary() {
+		var price = parseFloat(_product['price']);
+		var shippingFee = parseFloat(_product['shippingFee']);
+
+		if (_ottoman != undefined) {
+			price += parseFloat(_ottoman['price']);
+			shippingFee += parseFloat(_ottoman['shippingFee']);
+		}
+
+		$('#productPrice').text(currencyFormat(price));
+		$('#shippingFee').text(currencyFormat(shippingFee));
+	}
+
+	/**
 	 * Ajoute un type à la liste de types de produit.
 	 *
 	 * @param type
@@ -711,6 +858,22 @@
 			'</li>'
 		);
 		$type.appendTo('#typesSlider');
+	}
+
+
+	/**
+	 * Ajoute un type à la liste de types de produit.
+	 *
+	 * @param type
+	 */
+	function addTypeToTypesList(type) {
+		var $type = $(
+			'<div class="type" data-code="' + type['code'] + '">' +
+			'<img src="img/types/' + type['code'] + '.png" />' +
+			'<label class="name">' + type['name'] + '</label>' +
+			'</div>'
+		);
+		$type.appendTo('#typesList');
 	}
 
 

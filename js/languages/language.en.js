@@ -37,7 +37,10 @@ var label = {
 	'CART_DIALOG_EMPTY_TEXT'                     : 'Do you really want to clear your shopping cart?',
 	'CART_DIALOG_REMOVE_PRODUCT_TEXT'            : 'Do you really want to remove this product from your shopping cart?',
 	'CART_DIALOG_REMOVE_PRODUCT_TITLE'           : 'Remove this product?',
-	'CONFIRMATION_REDIRECT'                     : 'You will be logged off in [time] seconds...'
+	'CONFIRMATION_REDIRECT'                      : 'You will be logged off in [time] seconds...',
+	'CONFIGURATOR_LBL_TYPES_DIALOG_TITLE'        : 'What kind of product are you looking for?',
+	'CART_DIALOG_CHECKOUT_TEXT'                  : 'Once your order is complete, you can not change your shopping.',
+	'CART_DIALOG_CHECKOUT_TITLE'                 : 'Do you want to complete your purchase?'
 };
 
 var messages = {

@@ -93,7 +93,7 @@
 
 		$('#btnCancel').click(function () {
 			cancelTransaction(function () {
-				window.location = 'productConfigurator.php';
+				window.location = 'cart.php';
 			});
 		});
 

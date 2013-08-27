@@ -67,8 +67,6 @@ if (file_exists($file = DIR . 'pages/' . $page . '.php')) {
 } else {
 	include_once(ERROR_PAGE);
 }
-
-
 ?>
 
 <html>
@@ -117,14 +115,19 @@ if (file_exists($file = DIR . 'pages/' . $page . '.php')) {
 
 			<ul id="menu">
 				<?php if (Security::isAuthenticated()) { ?>
+
 					<?php $role = Security::getRole(); ?>
-					<?php if ($role == ROLE_STORE || ROLE_CUSTOMER) { ?>
+
+					<li><a id="btnProducts"><?php echo MENU_LBL_PRODUCTS; ?></a></li>
+
+					<?php if ($role == ROLE_STORE || $role == ROLE_CUSTOMER) { ?>
 						<li><a id="btnShoppingCart"><?php echo MENU_LBL_CART; ?></a></li>
 					<?php } ?>
 					<?php if ($role == ROLE_ADMINISTRATOR) { ?>
 						<li><a id="btnAdminManager"><?php echo MENU_LBL_MANAGER; ?></a></li>
 					<?php } ?>
 				<?php } ?>
+
 				<?php if ($languageCode == LANGUAGE_ENGLISH) { ?>
 					<li><a id="btnFrench">Français</a></li>
 				<?php } else if ($languageCode == LANGUAGE_FRENCH) { ?>

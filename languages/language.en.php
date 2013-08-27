@@ -1,6 +1,7 @@
 <?php
 
 // Menu principal
+define('MENU_LBL_PRODUCTS', 'Products');
 define('MENU_LBL_CART', 'Shopping Cart');
 define('MENU_LBL_MANAGER', 'Manager');
 define('MENU_LBL_LOGOUT', 'Log Out');
@@ -26,6 +27,11 @@ define('CONFIGURATOR_LBL_PIPING_NAME', 'Piping :');
 define('CONFIGURATOR_LBL_PRODUCT_PRICE', 'Price :');
 define('CONFIGURATOR_LBL_SHIPPING_FEE', 'Shipping Fee :');
 define('CONFIGURATOR_BTN_ADD_TO_CART', 'Add to Cart');
+define('CONFIGURATOR_LBL_TYPES_DIALOG_TEXT', 'Click on the kind of product you are looking for.');
+define('CONFIGURATOR_LBL_OTTOMAN_INCLUDED', 'Upholstered Ottoman :');
+define('CONFIGURATION_LBL_WITH_OTTOMAN', 'Included');
+define('CONFIGURATION_LBL_WITHOUT_OTTOMAN', 'Not Included');
+define('CONFIGURATOR_LBL_PILOW_MATCHED', 'Lombar Pillow :');
 
 // Page du panier d'achats
 define('CART_TITLE', 'Shopping Cart');

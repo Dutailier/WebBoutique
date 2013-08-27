@@ -11,6 +11,14 @@ $title = CONFIGURATOR_TITLE;
 <?php $head = ob_get_contents(); ?>
 <?php ob_clean(); ?>
 
+<div id="typesDialog">
+	<p><?php echo CONFIGURATOR_LBL_TYPES_DIALOG_TEXT; ?></p>
+
+	<div id="typesList">
+
+	</div>
+</div>
+
 <div id="slidersWrapper">
 	<ul id="typesSlider" class="bxslider">
 	</ul>
@@ -43,6 +51,15 @@ $title = CONFIGURATOR_TITLE;
 					<select id="pipingsList"></select>
 					<label for="pipingsList"><?php echo CONFIGURATOR_LBL_PIPING_NAME; ?></label>
 				</p>
+				<br />
+
+				<p>
+					<select id="ottomanIncluded">
+						<option value="false"><?php echo CONFIGURATION_LBL_WITHOUT_OTTOMAN; ?></option>
+						<option value="true"><?php echo CONFIGURATION_LBL_WITH_OTTOMAN; ?></option>
+					</select>
+					<label for="ottomanIncluded"><?php echo CONFIGURATOR_LBL_OTTOMAN_INCLUDED; ?></label>
+				</p>
 			</div>
 			<div id="productCosts">
 				<p>
@@ -57,7 +74,9 @@ $title = CONFIGURATOR_TITLE;
 			</div>
 
 			<div id="summary">
-				<input id="addToCart" type="button" value="<?php echo CONFIGURATOR_BTN_ADD_TO_CART; ?>" />
+				<?php if (Security::getRole() == ROLE_STORE) { ?>
+					<input id="addToCart" type="button" value="<?php echo CONFIGURATOR_BTN_ADD_TO_CART; ?>" />
+				<?php } ?>
 			</div>
 			<div id="warnings">
 				<label><?php echo LBL_WARNING; ?></label>
