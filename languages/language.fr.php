@@ -73,6 +73,10 @@ define('VALIDATION_LBL_SHIP_TO_EMAIL', 'Courriel :');
 define('VALIDATION_BTN_CANCEL', 'Annuler');
 define('VALIDATION_BTN_CONFIRM', 'Confirmer');
 
+// Page de confirmation
+define('CONFIRMATION_TITLE', 'Confirmation');
+define('CONFIRMATION_TEXT', 'Votre commande a bien été traité. Vous recevrez un courriel de confirmation sous peu.');
+
 // Page du gestionnaire pour commerçant
 define('STORE_MANAGER_TITLE', 'Gestionnaire pour commerçant.');
 
@@ -101,6 +105,17 @@ define('ERROR_CREDENTIELS_REQUIRED', 'Le nom d\'utilisateur et le mot de passe s
 define('ERROR_CREDENTIELS_INCORRECT', 'Le nom d\'utilisateur ou le mot de passe est incorrect.');
 define('ERROR_AUTHENTIFICATION_REQUIRED', 'Vous devez être authentifié.');
 define('ERROR_REQUIRED_ROLE_ADMINISTRATOR', 'Vous devez être authentifié en tant qu\'administrateur.');
+define('ERROR_REQUIRED_ROLE_STORE', 'Vous devez être authentifié en tant que commerçant.');
+
+// Erreurs de transaction
+define('ERROR_TRANSACTION_REQUIRED_STATUS_OPEN', 'La transaction doit être préalablement initiée.');
+define('ERROR_TRANSACITON_NO_PRODUCT', 'La transaction doit avoir un minimum un produit.');
+define('ERROR_TRANSACTION_TOTAL_PRICE_MAX', 'La transaction ne doit pas dépassé le maximum alloué.');
+define('ERROR_TRANSACTION_REQUIRED_STATUS_CHECKOUT', 'Vous devez au préalable finaliser vos achats.');
+define('ERROR_TRANSACTION_REQUIRED_RECIPIENT_INFO', 'Les informations d\'expédition doivent être complétées.');
+define('ERROR_TRANSACTION_REQUIRED_SHIPPING_INFO', 'Les informations d\'expédition doivent être complétées.');
+define('ERROR_TRANSACTION_REQUIRED_STATUS_FINALIZED', 'Les informations d\'expédition doivent être confirmées.');
+define('ERROR_TRANSACTION_STATUS_INVALID', 'Le statut inscrit est invalide.');
 
 // Erreurs AJAX
 define('ERROR_REQUIRED_LANGUAGE_CODE', 'Le code de la langue est requis.');
@@ -122,14 +137,6 @@ define('ERROR_REQUIRED_COUNTRY_CODE', 'Le pays est requis.');
 define('ERROR_REQUIRED_EMAIL', 'Le courriel est requis.');
 define('ERROR_REQUIRED_PHONE', 'Le numéro de téléphone est requis.');
 define('ERROR_REQUIRED_QUANTITY', 'Une quantité est requise.');
-
-// Erreurs de transaction
-define('ERROR_TRANSACTION_ALREADY_CHECKOUT', 'Vous avez déjà finalisé vos achats.');
-define('ERROR_TRANSACTION_ALREADY_COMPLETE', 'Les informations d\'expédition ont déjà été inscrites.');
-define('ERROR_TRANSACTION_STATUS_INVALID', 'Le statut n\'est pas valide.');
-define('ERROR_TRANSACTION_ALREADY_OPEN', 'La transaction a déjà débuté.');
-define('ERROR_TRANSACTION_TOTAL_PRICE_MAX', 'Le total de la transaction est supérieur à ' . TOTAL_PRICE_MAX . '.');
-define('ERROR_TRANSACITON_NO_PRODUCT', 'La commande doit avoir au moins un produit.');
 
 // Erreurs d'entités
 define('ERROR_USER_DOESNT_EXIST', 'L\'utilisteur n\'existe pas.');

@@ -11,8 +11,8 @@ include_once(DIR . 'libs/repositories/shippingInfos.php');
 
 define('TRANSACTION_STATUS_OPEN', 0); // L'utilisateur peut configurer différents produits.
 define('TRANSACTION_STATUS_CHECKOUT', 1); // L'utilisateur à complété ses achats.
-define('TRANSACTION_STATUS_READY_TO_PAY', 2); // L'utilisateur a terminé de magasiner et est prêt à payer.
-define('TRANSACTION_STATUS_PAYMENT_IS_COMPLETE', 3); // La paiement est complété, une confirmation peut être affichée.
+define('TRANSACTION_STATUS_FINALIZED', 2); // Les informations ont été remplis.
+define('TRANSACTION_STATUS_CONFIRMED', 3); // L'utilisateur a terminé de magasiner et est prêt à payer.
 
 /**
  * Class SessionTransaction
@@ -74,7 +74,6 @@ class SessionTransaction
 			'status'        => $this->getStatus(),
 			'user'          => $this->getUser()->getInfoArray(),
 			'address'       => $this->getUser()->getAddress()->getInfoArray(),
-			'order'         => $this->getOrder()->getInfoArray(),
 			'recipientInfo' => $this->getRecipientInfo()->getInfoArray(),
 			'shippingInfo'  => $this->getShippingInfo()->getInfoArray(),
 			'summary'       => array(
@@ -84,8 +83,10 @@ class SessionTransaction
 		);
 
 		foreach ($this->getLines() as $line) {
-			$product = $line->getProduct();
-			$model   = $product->getModel();
+			$product = Products::Find(
+				$line->getProductSku(),
+				$this->getUser()->getId()
+			);
 
 			$infos['lines'][] = array_merge(
 				$line->getInfoArray(),
@@ -93,9 +94,13 @@ class SessionTransaction
 					'product' => array_merge(
 						$product->getInfoArray(),
 						array(
-							'model' => $model->getInfoArray()
+							'model' => $product->getModel()->getInfoArray()
 						))
 				));
+		}
+
+		if ($this->getStatus() >= TRANSACTION_STATUS_CONFIRMED) {
+			$infos['order'] = $this->getOrder()->getInfoArray();
 		}
 
 		return $infos;
@@ -144,7 +149,7 @@ class SessionTransaction
 	 */
 	public function Close()
 	{
-		$this->ClearCart();
+		$this->cart->Clear();
 		$this->Cancel();
 	}
 
@@ -155,8 +160,8 @@ class SessionTransaction
 	 */
 	public function Checkout()
 	{
-		if ($this->getStatus() >= TRANSACTION_STATUS_CHECKOUT) {
-			throw new Exception(ERROR_TRANSACTION_ALREADY_CHECKOUT);
+		if ($this->getStatus() != TRANSACTION_STATUS_OPEN) {
+			throw new Exception(ERROR_TRANSACTION_REQUIRED_STATUS_OPEN);
 		}
 
 		$items = $this->getItems();
@@ -194,16 +199,40 @@ class SessionTransaction
 
 
 	/**
-	 * Exécute la transaction.
+	 * Finalise la transaction.
+	 *
+	 * @throws Exception
+	 */
+	public function Finalize()
+	{
+		if ($this->getStatus() != TRANSACTION_STATUS_CHECKOUT) {
+			throw new Exception(ERROR_TRANSACTION_REQUIRED_STATUS_CHECKOUT);
+		}
+
+		if (empty($this->recipientInfo)) {
+			throw new Exception(ERROR_TRANSACTION_REQUIRED_RECIPIENT_INFO);
+		}
+
+		if (empty($this->shippingInfo)) {
+			throw new Exception(ERROR_TRANSACTION_REQUIRED_SHIPPING_INFO);
+		}
+
+		$this->setStatus(TRANSACTION_STATUS_FINALIZED);
+		$this->Save();
+	}
+
+
+	/**
+	 * Confirme la transaction.
 	 * - Ajoute la commande à la base de données.
 	 * - Ajoute les informations du destinateur à la base de données.
 	 * - Ajoute les informations d'expédition à la base de données.
 	 * - Ajoute les lignes de commande à la base de données.
 	 */
-	public function ReadyToPay()
+	public function Confirm()
 	{
-		if ($this->getStatus() >= TRANSACTION_STATUS_READY_TO_PAY) {
-			throw new Exception(ERROR_TRANSACTION_ALREADY_COMPLETE);
+		if ($this->getStatus() != TRANSACTION_STATUS_FINALIZED) {
+			throw new Exception(ERROR_TRANSACTION_REQUIRED_STATUS_FINALIZED);
 		}
 
 		// Crée et ajoute la commande à la base de données.
@@ -226,7 +255,7 @@ class SessionTransaction
 			$line = Lines::Attach($line);
 		}
 
-		$this->setStatus(TRANSACTION_STATUS_READY_TO_PAY);
+		$this->setStatus(TRANSACTION_STATUS_CONFIRMED);
 		$this->Save();
 	}
 
@@ -241,8 +270,8 @@ class SessionTransaction
 	 */
 	public function addProductToCart($sku)
 	{
-		if ($this->getStatus() >= TRANSACTION_STATUS_CHECKOUT) {
-			throw new Exception(ERROR_TRANSACTION_ALREADY_CHECKOUT);
+		if ($this->getStatus() != TRANSACTION_STATUS_OPEN) {
+			throw new Exception(ERROR_TRANSACTION_REQUIRED_STATUS_OPEN);
 		}
 
 		$product = Products::Find($sku, $this->getUser()->getId());
@@ -266,8 +295,8 @@ class SessionTransaction
 	 */
 	public function setQuantityOfProduct($sku, $quantity)
 	{
-		if ($this->getStatus() >= TRANSACTION_STATUS_CHECKOUT) {
-			throw new Exception(ERROR_TRANSACTION_ALREADY_CHECKOUT);
+		if ($this->getStatus() != TRANSACTION_STATUS_OPEN) {
+			throw new Exception(ERROR_TRANSACTION_REQUIRED_STATUS_OPEN);
 		}
 
 		$product = Products::Find($sku, $this->getUser()->getId());
@@ -288,8 +317,8 @@ class SessionTransaction
 	 */
 	public function ClearCart()
 	{
-		if ($this->getStatus() >= TRANSACTION_STATUS_CHECKOUT) {
-			throw new Exception(ERROR_TRANSACTION_ALREADY_CHECKOUT);
+		if ($this->getStatus() != TRANSACTION_STATUS_OPEN) {
+			throw new Exception(ERROR_TRANSACTION_REQUIRED_STATUS_OPEN);
 		}
 
 		$this->cart->Clear();
@@ -305,8 +334,8 @@ class SessionTransaction
 	 */
 	public function getItems()
 	{
-		if ($this->getStatus() >= TRANSACTION_STATUS_CHECKOUT) {
-			throw new Exception(ERROR_TRANSACTION_ALREADY_CHECKOUT);
+		if ($this->getStatus() != TRANSACTION_STATUS_OPEN) {
+			throw new Exception(ERROR_TRANSACTION_REQUIRED_STATUS_OPEN);
 		}
 
 		return $this->cart->getItems();
@@ -353,8 +382,8 @@ class SessionTransaction
 	 */
 	private function setUser($user)
 	{
-		if ($this->getStatus() > TRANSACTION_STATUS_OPEN) {
-			throw new Exception(ERROR_TRANSACTION_ALREADY_OPEN);
+		if ($this->getStatus() != TRANSACTION_STATUS_OPEN) {
+			throw new Exception(ERROR_TRANSACTION_REQUIRED_STATUS_OPEN);
 		}
 
 		$this->user = $user;
@@ -407,8 +436,8 @@ class SessionTransaction
 	 */
 	public function setStoreInfo($languageCode, $name, $phone, $email)
 	{
-		if ($this->getStatus() >= TRANSACTION_STATUS_READY_TO_PAY) {
-			throw new Exception(ERROR_TRANSACTION_ALREADY_COMPLETE);
+		if ($this->getStatus() != TRANSACTION_STATUS_CHECKOUT) {
+			throw new Exception(ERROR_TRANSACTION_REQUIRED_STATUS_CHECKOUT);
 		}
 
 		$this->recipientInfo = new RecipientInfo(
@@ -439,8 +468,8 @@ class SessionTransaction
 	 */
 	public function setCustomerInfo($languageCode, $greeting, $firstname, $lastname, $phone, $email)
 	{
-		if ($this->getStatus() >= TRANSACTION_STATUS_READY_TO_PAY) {
-			throw new Exception(ERROR_TRANSACTION_ALREADY_COMPLETE);
+		if ($this->getStatus() != TRANSACTION_STATUS_CHECKOUT) {
+			throw new Exception(ERROR_TRANSACTION_REQUIRED_STATUS_CHECKOUT);
 		}
 
 		$this->recipientInfo = new RecipientInfo(
@@ -480,8 +509,8 @@ class SessionTransaction
 	 */
 	public function setShippingInfo($street, $city, $zipCode, $stateCode)
 	{
-		if ($this->getStatus() >= TRANSACTION_STATUS_READY_TO_PAY) {
-			throw new Exception(ERROR_TRANSACTION_ALREADY_COMPLETE);
+		if ($this->getStatus() != TRANSACTION_STATUS_CHECKOUT) {
+			throw new Exception(ERROR_TRANSACTION_REQUIRED_STATUS_CHECKOUT);
 		}
 
 		$this->shippingInfo = new ShippingInfo(

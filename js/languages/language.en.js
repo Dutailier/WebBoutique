@@ -36,7 +36,8 @@ var label = {
 	'CART_DIALOG_EMPTY_TITLE'                    : 'Clear?',
 	'CART_DIALOG_EMPTY_TEXT'                     : 'Do you really want to clear your shopping cart?',
 	'CART_DIALOG_REMOVE_PRODUCT_TEXT'            : 'Do you really want to remove this product from your shopping cart?',
-	'CART_DIALOG_REMOVE_PRODUCT_TITLE'           : 'Remove this product?'
+	'CART_DIALOG_REMOVE_PRODUCT_TITLE'           : 'Remove this product?',
+	'CONFIRMATION_REDIRECT'                     : 'You will be logged off in [time] seconds...'
 };
 
 var messages = {

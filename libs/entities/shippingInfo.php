@@ -6,6 +6,9 @@
  */
 class ShippingInfo
 {
+	const REGEX_ZIP_CODE_CA = '/^[a-z][0-9][a-z](\s)?[0-9][a-z][0-9]$/i';
+	const REGEX_ZIP_CODE_US = '/^[0-9]{5}$/';
+
 	private $orderId;
 	private $street;
 	private $city;
@@ -34,8 +37,8 @@ class ShippingInfo
 	{
 		$this->setStreet($street);
 		$this->setCity($city);
-		$this->setZipCode($zipCode);
 		$this->setStateCode($stateCode);
+		$this->setZipCode($zipCode);
 	}
 
 
@@ -129,7 +132,26 @@ class ShippingInfo
 	 */
 	public function setZipCode($zipCode)
 	{
-		$this->zipCode = $zipCode;
+		include_once(DIR . 'libs/entities/country.php');
+		include_once(DIR . 'libs/repositories/states.php');
+
+		switch (States::find($this->getStateCode())->getCountryCode()) {
+			case CANADA_CODE :
+				if (!preg_match(self::REGEX_ZIP_CODE_CA, $zipCode)) {
+					throw new Exception(ERROR_ADDRESS_ZIP_CODE_CA_INVALID);
+				}
+
+				$this->zipCode = preg_replace('/\s/', '', $zipCode);
+				break;
+
+			case UNITED_STATES_CODE:
+				if (!preg_match(self::REGEX_ZIP_CODE_US, $zipCode)) {
+					throw new Exception(ERROR_ADDRESS_ZIP_CODE_US_INVALID);
+				}
+
+				$this->zipCode = $zipCode;
+				break;
+		}
 	}
 
 

@@ -11,6 +11,10 @@ if (!Security::isAuthenticated()) {
 	$data['success'] = false;
 	$data['message'] = ERROR_AUTHENTIFICATION_REQUIRED;
 
+} else if (Security::getRole() != ROLE_STORE) {
+	$data['success'] = false;
+	$data['message'] = ERROR_REQUIRED_ROLE_STORE;
+	
 } else {
 	// Nom d'expédition
 	if (empty($_POST['greeting'])) {
@@ -71,7 +75,7 @@ if (!Security::isAuthenticated()) {
 				$_POST['stateCode']
 			);
 
-			$transaction->ReadyToPay();
+			$transaction->Finalize();
 
 			$data['success'] = true;
 

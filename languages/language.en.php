@@ -70,8 +70,12 @@ define('VALIDATION_LBL_SHIP_TO_NAME', 'Name :');
 define('VALIDATION_LBL_SHIP_TO_ADDRESS', 'Address :');
 define('VALIDATION_LBL_SHIP_TO_PHONE', 'Phone :');
 define('VALIDATION_LBL_SHIP_TO_EMAIL', 'Email :');
-define('VALIDATION_BTN_CANCEL', 'Annuler');
-define('VALIDATION_BTN_CONFIRM', 'Confirmer');
+define('VALIDATION_BTN_CANCEL', 'Cancel');
+define('VALIDATION_BTN_CONFIRM', 'Confirm');
+
+// Page de confirmation
+define('CONFIRMATION_TITLE', 'Confirmation');
+define('CONFIRMATION_TEXT', 'Your order been processed. You will receive a confirmation email shortly.');
 
 // Page du gestionnaire pour commerçant
 define('STORE_MANAGER_TITLE', 'Store Manager');
@@ -122,15 +126,18 @@ define('ERROR_CREDENTIELS_REQUIRED', 'Username and password are required.');
 define('ERROR_CREDENTIELS_INCORRECT', 'Username or password incorrect.');
 define('ERROR_AUTHENTIFICATION_REQUIRED', 'Your authentification is required.');
 define('ERROR_REQUIRED_ROLE_ADMINISTRATOR', 'You must be authenficated as administrator.');
+define('ERROR_REQUIRED_ROLE_STORE', 'You must be authenficated as store.');
+
 
 // Erreurs de transaction
-define('ERROR_TRANSACTION_ALREADY_CHECKOUT', 'You have already checkout.');
-define('ERROR_TRANSACTION_ALREADY_COMPLETE', 'You have already complete the recipient and shipping information.');
+define('ERROR_TRANSACTION_REQUIRED_STATUS_OPEN', 'The transaction must be previously initiated.');
+define('ERROR_TRANSACITON_NO_PRODUCT', 'The transaction must be at least one product.');
+define('ERROR_TRANSACTION_TOTAL_PRICE_MAX', 'The transaction does not exceed the maximum allowed.');
+define('ERROR_TRANSACTION_REQUIRED_STATUS_CHECKOUT', 'You must first complete your purchases.');
+define('ERROR_TRANSACTION_REQUIRED_RECIPIENT_INFO', 'The shipping information must be completed.');
+define('ERROR_TRANSACTION_REQUIRED_SHIPPING_INFO', 'The shipping information must be completed.');
+define('ERROR_TRANSACTION_REQUIRED_STATUS_FINALIZED', 'The shipping information must be confirmed.');
 define('ERROR_TRANSACTION_STATUS_INVALID', 'The status is invalid.');
-define('ERROR_TRANSACTION_ALREADY_OPEN', 'The transaction is already open.');
-define('ERROR_TRANSACTION_TOTAL_PRICE_MAX', 'The total price of the transaction is higher to ' . TOTAL_PRICE_MAX . '.');
-define('ERROR_TRANSACITON_NO_PRODUCT', 'The order must be at least one product.');
-
 
 // Erreurs d'entités
 define('ERROR_USER_DOESNT_EXIST', 'The user doesn\'t exist.');

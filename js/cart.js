@@ -54,7 +54,7 @@
 
 
 		$('input.btnProceedOrder').click(function () {
-			checkout(function () {
+			checkoutTransaction(function () {
 				window.location = 'shippingForm.php';
 			});
 		});
@@ -237,44 +237,6 @@
 	function clearCart(callback) {
 
 		$.post('ajax/clearCart.php')
-			.done(function (data) {
-
-				if (data.hasOwnProperty('success') && data['success']) {
-
-					callback();
-
-				} else if (data.hasOwnProperty('message')) {
-					noty({
-						layout: 'topRight',
-						type  : 'error',
-						text  : data['message']
-					});
-
-				} else {
-					noty({
-						layout: 'topRight',
-						type  : 'error',
-						text  : errors['SERVER_UNREADABLE']
-					});
-				}
-			})
-			.fail(function () {
-				noty({
-					layout: 'topRight',
-					type  : 'error',
-					text  : errors['SERVER_FAILED']
-				});
-			});
-	}
-
-
-	/**
-	 * Procède à la transaction.
-	 *
-	 * @param callback
-	 */
-	function checkout(callback) {
-		$.post('ajax/checkout.php')
 			.done(function (data) {
 
 				if (data.hasOwnProperty('success') && data['success']) {

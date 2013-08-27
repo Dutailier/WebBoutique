@@ -36,7 +36,8 @@ var label = {
 	'CART_DIALOG_EMPTY_TITLE'                    : 'Vider?',
 	'CART_DIALOG_EMPTY_TEXT'                     : 'Souhaitez-vous réellement vider votre panier d\'achats?',
 	'CART_DIALOG_REMOVE_PRODUCT_TEXT'            : 'Souhaitez-vous réellement retirer ce produit de votre panier d\'achats?',
-	'CART_DIALOG_REMOVE_PRODUCT_TITLE'           : 'Retirer ce produit?'
+	'CART_DIALOG_REMOVE_PRODUCT_TITLE'           : 'Retirer ce produit?',
+	'CONFIRMATION_REDIRECT'                     : 'Vous serez déconnectez dans [time] secondes...'
 };
 
 var messages = {

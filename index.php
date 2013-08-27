@@ -31,17 +31,27 @@ if (!Security::isAuthenticated()) {
 			}
 			break;
 
+		case 'cart':
+		case 'validation';
+		case 'confirmation':
 		case 'shippingForm' :
 		case 'productConfigurator':
 			$transaction = new SessionTransaction();
 
 			switch ($transaction->getStatus()) {
 				case TRANSACTION_STATUS_OPEN:
-					$page = 'productConfigurator';
+					if ($page != 'cart') {
+						$page = 'productConfigurator';
+					}
 					break;
 				case TRANSACTION_STATUS_CHECKOUT:
 					$page = 'shippingForm';
 					break;
+				case TRANSACTION_STATUS_FINALIZED:
+					$page = 'validation';
+					break;
+				case TRANSACTION_STATUS_CONFIRMED:
+					$page = 'confirmation';
 			}
 			break;
 	}
@@ -108,7 +118,7 @@ if (file_exists($file = DIR . 'pages/' . $page . '.php')) {
 			<ul id="menu">
 				<?php if (Security::isAuthenticated()) { ?>
 					<?php $role = Security::getRole(); ?>
-					<?php if ($role == ROLE_ADMINISTRATOR || ROLE_STORE || ROLE_CUSTOMER) { ?>
+					<?php if ($role == ROLE_STORE || ROLE_CUSTOMER) { ?>
 						<li><a id="btnShoppingCart"><?php echo MENU_LBL_CART; ?></a></li>
 					<?php } ?>
 					<?php if ($role == ROLE_ADMINISTRATOR) { ?>
@@ -142,6 +152,7 @@ if (file_exists($file = DIR . 'pages/' . $page . '.php')) {
 	<script src="js/languages/language.<?php echo strtolower($languageCode); ?>.js" charset="utf8"></script>
 	<script src="js/format.<?php echo strtolower($languageCode); ?>.js"></script>
 	<script src="js/global/url.js"></script>
+	<script src="js/security.js"></script>
 	<script src="js/menu.js"></script>
 
 </body>

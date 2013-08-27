@@ -198,7 +198,7 @@ class Line
 	 */
 	public function getTotalPrice()
 	{
-		return $this->getQuantity() * $this->getProduct()->getPrice();
+		return $this->getQuantity() * $this->getUnitPrice();
 	}
 
 
@@ -209,7 +209,7 @@ class Line
 	 */
 	public function getTotalShippingFee()
 	{
-		return $this->getQuantity() * $this->getProduct()->getShippingFee();
+		return $this->getQuantity() * $this->getUnitShippingFee();
 	}
 
 

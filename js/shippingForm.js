@@ -318,7 +318,7 @@
 			'phone'    : $('#txtPhone').val()
 		};
 
-		$.post('ajax/readyToPay.php', informations)
+		$.post('ajax/finalizeTransaction.php', informations)
 			.done(function (data) {
 
 				if (data.hasOwnProperty('success') && data['success']) {

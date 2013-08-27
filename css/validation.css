@@ -8,7 +8,6 @@
 	margin          : 0px 20px;
 }
 
-
 #btnConfirm {
 	float : right;
 	width : 200px;
@@ -50,7 +49,8 @@ fieldset p label.value {
 
 #userInfo,
 #shipToInfo {
-	width : 428px;
+	margin-top : 25px;
+	width      : 428px;
 }
 
 hr {

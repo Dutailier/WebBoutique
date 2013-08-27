@@ -2,11 +2,17 @@
 	$(document).ready(function () {
 		updateTransactionInfo();
 
-		$('#btnCancel').click(function() {
+		$('#btnCancel').click(function () {
 			cancelTransaction(function () {
 				window.location = 'productConfigurator.php';
 			});
-		})
+		});
+
+		$('#btnConfirm').click(function () {
+			confirmTransaction(function () {
+				window.location = 'confirmation.php';
+			});
+		});
 	});
 
 
