@@ -262,4 +262,18 @@ class RecipientInfo
 	{
 		return $this->email;
 	}
+
+
+	/**
+	 * Retourne le nom du consommateur.
+	 *
+	 * @return string
+	 */
+	public function getFullName()
+	{
+		return
+			$this->getGreeting() . ' ' .
+			$this->getFirstname() . ' ' .
+			$this->getLastname();
+	}
 }

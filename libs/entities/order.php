@@ -259,4 +259,57 @@ class Order
 
 		return ShippingInfos::Find($this->getUserId());
 	}
+
+
+	/**
+	 * Retourne le sous-total de la commande.
+	 *
+	 * @return int
+	 */
+	public function getSubTotal()
+	{
+		$subTotal = 0;
+
+		include_once(DIR . 'libs/repositories/lines.php');
+
+		$lines = Lines::FilterByOrderId($this->getId());
+
+		foreach ($lines as $line) {
+			$subtotal += $line->getTotalPrice();
+		}
+
+		return $subTotal;
+	}
+
+
+	/**
+	 * Retourne le totals des frais d'expédition.
+	 *
+	 * @return int
+	 */
+	public function getTotalShippingFee()
+	{
+		$totalShippingFee = 0;
+
+		include_once(DIR . 'libs/repositories/lines.php');
+
+		$lines = Lines::FilterByOrderId($this->getId());
+
+		foreach ($lines as $line) {
+			$totalShippingFee += $line->getTotalShippingFee();
+		}
+
+		return $totalShippingFee;
+	}
+
+
+	/**
+	 * Retourne le total de la commande.
+	 *
+	 * @return int
+	 */
+	public function getTotal()
+	{
+		return $this->getSubTotal() + $this->getTotalShippingFee();
+	}
 }

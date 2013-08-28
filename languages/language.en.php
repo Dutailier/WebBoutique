@@ -144,6 +144,7 @@ define('ERROR_TRANSACTION_REQUIRED_RECIPIENT_INFO', 'The shipping information mu
 define('ERROR_TRANSACTION_REQUIRED_SHIPPING_INFO', 'The shipping information must be completed.');
 define('ERROR_TRANSACTION_REQUIRED_STATUS_FINALIZED', 'The shipping information must be confirmed.');
 define('ERROR_TRANSACTION_STATUS_INVALID', 'The status is invalid.');
+define('ERROR_TRANSACTION_FILE_CANNOT_OPEN', 'The file cannot be open.');
 
 // Erreurs d'entités
 define('ERROR_USER_DOESNT_EXIST', 'The user doesn\'t exist.');

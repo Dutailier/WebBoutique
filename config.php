@@ -14,3 +14,6 @@ define('DB_USERNAME', 'hlapointe');
 define('DB_PASSWORD', 'hlapointe');
 
 define('TOTAL_PRICE_MAX', 5000);
+
+define('ORDER_FILE_PATH', DIR . 'orders/');
+define('SHIPPING_CODE', '040');

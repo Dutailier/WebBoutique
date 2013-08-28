@@ -374,12 +374,14 @@
 	 * @param modelCode
 	 */
 	function updateModel(modelCode) {
-		getModelByCode(modelCode, function (model) {
+		_modelCode = modelCode;
+
+		getModelByCode(_modelCode, function (model) {
 			updateModelInfo(model);
 		});
 
-		updateConfiguration(modelCode, function (modelCode, finishCode, fabricCode, pipingCode) {
-			getProductInfo(modelCode, finishCode, fabricCode, pipingCode, function (product) {
+		updateConfiguration(_modelCode, function (finishCode, fabricCode, pipingCode) {
+			getProductInfo(_modelCode, finishCode, fabricCode, pipingCode, function (product) {
 				_product = product;
 				updateProductInfo(product);
 			});
@@ -395,11 +397,14 @@
 	function updateProductInfo(product) {
 		$('#productImage').attr('src', 'img/products/' + product['imageName']);
 
+		var $ottomanIncluded = $('#ottomanIncluded');
+
 		if (product.hasOwnProperty('modelCodeMatchingOttoman')) {
-			$('#ottomanIncluded').parent('p').fadeIn(1000);
+			$ottomanIncluded.parent('p').fadeIn(1000);
 
 		} else {
-			$('#ottomanIncluded').parent('p').hide();
+			$ottomanIncluded.parent('p').hide();
+			$ottomanIncluded.val(false);
 		}
 
 		updateOttoman(function () {
@@ -717,7 +722,6 @@
 		var $modelName = $('#modelName');
 		var $modelDescription = $('#modelDescription');
 
-		_modelCode = model['code'];
 		$modelName.html(model['name']);
 		$modelDescription.html(model['description']);
 	}
@@ -763,7 +767,7 @@
 
 					var pipingCode = $pipingsList.find('option:selected').val();
 
-					callback(modelCode, finishCode, fabricCode, pipingCode);
+					callback(finishCode, fabricCode, pipingCode);
 				});
 			});
 		});

@@ -57,8 +57,7 @@ class Customer extends User
 	 *
 	 * @return array
 	 */
-	public
-	function getInfoArray()
+	public function getInfoArray()
 	{
 		return array_merge(
 			parent::getInfoArray(),
@@ -78,8 +77,7 @@ class Customer extends User
 	 *
 	 * @param mixed $greeting
 	 */
-	private
-	function setGreeting($greeting)
+	private function setGreeting($greeting)
 	{
 		$this->greeting = $greeting;
 	}
@@ -90,8 +88,7 @@ class Customer extends User
 	 *
 	 * @return mixed
 	 */
-	public
-	function getGreeting()
+	public function getGreeting()
 	{
 		return $this->greeting;
 	}
@@ -102,8 +99,7 @@ class Customer extends User
 	 *
 	 * @param mixed $firstname
 	 */
-	private
-	function setFirstname($firstname)
+	private function setFirstname($firstname)
 	{
 		$this->firstname = $firstname;
 	}
@@ -114,8 +110,7 @@ class Customer extends User
 	 *
 	 * @return mixed
 	 */
-	public
-	function getFirstname()
+	public function getFirstname()
 	{
 		return $this->firstname;
 	}
@@ -126,8 +121,7 @@ class Customer extends User
 	 *
 	 * @param mixed $lastname
 	 */
-	private
-	function setLastname($lastname)
+	private function setLastname($lastname)
 	{
 		$this->lastname = $lastname;
 	}
@@ -138,8 +132,7 @@ class Customer extends User
 	 *
 	 * @return mixed
 	 */
-	public
-	function getLastname()
+	public function getLastname()
 	{
 		return $this->lastname;
 	}
@@ -152,8 +145,7 @@ class Customer extends User
 	 *
 	 * @throws Exception
 	 */
-	private
-	function setPhone($phone)
+	private function setPhone($phone)
 	{
 		if (!preg_match(self::REGEX_PHONE, $phone)) {
 			throw new Exception(ERROR_STORE_PHONE_INVALID);
@@ -171,8 +163,7 @@ class Customer extends User
 	 *
 	 * @return mixed
 	 */
-	public
-	function getPhone()
+	public function getPhone()
 	{
 		return $this->phone;
 	}
@@ -185,8 +176,7 @@ class Customer extends User
 	 *
 	 * @throws Exception
 	 */
-	private
-	function setEmail($email)
+	private function setEmail($email)
 	{
 		if (!preg_match(self::REGEX_EMAIL, $email)) {
 			throw new Exception(ERROR_STORE_EMAIL_INVALID);
@@ -201,11 +191,22 @@ class Customer extends User
 	 *
 	 * @return mixed
 	 */
-	public
-	function getEmail()
+	public function getEmail()
 	{
 		return $this->email;
 	}
 
 
+	/**
+	 * Retourne le nom du consommateur.
+	 *
+	 * @return string
+	 */
+	public function getFullName()
+	{
+		return
+			$this->getGreeting() . ' ' .
+			$this->getFirstname() . ' ' .
+			$this->getLastname();
+	}
 }

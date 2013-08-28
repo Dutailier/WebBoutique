@@ -122,6 +122,7 @@ define('ERROR_TRANSACTION_REQUIRED_RECIPIENT_INFO', 'Les informations d\'expédi
 define('ERROR_TRANSACTION_REQUIRED_SHIPPING_INFO', 'Les informations d\'expédition doivent être complétées.');
 define('ERROR_TRANSACTION_REQUIRED_STATUS_FINALIZED', 'Les informations d\'expédition doivent être confirmées.');
 define('ERROR_TRANSACTION_STATUS_INVALID', 'Le statut inscrit est invalide.');
+define('ERROR_TRANSACTION_FILE_CANNOT_OPEN', 'Le fichier ne peut pas être ouvert.');
 
 // Erreurs AJAX
 define('ERROR_REQUIRED_LANGUAGE_CODE', 'Le code de la langue est requis.');

@@ -255,8 +255,81 @@ class SessionTransaction
 			$line = Lines::Attach($line);
 		}
 
+		$this->createFile(); // Création du fichier texte de la commande.
 		$this->setStatus(TRANSACTION_STATUS_CONFIRMED);
 		$this->Save();
+	}
+
+
+	/**
+	 * Crée le fichier texte qui sera transmit au système 1010.
+	 * Le format du fichier ainsi créé est définit par le système 1010. Surtout,
+	 * ne pas modifier celui-ci.
+	 *
+	 * @throws Exception
+	 */
+	private function createFile()
+	{
+		$filename = ORDER_FILE_PATH . $this->order->getNumber() . ".txt";
+
+		// Ouverture ou création du fichier texte.
+		$file = fopen($filename, 'w');
+
+		if (empty($file)) {
+			throw new Exception(ERROR_TRANSACTION_FILE_CANNOT_OPEN);
+		}
+
+		$user          = & $this->user;
+		$order         = & $this->order;
+		$recipientInfo = & $this->recipientInfo;
+		$shippingInfo  = & $this->shippingInfo;
+		$line          = & $this->lines[0];
+		$product       = $line->getProduct();
+
+		$text = // Première ligne du fichier.
+			$user->getRef() . "\t" . //.................................. Référence 1010 du commerçant.
+			$order->getNumber() . "\t" . //.............................. Numéro de commande.
+			$user->getEmail() . "\t" . //................................ Adresse courriel du commerçant.
+			$recipientInfo->getFullName() . "\t" . //.................... Nom complet (incluant la salutation) du consommateur.
+			$recipientInfo->getPhone() . "\t" . //....................... Numéro de téléphone du consommateur.
+			$shippingInfo->getStreet() . "\t\t" . //..................... Adresse civique du consommateur.
+			$shippingInfo->getCity() . "\t" . //......................... Ville du consommateur.
+			$shippingInfo->getStateCode() . "\t" . //.................... État ou province du consommateur.
+			$shippingInfo->getZipCode() . "\t" . //...................... Code postal du consommateur.
+			$line->getProductSku() . "\t" . //........................... Numéro de produit commandé.
+			$line->getQuantity() . "\t" . //............................. Quantity du produit commandé.
+			number_format($line->getUnitPrice(), 2) . "\t" . //.......... Prix unitaire du produit commandé.
+			SHIPPING_CODE . "\t" . //.................................... Code d"expédition (frais divers).
+			number_format($order->getTotalShippingFee(), 2) . "\t" . //.. Total des frais d"expédition.
+			(method_exists($product, 'getPipingCode') ? //............... Si n'est pas un coussin lombaire.
+				$product->getPipingCode() : '') . "\r\n"; //............. Code du fini du produit commandé.
+
+		for ($i = 1; $i < count($this->lines); $i++) {
+			$line    = & $this->lines[$i];
+			$product = $line->getProduct();
+
+			$text .= // Autres lignes du fichier.
+				$user->getRef() . "\t" . //................................. Référence 1010 du commerçant.
+				$order->getNumber() . "\t" . //............................. Numéro de commande.
+				$user->getEmail() . "\t" . //............................... Adresse courriel du commerçant.
+				$recipientInfo->getFullName() . "\t" . //................... Nom complet (incluant la salutation) du consommateur.
+				$recipientInfo->getPhone() . "\t" . //...................... Numéro de téléphone du consommateur.
+				$shippingInfo->getStreet() . "\t\t" . //.................... Adresse civique du consommateur.
+				$shippingInfo->getCity() . "\t" . //........................ Ville du consommateur.
+				$shippingInfo->getStateCode() . "\t" . //................... État ou province du consommateur.
+				$shippingInfo->getZipCode() . "\t" . //..................... Code postal du consommateur.
+				$line->getProductSku() . "\t" . //.......................... Numéro de produit commandé.
+				$line->getQuantity() . "\t" . //............................ Quantity du produit commandé.
+				number_format($line->getUnitPrice(), 2) . "\t" . //......... Prix unitaire du produit commandé.
+				SHIPPING_CODE . "\t" . //................................... Code d"expédition (frais divers).
+				number_format($line->getTotalShippingFee(), 2) . "\t" . //.. Total des frais d"expédition.
+				(method_exists($product, 'getPipingCode') ? //............... Si n'est pas un coussin lombaire.
+					$product->getPipingCode() : '') . "\r\n"; //............ Code du fini du produit commandé.
+		}
+
+		// Écriture du texte dans le fichier et sa fermeture.
+		fwrite($file, $text);
+		fclose($file);
 	}
 
 
