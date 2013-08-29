@@ -1,6 +1,7 @@
 <?php
 
 include_once(DIR . 'libs/item.php');
+include_once(DIR . 'libs/email.php');
 include_once(DIR . 'libs/security.php');
 include_once(DIR . 'libs/sessionCart.php');
 include_once(DIR . 'libs/repositories/lines.php');
@@ -255,7 +256,15 @@ class SessionTransaction
 			$line = Lines::Attach($line);
 		}
 
-		$this->createFile(); // Création du fichier texte de la commande.
+		// Création du fichier de la commande pour le système 1010.
+		$this->createFile();
+
+		// Envoie du courriel de confirmation.
+		Email::sendOrderConfirmation(
+			$this->order->getId(),
+			$this->recipientInfo->getemail()
+		);
+
 		$this->setStatus(TRANSACTION_STATUS_CONFIRMED);
 		$this->Save();
 	}
